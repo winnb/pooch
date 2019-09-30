@@ -1,0 +1,94 @@
+/***************************************/
+/*            Typography               */
+/***************************************/
+
+// Main font variables
+$zilla-slab: "Zilla Slab", serif;
+$red-hat-display: "Red Hat Display", sans-serif;
+
+.red-hat-display {
+  font-family: $red-hat-display;
+}
+
+body {
+  font-family: $red-hat-display;
+  font-size: calc(16px + 0.5vw);
+  line-height: calc(24px + 1vw);
+}
+
+// Trak custom header
+.trak_heading-xlarge {
+  font-family: $zilla-slab;
+  font-size: calc(32px + 1.5vw + 0.5vmin);
+  font-weight: 600;
+  line-height: calc(36px + 2.5vw);
+}
+
+.trak_heading-large {
+  font-family: $zilla-slab;
+  font-size: calc(60px);
+  font-weight: 600;
+}
+
+.trak_heading-medium {
+  font-family: $zilla-slab;
+  font-size: calc(48px);
+  font-weight: 600;
+}
+
+.trak_heading-small {
+  font-family: $zilla-slab;
+  font-size: calc(26px + 0.5vw + 0.5vmin);
+  font-weight: 600;
+}
+
+.trak_subheading {
+  font-family: $zilla-slab;
+  font-size: calc(26px);
+  font-weight: 600;
+}
+
+// Next custom body
+
+.trak_body {
+  font-family: $red-hat-display;
+  font-size: calc(24px);
+}
+
+.trak_body-small {
+  font-family: $red-hat-display;
+  font-size: calc(18px);
+}
+
+.trak_body-xsmall {
+  font-family: $red-hat-display;
+  font-size: calc(12px);
+}
+
+.trak_footer {
+  font-family: $red-hat-display;
+  font-size: 10px;
+  color: #9a9c9f;
+  line-height: 20px;
+}
+
+/***************************************/
+/*            Media Queries            */
+/***************************************/
+
+@media screen and (min-width: 1200px) {
+  // setting max font size based on Amasa Design System
+  body {
+    font-size: 24px;
+    line-height: 36px;
+  }
+
+  .trak_heading-xlarge {
+    font-size: 72px;
+    line-height: 86px;
+  }
+
+  .trak_heading-small {
+    font-size: 36px;
+  }
+}

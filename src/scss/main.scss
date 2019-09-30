@@ -1,0 +1,82 @@
+/*
+
+Theme bootstrap
+https://getbootstrap.com/docs/4.0/getting-started/theming/
+
+*/
+
+// To modify an existing color in our $theme-colors map, or
+// to add a new color to $theme-colors, add the new key and value:
+$theme-colors: (
+  "primary": #00a677,
+  "primary-dark": #3c444c,
+  "secondary-dark": #dde1e7,
+  "accent": #f2d292,
+  "light": #f2f4f7,
+  "error": #f44336,
+  "bg-primary": #282c34
+);
+
+$enable-responsive-font-sizes: true;
+
+// extend spacer variable for custom spacing
+$spacer: 1rem !default;
+$spacers: () !default;
+$spacers: map-merge(
+  (
+    6: (
+      calc(4px + 8vw + 8vh)
+    ),
+    7: (
+      calc(4px + 12vw + 12vh)
+    )
+  ),
+  $spacers
+);
+// $spacers: (
+//   7: calc(4px + 12vw + 12vh),
+//   8: calc(4px + 16vw + 16vh),
+//   9: calc(4px + 20vw + 20vh),
+//   10: calc(4px + 24vw + 24vh)
+// );
+// then import Bootstrap
+@import "bootstrap";
+
+// import typography
+@import "typography.scss";
+
+// import social
+@import "bootstrap-social.scss";
+
+body {
+  overflow-x: hidden;
+  background-color: #282c34;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+// // React css
+.App {
+  text-align: center;
+}
+
+// .App-logo {
+//   animation: App-logo-spin infinite 20s linear;
+//   height: 40vmin;
+//   pointer-events: none;
+// }
+
+// .App-header {
+//   background-color: #282c34;
+//   min-height: 100vh;
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   justify-content: center;
+//   font-size: calc(10px + 2vmin);
+//   color: white;
+// }
+
+// .App-link {
+//   color: #61dafb;
+// }
