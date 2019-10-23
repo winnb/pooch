@@ -27,8 +27,14 @@ $spacers: map-merge(
     6: (
       calc(4px + 8vw + 8vh)
     ),
-    7: (
+    8: (
       calc(4px + 12vw + 12vh)
+    ),
+    9: (
+      calc(4px + 16vw + 16vh)
+    ),
+    10: (
+      calc(4px + 20vw + 20vh)
     )
   ),
   $spacers

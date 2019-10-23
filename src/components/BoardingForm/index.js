@@ -11,18 +11,19 @@ import Fire from "../../config/Fire.js";
 import "../AllMeetups/styles.scss";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
-class WalkerForm extends React.Component {
+class BoardingForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       name: "",
       phone: "",
-      hourlyRate: "",
+      dailyRate: "",
+      address: "",
       city: ""
     };
 
     this.handleChange = this.handleChange.bind(this);
-    this.addWalker = this.addWalker.bind(this);
+    this.addBoarder = this.addBoarder.bind(this);
   }
 
   handleChange(e) {
@@ -39,24 +40,25 @@ class WalkerForm extends React.Component {
     }, 2000);
     const db = Fire.firestore();
 
-    // Get walkers from Firebase
-    db.collection("walkers")
+    // Get boarders from Firebase
+    db.collection("boarders")
       .orderBy("city")
       .get()
       .then(snapshot => {
         snapshot.docs.forEach(doc => {
-          renderWalkers(doc);
+          renderBoarders(doc);
         });
       });
 
       // Create a grid to store meetup data
-    const grid = document.querySelector("#walker-grid");
-    function renderWalkers(doc) {
+    const grid = document.querySelector("#boarder-grid");
+    function renderBoarders(doc) {
       // create a list to style the data
       let li = document.createElement("tr");
       let name = document.createElement("td");
       let phone = document.createElement("td");
-      let hourlyRate = document.createElement("td");
+      let dailyRate = document.createElement("td");
+      let address = document.createElement("td");
       let city = document.createElement("td");
 
       li.setAttribute("data-id", doc.id);
@@ -64,13 +66,15 @@ class WalkerForm extends React.Component {
       // Update local state to database contents
       name.textContent = doc.data().name;
       phone.textContent = doc.data().phone;
-      hourlyRate.textContent = doc.data().hourlyRate;
+      dailyRate.textContent = doc.data().dailyRate;
+      address.textContent = doc.data().address;
       city.textContent = doc.data().city;
 
       // Add all contents to the list
       li.appendChild(name);
       li.appendChild(phone);
-      li.appendChild(hourlyRate);
+      li.appendChild(dailyRate);
+      li.appendChild(address);
       li.appendChild(city);
 
       // Add list to grid
@@ -78,16 +82,17 @@ class WalkerForm extends React.Component {
     }
   }
 
-  addWalker = e => {
+  addBoarder = e => {
     e.preventDefault();
     const db = Fire.firestore();
     db.settings({
       timestampsInSnapshots: true
     });
-    db.collection("walkers").add({
+    db.collection("boarders").add({
       name: this.state.name,
       phone: this.state.phone,
-      hourlyRate: this.state.hourlyRate,
+      dailyRate: this.state.dailyRate,
+      address: this.state.address,
       city: this.state.city
     });
 
@@ -95,11 +100,12 @@ class WalkerForm extends React.Component {
     this.setState({
       name: "",
       phone: "",
-      hourlyRate: "",
+      dailyRate: "",
+      address: "",
       city: ""
     });
 
-    //Walker Recorded Pop-up
+    //Boarder Recorded Pop-up
     document.getElementById("success-message").style.display = "block";
     setTimeout(() => {
       document.getElementById("success-message").style.display = "none";
@@ -109,8 +115,8 @@ class WalkerForm extends React.Component {
   render() {
     return (
       <div className=" ml-5 input-group-prepend">
-        <form onSubmit={this.addWalker}>
-        <div className="trak_heading-medium mt-5">Local Dog Walkers</div>
+        <form onSubmit={this.addBoarder}>
+        <div className="trak_heading-medium mt-5">Local Dog Boarders</div>
           <div id="loader" className="mb-4">
             <Loader
               type="Grid"
@@ -127,24 +133,25 @@ class WalkerForm extends React.Component {
               <thead className="trak_heading-small">
                 {/* change color */}
                 <tr>
-                  <th scope="col">Walker Name</th>
+                  <th scope="col">Boarding Name</th>
                   <th scope="col">Phone Number</th>
-                  <th scope="col">Hourly Rate</th>
+                  <th scope="col">Daily Rate</th>
+                  <th scope="col">Address</th>
                   <th scope="col">City</th>
                 </tr>
               </thead>
-              <tbody id="walker-grid"></tbody>
+              <tbody id="boarder-grid"></tbody>
             </table>
           </div>
-            <div className="trak_heading-medium mt-5 mb-3">Get Started as a Verified Dog Walker
+            <div className="trak_heading-medium mt-5 mb-3">Get Started as a Verified Dog Boarder
             {/* Name */}
               <span className="input-group-text" id="inputGroup-sizing-default">
-                Walker Name
+                Boarder Name
               </span>
             <input
               name="name"
               type="text"
-              title="Walker Name"
+              title="Boarder Name"
               value={this.state.name}
               onChange={this.handleChange}
               required
@@ -163,7 +170,7 @@ class WalkerForm extends React.Component {
               type="number"
               maxLength="10"
               placeholder="i.e. 5551234567"
-              title="Walker Phone"
+              title="Boarder Phone"
               value={this.state.phone}
               onChange={this.handleChange}
               required
@@ -173,18 +180,35 @@ class WalkerForm extends React.Component {
             />
             </div>
             <div className="mb-1">
-            {/* Hourly Rate */}
+            {/* Daily Rate */}
               <span className="input-group-text" id="inputGroup-sizing-default">
-                Hourly Rate
+                Daily Rate
               </span>
             <input
-              name="hourlyRate"
+              name="dailyRate"
               type="number"
-              placeholder="i.e. 15"
-              title="Walker Rate"
-              value={this.state.hourlyRate}
+              placeholder="i.e. 150"
+              title="Boarder Rate"
+              value={this.state.dailyRate}
               onChange={this.handleChange}
               required
+              className="form-control"
+              aria-label="Default"
+              aria-describedby="inputGroup-sizing-default"
+            />
+            </div>
+            <div className="mb-1">
+            {/* Address */}
+              <span className="input-group-text" id="inputGroup-sizing-default">
+                Address
+              </span>
+            <textarea
+              name="address"
+              type="text"
+              placeholder="i.e. 2000 Los Coyotes Diagonal"
+              title="Boarder Address"
+              value={this.state.address}
+              onChange={this.handleChange}
               className="form-control"
               aria-label="Default"
               aria-describedby="inputGroup-sizing-default"
@@ -198,8 +222,8 @@ class WalkerForm extends React.Component {
             <textarea
               name="city"
               type="text"
-              placeholder="i.e. Long BEach"
-              title="Walker City"
+              placeholder="i.e. Long Beach"
+              title="Boarder City"
               value={this.state.city}
               onChange={this.handleChange}
               className="form-control"
@@ -222,4 +246,4 @@ class WalkerForm extends React.Component {
   }
 }
 
-export default WalkerForm;
+export default BoardingForm;
