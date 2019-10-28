@@ -115,7 +115,7 @@ class WalkerForm extends React.Component {
             <Loader
               type="Grid"
               // type="MutatingDots"
-              color="#00a677"
+              color="#fffa6a"
               height={75}
               width={75}
               // timeout={3000} //3 secs
@@ -123,9 +123,8 @@ class WalkerForm extends React.Component {
           </div>
           {/* Render contents of database */}
           <div id="result-table">
-            <table className="table table-dark mt-4 text-left trak_body">
-              <thead className="trak_heading-small">
-                {/* change color */}
+            <table className="table mt-4 text-left">
+              <thead className="thead-light trak_heading-small">
                 <tr>
                   <th scope="col">Walker Name</th>
                   <th scope="col">Phone Number</th>

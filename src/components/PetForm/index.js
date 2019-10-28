@@ -11,19 +11,19 @@ import Fire from "../../config/Fire.js";
 import "../AllMeetups/styles.scss";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
-class BoardingForm extends React.Component {
+class PetForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       name: "",
-      phone: "",
-      dailyRate: "",
-      address: "",
-      city: ""
+      gender: "",
+      breed: "",
+      color: "",
+      dateOfBirth: ""
     };
 
     this.handleChange = this.handleChange.bind(this);
-    this.addBoarder = this.addBoarder.bind(this);
+    this.addPet = this.addPet.bind(this);
   }
 
   handleChange(e) {
@@ -40,72 +40,72 @@ class BoardingForm extends React.Component {
     }, 2000);
     const db = Fire.firestore();
 
-    // Get boarders from Firebase
-    db.collection("boarders")
-      .orderBy("city")
+    // Get dogs from Firebase
+    db.collection("pets")
+      .orderBy("name")
       .get()
       .then(snapshot => {
         snapshot.docs.forEach(doc => {
-          renderBoarders(doc);
+          renderPets(doc);
         });
       });
 
       // Create a grid to store meetup data
-    const grid = document.querySelector("#boarder-grid");
-    function renderBoarders(doc) {
+    const grid = document.querySelector("#pet-grid");
+    function renderPets(doc) {
       // create a list to style the data
       let li = document.createElement("tr");
       let name = document.createElement("td");
-      let phone = document.createElement("td");
-      let dailyRate = document.createElement("td");
-      let address = document.createElement("td");
-      let city = document.createElement("td");
+      let gender = document.createElement("td");
+      let breed = document.createElement("td");
+      let color = document.createElement("td");
+      let dateOfBirth = document.createElement("td");
 
       li.setAttribute("data-id", doc.id);
 
       // Update local state to database contents
       name.textContent = doc.data().name;
-      phone.textContent = doc.data().phone;
-      dailyRate.textContent = doc.data().dailyRate;
-      address.textContent = doc.data().address;
-      city.textContent = doc.data().city;
+      gender.textContent = doc.data().gender;
+      breed.textContent = doc.data().breed;
+      color.textContent = doc.data().color;
+      dateOfBirth.textContent = doc.data().dateOfBirth;
 
       // Add all contents to the list
       li.appendChild(name);
-      li.appendChild(phone);
-      li.appendChild(dailyRate);
-      li.appendChild(address);
-      li.appendChild(city);
+      li.appendChild(gender);
+      li.appendChild(breed);
+      li.appendChild(color);
+      li.appendChild(dateOfBirth);
 
       // Add list to grid
       grid.appendChild(li);
     }
   }
 
-  addBoarder = e => {
+  addPet = e => {
     e.preventDefault();
     const db = Fire.firestore();
     db.settings({
       timestampsInSnapshots: true
     });
-    db.collection("boarders").add({
+    db.collection("pets").add({
       name: this.state.name,
-      phone: this.state.phone,
-      dailyRate: this.state.dailyRate,
-      address: this.state.address,
-      city: this.state.city
+      gender: this.state.gender,
+      breed: this.state.breed,
+      color: this.state.color,
+      dateOfBirth: this.state.dateOfBirth
     });
 
     // Reset state
     this.setState({
       name: "",
-      phone: "",
-      dailyRate: "",
-      address: "",
-      city: ""
+      gender: "",
+      breed: "",
+      color: "",
+      dateOfBirth: ""
     });
 
-    //Boarder Recorded Pop-up
+    //Pet Recorded Pop-up
     document.getElementById("success-message").style.display = "block";
     setTimeout(() => {
       document.getElementById("success-message").style.display = "none";
@@ -115,8 +115,8 @@ class BoardingForm extends React.Component {
   render() {
     return (
       <div className=" ml-5 input-group-prepend">
-        <form onSubmit={this.addBoarder}>
-        <div className="trak_heading-medium mt-5">Local Dog Boarders</div>
+        <form onSubmit={this.addPet}>
+        <div className="trak_heading-medium mt-5">Your Pets</div>
           <div id="loader" className="mb-4">
             <Loader
               type="Grid"
@@ -129,29 +129,29 @@ class BoardingForm extends React.Component {
           </div>
           {/* Render contents of database */}
           <div id="result-table">
-            <table className="table mt-4 text-left trak_body">
+            <table className="table mt-4 text-left">
               <thead className="thead-light trak_heading-small">
-                {/* change color */}
                 <tr>
-                  <th scope="col">Boarding Name</th>
-                  <th scope="col">Phone Number</th>
-                  <th scope="col">Daily Rate</th>
-                  <th scope="col">Address</th>
-                  <th scope="col">City</th>
+                  <th scope="col">Pet Name</th>
+                  <th scope="col">Gender</th>
+                  <th scope="col">Breed</th>
+                  <th scope="col">Color</th>
+                  <th scope="col">Date of Birth</th>
+                  <th scope="col"></th>
                 </tr>
               </thead>
-              <tbody id="boarder-grid"></tbody>
+              <tbody id="pet-grid"></tbody>
             </table>
           </div>
-            <div className="trak_heading-medium mt-5 mb-3">Get Started as a Verified Dog Boarder
+            <div className="trak_heading-medium mt-5 mb-3">Got more pups? Add them below!
             {/* Name */}
               <span className="input-group-text" id="inputGroup-sizing-default">
-                Boarder Name
+                Pet Name
               </span>
             <input
               name="name"
               type="text"
-              title="Boarder Name"
+              title="Pet Name"
               value={this.state.name}
               onChange={this.handleChange}
               required
@@ -161,17 +161,17 @@ class BoardingForm extends React.Component {
             />
             </div>
             <div className="mb-1">
-            {/* Phone */}
+            {/* Gender */}
               <span className="input-group-text" id="inputGroup-sizing-default">
-                Phone Number
+                Gender
               </span>
             <input
-              name="phone"
-              type="number"
-              maxLength="10"
-              placeholder="i.e. 5551234567"
-              title="Boarder Phone"
-              value={this.state.phone}
+              name="Gender"
+              type="text"
+              maxLength="1"
+              placeholder="i.e. M/F"
+              title="Pet Gender"
+              value={this.state.gender}
               onChange={this.handleChange}
               required
               className="form-control"
@@ -180,16 +180,16 @@ class BoardingForm extends React.Component {
             />
             </div>
             <div className="mb-1">
-            {/* Daily Rate */}
+            {/* Breed */}
               <span className="input-group-text" id="inputGroup-sizing-default">
-                Daily Rate
+                Breed
               </span>
             <input
-              name="dailyRate"
-              type="number"
-              placeholder="i.e. 150"
-              title="Boarder Rate"
-              value={this.state.dailyRate}
+              name="Breed"
+              type="text"
+              placeholder="i.e. Golden Doodle"
+              title="Breed"
+              value={this.state.breed}
               onChange={this.handleChange}
               required
               className="form-control"
@@ -198,16 +198,16 @@ class BoardingForm extends React.Component {
             />
             </div>
             <div className="mb-1">
-            {/* Address */}
+            {/* Color */}
               <span className="input-group-text" id="inputGroup-sizing-default">
-                Address
+                Color
               </span>
             <textarea
-              name="address"
+              name="Color"
               type="text"
-              placeholder="i.e. 2000 Los Coyotes Diagonal"
-              title="Boarder Address"
-              value={this.state.address}
+              placeholder="i.e. Black with white spots"
+              title="Color"
+              value={this.state.color}
               onChange={this.handleChange}
               className="form-control"
               aria-label="Default"
@@ -215,16 +215,15 @@ class BoardingForm extends React.Component {
             />
             </div>
             <div className="mb-1">
-            {/* City */}
+            {/* Date of Birth */}
               <span className="input-group-text" id="inputGroup-sizing-default">
-                City
+                Date of Birth
               </span>
-            <textarea
-              name="city"
-              type="text"
-              placeholder="i.e. Long Beach"
-              title="Boarder City"
-              value={this.state.city}
+            <input
+              name="dateOfBirth"
+              type="datetime-local"
+              title="dateOfBirth"
+              value={this.state.dateOfBirth}
               onChange={this.handleChange}
               className="form-control"
               aria-label="Default"
@@ -246,4 +245,4 @@ class BoardingForm extends React.Component {
   }
 }
 
-export default BoardingForm;
+export default PetForm;

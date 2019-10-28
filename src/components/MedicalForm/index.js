@@ -258,7 +258,7 @@ class MedicalForm extends React.Component {
             <Loader
               type="Grid"
               // type="MutatingDots"
-              color="#00a677"
+              color="#fffa6a"
               height={75}
               width={75}
               // timeout={3000} //3 secs

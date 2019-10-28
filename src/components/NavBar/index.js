@@ -3,8 +3,8 @@ import React from "react";
 // Firebase
 import fire from "../../config/Fire";
 
-// // Media
-// import Hologram from "./media/hologram.svg";
+// Components
+import Button from "../Button";
 
 // Styles
 import "./styles.scss";
@@ -22,7 +22,7 @@ class NavBar extends React.Component {
   render() {
     return (
       <div>
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav className="navbar navbar-expand-lg bg-light">
           <a className="navbar-brand" href="/">
             POOCH
             {/* <img src={Hologram} alt="Hologram" /> */}
@@ -73,13 +73,14 @@ class NavBar extends React.Component {
               
             </ul>
             <form className="form-inline my-2 my-lg-0">
-              <button
-                onClick={this.logout}
-                className="btn btn-outline-success my-2 my-sm-0"
+            <div className="trak_body-small" onClick={this.logout}>
+                <Button
                 type="submit"
-              >
-                Log out
-              </button>
+                buttonStyle="btn-primary"
+                buttonText="Logout"
+                buttonTitle="Logout">
+              </Button>
+            </div>
             </form>
           </div>
         </nav>

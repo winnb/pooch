@@ -260,7 +260,7 @@ class MeetupForm extends React.Component {
             <Loader
               type="Grid"
               // type="MutatingDots"
-              color="#00a677"
+              color="#fffa6a"
               height={75}
               width={75}
               // timeout={3000} //3 secs
@@ -268,11 +268,11 @@ class MeetupForm extends React.Component {
           </div>
           {/* Render contents of database */}
           <div id="result-table">
-            <table className="table table-dark mt-4 text-left trak_body">
-              <thead className="trak_heading-small">
+            <table className="table mt-4 text-left trak_body">
+              <thead className="thead-light trak_heading-small">
                 {/* change color */}
                 <tr>
-                  <th scope="col">Date & Time</th>
+                  <th scope="col">Date&Time</th>
                   <th scope="col">Address</th>
                   <th scope="col">City</th>
                   <th scope="col">State</th>
