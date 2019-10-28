@@ -110,12 +110,12 @@ class WalkerForm extends React.Component {
     return (
       <div className=" ml-5 input-group-prepend">
         <form onSubmit={this.addWalker}>
-        <div className="trak_heading-medium mt-5">Local Dog Walkers</div>
+        <div className="trak_heading-medium">Local Dog Walkers</div>
           <div id="loader" className="mb-4">
             <Loader
               type="Grid"
               // type="MutatingDots"
-              color="#fffa6a"
+              color="black"
               height={75}
               width={75}
               // timeout={3000} //3 secs
@@ -135,7 +135,8 @@ class WalkerForm extends React.Component {
               <tbody id="walker-grid"></tbody>
             </table>
           </div>
-            <div className="trak_heading-medium mt-5 mb-3">Get Started as a Verified Dog Walker
+          <div className="trak_heading-medium mt-7 mb-3">Get Started as a Verified Dog Walker</div>
+            <div>
             {/* Name */}
               <span className="input-group-text" id="inputGroup-sizing-default">
                 Walker Name
@@ -197,7 +198,7 @@ class WalkerForm extends React.Component {
             <textarea
               name="city"
               type="text"
-              placeholder="i.e. Long BEach"
+              placeholder="i.e. Long Beach"
               title="Walker City"
               value={this.state.city}
               onChange={this.handleChange}
@@ -206,7 +207,7 @@ class WalkerForm extends React.Component {
               aria-describedby="inputGroup-sizing-default"
             />
             </div>
-            <div className="mt-2">
+            <div className="mt-2 mb-5">
             {/* Submit Button */}
             <Button
               buttonType="submit"

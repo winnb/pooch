@@ -116,12 +116,12 @@ class PetForm extends React.Component {
     return (
       <div className=" ml-5 input-group-prepend">
         <form onSubmit={this.addPet}>
-        <div className="trak_heading-medium mt-5">Your Pets</div>
+        <div className="trak_heading-medium">Your Pets</div>
           <div id="loader" className="mb-4">
             <Loader
               type="Grid"
               // type="MutatingDots"
-              color="#fffa6a"
+              color="black"
               height={75}
               width={75}
               // timeout={3000} //3 secs
@@ -143,7 +143,8 @@ class PetForm extends React.Component {
               <tbody id="pet-grid"></tbody>
             </table>
           </div>
-            <div className="trak_heading-medium mt-5 mb-3">Got more pups? Add them below!
+          <div className="trak_heading-medium mt-7 mb-3">Got more pups? Add them below!</div>
+            <div>
             {/* Name */}
               <span className="input-group-text" id="inputGroup-sizing-default">
                 Pet Name
@@ -166,11 +167,11 @@ class PetForm extends React.Component {
                 Gender
               </span>
             <input
-              name="Gender"
+              name="gender"
               type="text"
               maxLength="1"
               placeholder="i.e. M/F"
-              title="Pet Gender"
+              title="gender"
               value={this.state.gender}
               onChange={this.handleChange}
               required
@@ -185,10 +186,10 @@ class PetForm extends React.Component {
                 Breed
               </span>
             <input
-              name="Breed"
+              name="breed"
               type="text"
               placeholder="i.e. Golden Doodle"
-              title="Breed"
+              title="breed"
               value={this.state.breed}
               onChange={this.handleChange}
               required
@@ -203,10 +204,10 @@ class PetForm extends React.Component {
                 Color
               </span>
             <textarea
-              name="Color"
+              name="color"
               type="text"
               placeholder="i.e. Black with white spots"
-              title="Color"
+              title="color"
               value={this.state.color}
               onChange={this.handleChange}
               className="form-control"
@@ -221,7 +222,7 @@ class PetForm extends React.Component {
               </span>
             <input
               name="dateOfBirth"
-              type="datetime-local"
+              type="date"
               title="dateOfBirth"
               value={this.state.dateOfBirth}
               onChange={this.handleChange}
@@ -230,7 +231,7 @@ class PetForm extends React.Component {
               aria-describedby="inputGroup-sizing-default"
             />
             </div>
-            <div className="mt-2">
+            <div className="mt-2 mb-5">
             {/* Submit Button */}
             <Button
               buttonType="submit"
