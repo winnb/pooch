@@ -2,11 +2,16 @@ import React from "react";
 
 import "./styles.scss";
 
+import Richard from "./richard.png";
+
 const Home = () => {
   return (
     <div>
       <div className="title trak_heading-large mt-4 mb-5">Your one stop shop for puppers, doggos, and good boys</div>
       <form>
+        <div>
+          <img className="border" src={Richard} alt="Good ol' Richard"/>
+        </div>
         <div className="form-group col-4">
           <label>Display Name</label>
           <input type="text" className="form-control" placeholder="Enter name"/>

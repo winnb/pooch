@@ -63,7 +63,6 @@ class MeetupForm extends React.Component {
       let sta = document.createElement("td");
       let zipcode = document.createElement("td");
       let description = document.createElement("td");
-      let cross = document.createElement("button");
 
       li.setAttribute("data-id", doc.id);
 
@@ -74,7 +73,6 @@ class MeetupForm extends React.Component {
       sta.textContent = doc.data().sta;
       zipcode.textContent = doc.data().zipcode;
       description.textContent = doc.data().description;
-      cross.textContent = " X ";
 
       // Add all contents to the list
       li.appendChild(timestamp);
@@ -83,17 +81,6 @@ class MeetupForm extends React.Component {
       li.appendChild(sta);
       li.appendChild(zipcode);
       li.appendChild(description);
-      li.appendChild(cross);
-
-      // Delete Meetup
-      cross.addEventListener("click", e => {
-        e.stopPropagation();
-        e.preventDefault();
-        let id = e.target.parentElement.getAttribute("data-id");
-        db.collection("meetups")
-          .doc(id)
-          .delete();
-      });
 
       // Add list to grid
       grid.appendChild(li);
