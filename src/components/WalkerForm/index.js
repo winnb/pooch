@@ -10,6 +10,7 @@ import Fire from "../../config/Fire.js";
 //styles
 import "../AllMeetups/styles.scss";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import "../WalkerForm/styles.scss";
 
 class WalkerForm extends React.Component {
   constructor(props) {
@@ -79,6 +80,10 @@ class WalkerForm extends React.Component {
   }
 
   addWalker = e => {
+    document.getElementById("success-message").style.display = "block";
+    setTimeout(() => {
+      document.getElementById("success-message").style.display = "none";
+    }, 2000);
     e.preventDefault();
     const db = Fire.firestore();
     db.settings({
@@ -98,12 +103,6 @@ class WalkerForm extends React.Component {
       hourlyRate: "",
       city: ""
     });
-
-    //Walker Recorded Pop-up
-    document.getElementById("success-message").style.display = "block";
-    setTimeout(() => {
-      document.getElementById("success-message").style.display = "none";
-    }, 2000);
   };
 
   render() {
@@ -135,7 +134,10 @@ class WalkerForm extends React.Component {
               <tbody id="walker-grid"></tbody>
             </table>
           </div>
-          <div className="trak_heading-medium mt-7 mb-3">Get Started as a Verified Dog Walker</div>
+          <div id = "success-message">
+                Form Successfully Submitted 
+          </div>
+          <div className="trak_heading-medium mt-7 mb-3" id = "space">Get Started as a Verified Dog Walker</div>
             <div>
             {/* Name */}
               <span className="input-group-text" id="inputGroup-sizing-default">

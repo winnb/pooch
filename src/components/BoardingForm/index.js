@@ -10,6 +10,7 @@ import Fire from "../../config/Fire.js";
 //styles
 import "../AllMeetups/styles.scss";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import "../BoardingForm/styles.scss";
 
 class BoardingForm extends React.Component {
   constructor(props) {
@@ -143,7 +144,10 @@ class BoardingForm extends React.Component {
               <tbody id="boarder-grid"></tbody>
             </table>
           </div>
-          <div className="trak_heading-medium mt-5 mb-3">Get Started as a Verified Dog Boarder</div>
+          <div id = "success-message">
+                Form Successfully Submitted 
+          </div>
+          <div className="trak_heading-medium mt-5 mb-3" id = "space">Get Started as a Verified Dog Boarder</div>
             <div>
             {/* Name */}
               <span className="input-group-text" id="inputGroup-sizing-default">

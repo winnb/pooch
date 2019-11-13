@@ -10,6 +10,7 @@ import Fire from "../../config/Fire.js";
 //styles
 import "../AllMeetups/styles.scss";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import "../PetForm/styles.scss";
 
 class PetForm extends React.Component {
   constructor(props) {
@@ -60,6 +61,7 @@ class PetForm extends React.Component {
       let breed = document.createElement("td");
       let color = document.createElement("td");
       let dateOfBirth = document.createElement("td");
+      
 
       li.setAttribute("data-id", doc.id);
 
@@ -83,6 +85,12 @@ class PetForm extends React.Component {
   }
 
   addPet = e => {
+    //Pop-up Confirmation message
+    document.getElementById("success-message").style.display = "block";
+    setTimeout(() => {
+      document.getElementById("success-message").style.display = "none";
+    }, 2000);
+
     e.preventDefault();
     const db = Fire.firestore();
     db.settings({
@@ -105,11 +113,6 @@ class PetForm extends React.Component {
       dateOfBirth: ""
     });
 
-    //Pet Recorded Pop-up
-    document.getElementById("success-message").style.display = "block";
-    setTimeout(() => {
-      document.getElementById("success-message").style.display = "none";
-    }, 2000);
   };
 
   render() {
@@ -143,7 +146,10 @@ class PetForm extends React.Component {
               <tbody id="pet-grid"></tbody>
             </table>
           </div>
-          <div className="trak_heading-medium mt-7 mb-3">Got more pups? Add them below!</div>
+          <div id = "success-message">
+                Pet Successfully Added 
+          </div>
+          <div className="trak_heading-medium mt-7 mb-3" id="space">Got more pups? Add them below!</div>
             <div>
             {/* Name */}
               <span className="input-group-text" id="inputGroup-sizing-default">

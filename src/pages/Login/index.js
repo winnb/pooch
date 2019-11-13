@@ -1,5 +1,8 @@
 import React from "react";
 import Card from "../../components/Card/";
+import SignUp from "../../components/SignUp/index";
+
+
 
 // Styles
 import "./styles.scss";
@@ -14,12 +17,13 @@ class Login extends React.Component {
 
     this.login = this.login.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.signup = this.signup.bind(this);
+    //this.signup = this.signup.bind(this);
     this.googleLogin = this.googleLogin.bind(this);
 
     this.state = {
       email: "",
-      password: ""
+      password: "",
+      isOpen: false
     };
   }
 
@@ -37,18 +41,27 @@ class Login extends React.Component {
       });
   }
 
-  signup(e) {
-    e.preventDefault();
-    fire
-      .auth()
-      .createUserWithEmailAndPassword(this.state.email, this.state.password)
-      .catch(error => {
-        console.log(error.message);
-        document.querySelector("#error-message-signup").style.display = "block";
-        document.getElementById("error-message-signup").innerHTML =
-          error.message;
-        // TODO: set time out
-      });
+  //signup(e) {
+    // e.preventDefault();
+    // fire
+    //   .auth()
+    //   .createUserWithEmailAndPassword(this.state.email, this.state.password)
+    //   .catch(error => {
+    //     console.log(error.message);
+    //     document.querySelector("#error-message-signup").style.display = "block";
+    //     document.getElementById("error-message-signup").innerHTML =
+    //       error.message;
+    //     // TODO: set time out
+    //   });
+  //}
+
+  signup() {
+    var x = document.getElementById("show");
+    if (x.style.display === "none") {
+      x.style.display = "block";
+    } else {
+      x.style.display = "none";
+    }
   }
 
   googleLogin(e) {
@@ -60,9 +73,22 @@ class Login extends React.Component {
     this.setState({ [e.target.name]: e.target.value });
   }
 
+  myFunction() {
+    var x = document.getElementById("show");
+    if (x.style.display === "none") {
+      x.style.display = "block";
+    } else {
+      x.style.display = "none";
+    }
+  }
+
   render() {
     return (
       <div className="mt-6 mx-6">
+        <div id = "show">
+        <SignUp 
+        />
+        </div>
         <Card
           cardTitle={<div className="trak_heading-xlarge">P O O C H</div>}
           cardContent={
@@ -109,9 +135,11 @@ class Login extends React.Component {
               >
                 Login
               </button>
+
               <button
                 type="submit"
-                onClick={this.signup}
+                //onClick={this.signup}
+                onClick = {this.signup}
                 className="btn btn-secondary mr-4"
               >
                 Sign Up
