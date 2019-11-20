@@ -1,6 +1,7 @@
 import React from "react";
 import Card from "../../components/Card/";
-import SignUp from "../../components/SignUp/index";
+import SignUpForm from "../../components/SignUpForm/index";
+import { Link }  from  "@reach/router";
 
 
 
@@ -85,10 +86,6 @@ class Login extends React.Component {
   render() {
     return (
       <div className="mt-6 mx-6">
-        <div id = "show">
-        <SignUp 
-        />
-        </div>
         <Card
           cardTitle={<div className="trak_heading-xlarge">P O O C H</div>}
           cardContent={
@@ -136,14 +133,14 @@ class Login extends React.Component {
                 Login
               </button>
 
-              <button
+              {/* <button
                 type="submit"
                 //onClick={this.signup}
                 onClick = {this.signup}
                 className="btn btn-secondary mr-4"
               >
                 Sign Up
-              </button>
+              </button> */}
 
               <button
                 type="submit"
@@ -153,7 +150,11 @@ class Login extends React.Component {
                 <span className="fa fa-google" />
                 Login with Google
               </button>
-
+              
+                <Link to="/sign-up">
+                    Don't have an account?
+                </Link>
+              
               <div
                 id="error-message-login"
                 className="trak_body-small mt-4"

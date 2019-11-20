@@ -20,6 +20,7 @@ import DogMeetup from "./pages/DogMeetup";
 import DogServices from "./pages/DogServices";
 import DogRecords from "./pages/DogRecords";
 import PageNotFound from "./pages/PageNotFound";
+import SignUp from "../../PoOch/src/pages/SignUp";
 
 class App extends React.Component {
   constructor(props) {
@@ -65,6 +66,7 @@ class App extends React.Component {
           <div>
             <Router>
               <Login path="/" />
+              <SignUp path="/sign-up" />
               <PageNotFound path="/page-not-found" default />
             </Router>
           </div>
