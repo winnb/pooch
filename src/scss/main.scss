@@ -25,6 +25,9 @@ $spacers: () !default;
 $spacers: map-merge(
   (
     6: (
+      calc(4px + 4vw + 4vh)
+    ),
+    7: (
       calc(4px + 8vw + 8vh)
     ),
     8: (

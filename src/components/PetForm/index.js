@@ -114,7 +114,7 @@ class PetForm extends React.Component {
 
   render() {
     return (
-      <div className=" ml-5 input-group-prepend">
+      <div className="mt-6 ml-5 input-group-prepend">
         <form onSubmit={this.addPet}>
         <div className="trak_heading-medium">Your Pets</div>
           <div id="loader" className="mb-4">

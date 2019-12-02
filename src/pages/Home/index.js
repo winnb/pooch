@@ -6,8 +6,8 @@ import Richard from "./richard.png";
 
 const Home = () => {
   return (
-    <div>
-      <div className="title trak_heading-large mt-4 mb-5">Your one stop shop for puppers, doggos, and good boys</div>
+    <div className="mt-5">
+      <div className="title trak_heading-large mt-6 mb-5">Your one stop shop for puppers, doggos, and good boys</div>
       <form>
         <div>
           <img className="border" src={Richard} alt="Good ol' Richard"/>

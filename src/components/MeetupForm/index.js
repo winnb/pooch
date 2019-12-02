@@ -121,7 +121,7 @@ class MeetupForm extends React.Component {
 
   render() {
     return (
-      <div className=" ml-5 input-group-prepend">
+      <div className="ml-5 input-group-prepend">
         <form onSubmit={this.addMeetup}>
             <div className="mb-1">
             {/* Timestamp */}

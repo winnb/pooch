@@ -22,10 +22,9 @@ class NavBar extends React.Component {
   render() {
     return (
       <div>
-        <nav className="navbar navbar-expand-lg bg-light">
+        <nav className="navbar navbar-expand-lg bg-light fixed-top">
           <a className="navbar-brand" href="/">
             POOCH
-            {/* <img src={Hologram} alt="Hologram" /> */}
           </a>
           <button
             className="navbar-toggler"
@@ -42,7 +41,7 @@ class NavBar extends React.Component {
             <ul className="navbar-nav mr-auto trak_body-small">
               <li className="nav-item">
                 <a className="nav-link" href="/your-pets">
-                  Your Pets
+                Your Pets
                 </a>
               </li>
               <li className="nav-item">
