@@ -1,41 +1,70 @@
+// React
 import React from "react";
 
+// Styles
 import "./styles.scss";
-
-import Richard from "./richard.png";
 
 const Home = () => {
   return (
     <div className="mt-5">
       <div className="title trak_heading-large mt-6 mb-5">Your one stop shop for puppers, doggos, and good boys</div>
-      <form>
-        <div>
-          <img className="border" src={Richard} alt="Good ol' Richard"/>
+      <div className="row">
+        <div className="col mx-5">
+          <div className="trak_heading-medium mb-3">
+            Profile
+          </div>
+          <form>
+            <span className="form-group">
+              <label>Display Name</label>
+              <input type="text" className="form-control" placeholder="Enter name"/>
+              <small className="form-text text-muted">This is what the community will see you as!</small>
+            </span>
+            <span className="form-group">
+              <label>Age</label>
+              <input type="number" className="form-control" defaultValue="18" min="18" max="110"/>
+            </span>
+            <span className="form-check">
+              <input className="form-check-input" type="checkbox" value="" defaultChecked/>
+              <label className="form-control-sm">
+                Display age publicly?
+              </label>
+            </span>
+            <span className="form-group">
+              <label for="exampleFormControlTextarea1">Bio</label>
+              <textarea className="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            </span>
+            <div className="row mt-3">
+              <div className="col trak_body-medium"># of Pets</div>
+              <div className="col"><input class="form-control" type="text" value="# of pets"/></div>
+            </div>
+            <div className="mt-4 mx-7">
+              <button type="submit" className="btn btn-primary pull-left ml-6">Update Profile</button>
+            </div>
+          </form>
         </div>
-        <div className="form-group col-4">
-          <label>Display Name</label>
-          <input type="text" className="form-control" placeholder="Enter name"/>
-          <small className="form-text text-muted">This is what the community will see you as!</small>
+        <div className="col">
+          <div className="trak_heading-medium mb-3">
+            News Feed
+          </div>
+          <div className="quick-access-box px-5 py-5 mx-2 my-3">
+            <div className="row">
+              <div className="col mx-2 px-2 py-5 inner-box">Shortcut #1</div>
+              <div className="col mx-2 px-2 py-5 inner-box">Shortcut #2</div>
+              <div className="col mx-2 px-2 py-5 inner-box">Shortcut #3</div>
+            </div>
+          </div>
+          <div className="row mt-2 px-3 py-3">
+            <div className="col mx-2 quick-access-box px-3 py-3 news-box">News Box #1</div>
+            <div className="col mx-2 quick-access-box px-3 py-3 news-box">News Box #2</div>
+          </div>
+          <div className="row mt-2 px-3 py-3">
+            <div className="col mx-2 quick-access-box px-3 py-3 news-box">News Box #3</div>
+            <div className="col mx-2 quick-access-box px-3 py-3 news-box">News Box #4</div>
+          </div>
         </div>
-        <div className="form-group col-4">
-          <label>Age</label>
-          <input type="number" className="form-control"/>
-        </div>
-        <div className="form-check col-4">
-          <input className="form-check-input" type="checkbox" value=""/>
-          <label className="form-control-sm">
-            Display age publicly?
-          </label>
-        </div>
-        <div className="form-group col-4">
-          <label for="exampleFormControlTextarea1">Bio</label>
-          <textarea className="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-        </div>
-        <div className="col-1">
-          <input class="form-control" type="text" value="# of pets"/>
-        </div>
-        <button type="submit" className="btn btn-primary pull-left ml-6">Update Profile</button>
-      </form>
+      </div>
+      
+      
     </div>
     /* <div>
       <div classNameName="title trak_heading-medium mt-5" name="title">Your one stop shop for puppers, doggos, and good boys</div>

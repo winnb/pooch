@@ -1,3 +1,4 @@
+// React
 import React from "react";
 
 // Firebase
@@ -8,6 +9,7 @@ import Button from "../Button";
 
 // Styles
 import "./styles.scss";
+import Richard from "./richard.png";
 
 class NavBar extends React.Component {
   constructor(props) {
@@ -23,6 +25,7 @@ class NavBar extends React.Component {
     return (
       <div>
         <nav className="navbar navbar-expand-lg bg-light fixed-top">
+          <img className="border" src={Richard} alt="Good ol' Richard"/>
           <a className="navbar-brand" href="/">
             POOCH
           </a>
@@ -40,32 +43,32 @@ class NavBar extends React.Component {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav mr-auto trak_body-small">
               <li className="nav-item">
-                <a className="nav-link" href="/your-pets">
+                <a className="nav-link your-pets" href="/your-pets">
                 Your Pets
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/dog-walking">
+                <a className="nav-link dog-walking" href="/dog-walking">
                   Dog Walking
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/dog-boarding">
+                <a className="nav-link dog-boarding" href="/dog-boarding">
                   Dog Boarding
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/dog-services">
+                <a className="nav-link dog-services" href="/dog-services">
                   Dog Services
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/dog-meetup">
+                <a className="nav-link dog-meetup" href="/dog-meetup">
                   Dog Meetup
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/dog-records">
+                <a className="nav-link dog-records" href="/dog-records">
                   Dog Records
                 </a>
               </li>

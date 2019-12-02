@@ -1,7 +1,7 @@
-img {
-    max-width: 10%;
-    height: auto;
-    border-color: red;
+  img {
+    width: 65px;
+    height: 65px;
+    transform: scale(0.9);
   }
 
   button:hover {
@@ -9,10 +9,36 @@ img {
   }
 
   a:hover {
-    transform: scale(1.05);
+    transform: scale(1);
     transition-duration: 0.5s;
   }
 
   a {
-    color: red;
+    transform: scale(0.95);
+    border-bottom-style: solid;
+    border-bottom-width: 5;
+  }
+
+  .your-pets {
+    border-bottom-color: rgb(255, 195, 117);
+  }
+
+  .dog-walking {
+    border-bottom-color: rgb(255, 230, 117);
+  }
+
+  .dog-boarding {
+    border-bottom-color: rgb(172, 255, 117);
+  }
+
+  .dog-services {
+    border-bottom-color: rgb(117, 255, 175);
+  }
+
+  .dog-meetup {
+    border-bottom-color: rgb(117, 223, 255);
+  }
+
+  .dog-records {
+    border-bottom-color: rgb(188, 117, 255);
   }

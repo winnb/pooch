@@ -4,10 +4,6 @@ import { Link } from "@reach/router";
 
 // Components
 import Card from "../../components/Card/";
-import SignUpForm from "../../components/SignUpForm/index";
-import { Link }  from  "@reach/router";
-
-
 
 // Styles
 import "./styles.scss";
