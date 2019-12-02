@@ -4,6 +4,10 @@ import { Link } from "@reach/router";
 
 // Components
 import Card from "../../components/Card/";
+import SignUpForm from "../../components/SignUpForm/index";
+import { Link }  from  "@reach/router";
+
+
 
 // Styles
 import "./styles.scss";
@@ -37,7 +41,8 @@ class Login extends React.Component {
 
     this.state = {
       email: "",
-      password: ""
+      password: "",
+      isOpen: false
     };
   }
 
@@ -61,6 +66,15 @@ class Login extends React.Component {
 
   handleChange(e) {
     this.setState({ [e.target.name]: e.target.value });
+  }
+
+  myFunction() {
+    var x = document.getElementById("show");
+    if (x.style.display === "none") {
+      x.style.display = "block";
+    } else {
+      x.style.display = "none";
+    }
   }
 
   render() {

@@ -10,6 +10,7 @@ import Fire from "../../config/Fire.js";
 //styles
 import "../AllMeetups/styles.scss";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import "../MeetupForm/styles.scss";
 
 class MeetupForm extends React.Component {
   constructor(props) {
@@ -236,11 +237,15 @@ class MeetupForm extends React.Component {
             <div className="mt-2">
             {/* Submit Button */}
             <Button
+              id = "submit"
               buttonType="submit"
               buttonText="Submit"
               buttonStyle="btn-primary ml-5"
               buttonTitle="Submit"
             />
+            </div>
+            <div id = "success-message">
+                Meetup Successfully Created 
             </div>
           <div className="trak_heading-medium mt-5">Local Doggy Meetups</div>
           <div id="loader" className="mb-4">
