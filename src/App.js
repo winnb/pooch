@@ -12,6 +12,8 @@ import fire from "./config/Fire";
 
 // Pages
 import Login from "../src/pages/Login/";
+import Signup from "./pages/Signup";
+import ChangePassword from "./pages/ChangePassword";
 import Home from "./pages/Home";
 import YourPets from "./pages/YourPets";
 import DogWalking from "./pages/DogWalking";
@@ -20,7 +22,6 @@ import DogMeetup from "./pages/DogMeetup";
 import DogServices from "./pages/DogServices";
 import DogRecords from "./pages/DogRecords";
 import PageNotFound from "./pages/PageNotFound";
-import SignUp from "../../PoOch/src/pages/SignUp";
 
 class App extends React.Component {
   constructor(props) {
@@ -66,7 +67,8 @@ class App extends React.Component {
           <div>
             <Router>
               <Login path="/" />
-              <SignUp path="/sign-up" />
+              <Signup path="/sign-up" />
+              <ChangePassword path="change-password" />
               <PageNotFound path="/page-not-found" default />
             </Router>
           </div>

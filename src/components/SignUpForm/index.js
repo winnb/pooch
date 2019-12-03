@@ -1,67 +1,68 @@
+// React
 import React from "react";
-import Card from "../Card/index";
-
-import fire from "../../config/Fire";
-
 import { Link }  from  "@reach/router";
 
+// Components
+import Card from "../../components/Card/";
 
-import "./styles.scss";
+// Firebase
+import fire from "../../config/Fire";
 
-class SignUpForm extends React.Component{
-    constructor(props) {
-        super(props);
-    
-        this.handleChange = this.handleChange.bind(this);
-        this.signup = this.signup.bind(this);
-    
-        this.state = {
-          email: "",
-          password: "",
-          confirmPassword: ""
-        };
-      }
+class SignUpForm extends React.Component {
+  constructor(props) {
+    super(props);
 
-      signup(e) {
-        e.preventDefault();
-        if (this.state.password === this.state.confirmPassword) {
-           fire
-          .auth()
-          .createUserWithEmailAndPassword(this.state.email, this.state.password)
-          .catch(error => {
-            console.log(error.message);
-            document.querySelector("#error-message-signup").style.display = "block";
-            document.getElementById("error-message-signup").innerHTML =
-              error.message;
-          }); 
-          // If successful, then login
-          fire
-          .auth()
-          .signInWithEmailAndPassword(this.state.email, this.state.password)
-          .catch(error => {
-            console.log(error.message);
-            document.querySelector("#error-message-login").style.display = "block";
-            document.getElementById("error-message-login").innerHTML =
-              error.message;
-          });
-          //document.getElementsByClassName("signupForm")[0].innerHTML = null;
-          setTimeout(() => {
-            window.location.replace("/");  
-          }, 1900);
-        }
-        else {
-            document.querySelector("#error-message-signup").style.display = "block";
-            document.getElementById("error-message-signup").innerHTML = "Passwords do not match";
-        }
-      }
-      handleChange(e) {
-        this.setState({ [e.target.name]: e.target.value });
-      }
+    this.handleChange = this.handleChange.bind(this);
+    this.signup = this.signup.bind(this);
 
-    render(){
-        return(
-            <div className="mt-6 mx-6">
-                <Card
+    this.state = {
+      email: "",
+      password: "",
+      confirmPassword: ""
+    };
+  }
+
+  signup(e) {
+    e.preventDefault();
+    if (this.state.password === this.state.confirmPassword) {
+       fire
+      .auth()
+      .createUserWithEmailAndPassword(this.state.email, this.state.password)
+      .catch(error => {
+        console.log(error.message);
+        document.querySelector("#error-message-signup").style.display = "block";
+        document.getElementById("error-message-signup").innerHTML =
+          error.message;
+      }); 
+      // If successful, then login
+      fire
+      .auth()
+      .signInWithEmailAndPassword(this.state.email, this.state.password)
+      .catch(error => {
+        console.log(error.message);
+        document.querySelector("#error-message-login").style.display = "block";
+        document.getElementById("error-message-login").innerHTML =
+          error.message;
+      });
+      document.getElementsByClassName("signupForm")[0].innerHTML = null;
+      setTimeout(() => {
+        window.location.replace("/");  
+      }, 1900);
+    }
+    else {
+        document.querySelector("#error-message-signup").style.display = "block";
+        document.getElementById("error-message-signup").innerHTML = "Passwords do not match";
+    }
+  }
+
+  handleChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
+  }
+
+  render() {
+    return (
+      <div className="mt-6 mx-6 signupForm">
+        <Card
           cardTitle={<div className="trak_heading-xlarge">P O O C H</div>}
           cardContent={
             <div>
@@ -117,18 +118,19 @@ class SignUpForm extends React.Component{
                   aria-label="Confirm Password"
                   aria-describedby="basic-addon1"
                 />
-              </div>  
+              </div>
+
+              <div className="trak_body-small mb-3">
+                  <Link className="mr-3" to="/">Not what you wanted? Go back to login</Link>
+              </div>
 
               <button
                 type="submit"
                 onClick={this.signup}
-                className="btn btn-primary mr-4"
+                className="btn btn-secondary mr-4"
               >
                 Create Account
               </button>
-
-              <Link className="mr-3" to="/">Go Back</Link>
-              
 
               <div
                 id="error-message-login"
@@ -141,9 +143,9 @@ class SignUpForm extends React.Component{
             </div>
           }
         />
-            </div>
-        )
-    }
+      </div>
+    );
+  }
 }
 
 export default SignUpForm;

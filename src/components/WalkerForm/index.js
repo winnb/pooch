@@ -107,7 +107,7 @@ class WalkerForm extends React.Component {
 
   render() {
     return (
-      <div className=" ml-5 input-group-prepend">
+      <div className="mt-6 ml-5 input-group-prepend">
         <form onSubmit={this.addWalker}>
         <div className="trak_heading-medium">Local Dog Walkers</div>
           <div id="loader" className="mb-4">
