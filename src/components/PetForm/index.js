@@ -36,6 +36,7 @@ class PetForm extends React.Component {
   }
 
   componentDidMount() {
+    this.updateGrid();
     // Show loading icon for 2 seconds while grid loads
     document.getElementById("loader").style.display = "block";
     document.getElementById("result-table").style.display = "none";
@@ -43,6 +44,12 @@ class PetForm extends React.Component {
       document.getElementById("loader").style.display = "none";
       document.getElementById("result-table").style.display = "block";
     }, 2000);
+  }
+
+  updateGrid() {
+    // Clear grid before updating
+    document.getElementById("pet-grid").innerHTML = null;
+
     const db = Fire.firestore();
 
     setTimeout(() => {
@@ -56,7 +63,6 @@ class PetForm extends React.Component {
         });
       });
     }, 2000);
-    
 
       // Create a grid to store meetup data
     const grid = document.querySelector("#pet-grid");
@@ -69,8 +75,6 @@ class PetForm extends React.Component {
       let breed = document.createElement("td");
       let color = document.createElement("td");
       let dateOfBirth = document.createElement("td");
-      
-
       li.setAttribute("data-id", doc.id);
 
       // Update local state to database contents
@@ -97,6 +101,7 @@ class PetForm extends React.Component {
   }
 
   addPet = e => {
+    this.updateGrid();
     //Pop-up Confirmation message
     document.getElementById("success-message").style.display = "block";
     setTimeout(() => {
@@ -158,7 +163,6 @@ class PetForm extends React.Component {
                   <th scope="col">Breed</th>
                   <th scope="col">Color</th>
                   <th scope="col">Date of Birth</th>
-                  <th scope="col"></th>
                 </tr>
               </thead>
               <tbody id="pet-grid"></tbody>

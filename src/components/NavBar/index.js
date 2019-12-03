@@ -17,8 +17,13 @@ class NavBar extends React.Component {
     this.logout = this.logout.bind(this);
   }
 
-  logout() {
+  logout(e) {
+    e.preventDefault();
     fire.auth().signOut();
+    // Redirect to login page so user doesn't get 404 error
+    setTimeout(() => {
+      window.location.replace("/");
+    }, 100);
   }
 
   render() {

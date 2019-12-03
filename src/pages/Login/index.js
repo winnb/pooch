@@ -75,14 +75,14 @@ class Login extends React.Component {
 
   render() {
     return (
-      <div className="body mt-7 mx-6">
+      <div className="body mx-6">
         <Slide left>
           <div className="row mx-5">
-            <img src={Howling} alt="Howling dog" className="dog-shadows"/>
-            <img src={Laying} alt="Laying dog" className="dog-shadows"/>
-            <img src={Playing} alt="Playing dog" className="dog-shadows"/>
-            <img src={Dachshund} alt="Dachshund dog" className="dog-shadows"/>
-            <img src={Standing} alt="Standing dog" className="dog-shadows"/>
+            <img src={Howling} alt="Howling dog" className="col dog-shadows"/>
+            <img src={Laying} alt="Laying dog" className="col dog-shadows"/>
+            <img src={Playing} alt="Playing dog" className="col dog-shadows"/>
+            <img src={Dachshund} alt="Dachshund dog" className="col dog-shadows"/>
+            <img src={Standing} alt="Standing dog" className="col dog-shadows"/>
           </div>
           <Card
             cardTitle={<div className="trak_heading-xlarge">P O O C H</div>}
@@ -158,11 +158,11 @@ class Login extends React.Component {
             }
           />
           <div className="row mx-5">
-            <img src={Alerted} alt="Alerted dog" className="dog-shadows"/>
-            <img src={Boxer} alt="Boxer dog" className="dog-shadows"/>
-            <img src={Shepard} alt="Shepard dog" className="dog-shadows"/>
-            <img src={Curious} alt="Curious dog" className="dog-shadows"/>
-            <img src={Jumping} alt="Jumping dog" className="dog-shadows"/>
+            <img src={Alerted} alt="Alerted dog" className="col dog-shadows"/>
+            <img src={Boxer} alt="Boxer dog" className="col dog-shadows"/>
+            <img src={Shepard} alt="Shepard dog" className="col dog-shadows"/>
+            <img src={Curious} alt="Curious dog" className="col dog-shadows"/>
+            <img src={Jumping} alt="Jumping dog" className="col dog-shadows"/>
           </div>
         </Slide>
       </div>
