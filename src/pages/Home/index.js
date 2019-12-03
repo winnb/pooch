@@ -3,14 +3,22 @@ import React from "react";
 
 // Styles
 import "./styles.scss";
+import Logo from "../../pooch-logo-small.png";
+import Slide from "react-reveal";
 
 const Home = () => {
   return (
     <div className="mt-5">
-      <div className="title trak_heading-large mt-6 mb-5">Your one stop shop for puppers, doggos, and good boys</div>
-      <div className="row">
+      <Slide down>
+        <div className="title trak_heading-medium mt-6 mb-3">
+          Your one stop shop for puppers, doggos, and good boys
+          <img src={Logo} alt="Pooch logo" className="logo pull-right mr-5"></img>
+        </div>
+      </Slide>
+      <div className="row mb-5 mt-2">
+        <Slide left>
         <div className="col mx-5">
-          <div className="trak_heading-medium mb-3">
+          <div className="trak_heading-small mb-3">
             Profile
           </div>
           <form>
@@ -42,8 +50,10 @@ const Home = () => {
             </div>
           </form>
         </div>
+        </Slide>
+        <Slide right>
         <div className="col">
-          <div className="trak_heading-medium mb-3">
+          <div className="trak_heading-small mb-3">
             News Feed
           </div>
           <div className="quick-access-box px-5 py-5 mx-2 my-3">
@@ -62,6 +72,7 @@ const Home = () => {
             <div className="col mx-2 quick-access-box px-3 py-3 news-box">News Box #4</div>
           </div>
         </div>
+        </Slide>
       </div>
       
       

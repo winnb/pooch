@@ -11,6 +11,7 @@ import Fire from "../../config/Fire.js";
 import "../AllMeetups/styles.scss";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import "../BoardingForm/styles.scss";
+import Slide from "react-reveal";
 
 class BoardingForm extends React.Component {
   constructor(props) {
@@ -117,7 +118,11 @@ class BoardingForm extends React.Component {
     return (
       <div className="mt-6 ml-5 input-group-prepend">
         <form onSubmit={this.addBoarder}>
-        <div className="trak_heading-medium">Local Dog Boarders</div>
+          <Slide down>
+            <div className="trak_heading-medium">
+            Local Dog Boarders
+            </div>
+          </Slide>
           <div id="loader" className="mb-4">
             <Loader
               type="Grid"

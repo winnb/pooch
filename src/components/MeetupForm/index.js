@@ -11,6 +11,7 @@ import Fire from "../../config/Fire.js";
 import "../AllMeetups/styles.scss";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import "../MeetupForm/styles.scss";
+import Slide from "react-reveal";
 
 class MeetupForm extends React.Component {
   constructor(props) {
@@ -122,8 +123,13 @@ class MeetupForm extends React.Component {
 
   render() {
     return (
-      <div className="ml-5 input-group-prepend">
-        <form onSubmit={this.addMeetup}>
+      <div>
+        <Slide down>
+          <div className="trak_heading-medium mb-6">
+            Schedule a New Meetup
+          </div>
+        </Slide>
+        <form onSubmit={this.addMeetup} className="mx-6">
             <div className="mb-1">
             {/* Timestamp */}
               <span className="input-group-text" id="inputGroup-sizing-default">

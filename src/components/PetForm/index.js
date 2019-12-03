@@ -12,6 +12,9 @@ import "../AllMeetups/styles.scss";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import "../PetForm/styles.scss";
 
+// Graphics and Animation
+import Slide from "react-reveal";
+
 class PetForm extends React.Component {
   constructor(props) {
     super(props);
@@ -119,7 +122,11 @@ class PetForm extends React.Component {
     return (
       <div className="mt-6 ml-5 input-group-prepend">
         <form onSubmit={this.addPet}>
-        <div className="trak_heading-medium">Your Pets</div>
+          <Slide down>
+            <div className="trak_heading-medium">
+              Your Pets
+            </div>
+          </Slide>
           <div id="loader" className="mb-4">
             <Loader
               type="Grid"
@@ -132,7 +139,7 @@ class PetForm extends React.Component {
           </div>
           {/* Render contents of database */}
           <div id="result-table">
-            <table className="table mt-4 text-left">
+            <table className="table mt-5 text-left">
               <thead className="thead-light trak_heading-small">
                 <tr>
                   <th scope="col">Pet Name</th>

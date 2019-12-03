@@ -11,6 +11,7 @@ import Fire from "../../config/Fire.js";
 import "../AllMeetups/styles.scss";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import "../WalkerForm/styles.scss";
+import Slide from "react-reveal";
 
 class WalkerForm extends React.Component {
   constructor(props) {
@@ -109,7 +110,11 @@ class WalkerForm extends React.Component {
     return (
       <div className="mt-6 ml-5 input-group-prepend">
         <form onSubmit={this.addWalker}>
-        <div className="trak_heading-medium">Local Dog Walkers</div>
+          <Slide down>
+            <div className="trak_heading-medium">
+              Local Dog Walkers
+            </div>
+          </Slide>
           <div id="loader" className="mb-4">
             <Loader
               type="Grid"
