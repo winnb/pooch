@@ -1,6 +1,6 @@
 import React from "react";
 import Card from "../Card/index";
-import axios from 'axios';
+import Axios from 'axios';
 
 import fire from "../../config/Fire";
 
@@ -18,7 +18,7 @@ class FileUpload extends React.Component{
     }
 
     fileUploadHndler = () => {
-        axios.post('')
+        Axios.post('')
     }
 
 
