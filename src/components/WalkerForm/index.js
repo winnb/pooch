@@ -51,7 +51,7 @@ class WalkerForm extends React.Component {
         });
       });
 
-      // Create a grid to store meetup data
+      // Create a grid to store walker data
     const grid = document.querySelector("#walker-grid");
     function renderWalkers(doc) {
       // create a list to style the data
@@ -94,7 +94,8 @@ class WalkerForm extends React.Component {
       name: this.state.name,
       phone: this.state.phone,
       hourlyRate: this.state.hourlyRate,
-      city: this.state.city
+      city: this.state.city,
+      timestamp: new Date()
     });
 
     // Reset state

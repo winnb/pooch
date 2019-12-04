@@ -95,7 +95,8 @@ class BoardingForm extends React.Component {
       phone: this.state.phone,
       dailyRate: this.state.dailyRate,
       address: this.state.address,
-      city: this.state.city
+      city: this.state.city,
+      timestamp: new Date()
     });
 
     // Reset state
