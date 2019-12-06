@@ -5,6 +5,8 @@
 // Main font variables
 $zilla-slab: "Zilla Slab", serif;
 $red-hat-display: "Red Hat Display", sans-serif;
+$oswald:  'Oswald', sans-serif;
+$cherry-swash: 'Cherry Swash', cursive;
 
 .red-hat-display {
   font-family: $red-hat-display;
@@ -70,6 +72,16 @@ body {
   font-size: 10px;
   color: #9a9c9f;
   line-height: 20px;
+}
+
+.trak_nav-title {
+  font-family: $oswald;
+  font-size: calc(60px);
+}
+
+.trak_nav-item {
+  font-family: $cherry-swash;
+  font-size: calc(24px);
 }
 
 /***************************************/

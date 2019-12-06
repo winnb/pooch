@@ -10,6 +10,9 @@ import { Router } from "@reach/router";
 //Firebase
 import fire from "./config/Fire";
 
+// Components
+import Footer from "./components/Footer";
+
 // Pages
 import Login from "../src/pages/Login/";
 import Signup from "./pages/Signup";
@@ -73,6 +76,7 @@ class App extends React.Component {
             </Router>
           </div>
         )}
+        <Footer/>
       </div>
     );
   }

@@ -1,11 +1,18 @@
   img {
-    width: 65px;
-    height: 65px;
-    transform: scale(0.9);
+    width: 85px;
+    height: 85px;
+    transform: scale(1);
+    border-radius: 50px;
   }
+
+  img:hover {
+    background-color:#000;
+    opacity:0.5;
+}
 
   button:hover {
     background-color: lightgray;
+
   }
 
   a:hover {
@@ -17,6 +24,7 @@
     transform: scale(0.95);
     border-bottom-style: solid;
     border-bottom-width: 5;
+    font-weight: 500;
   }
 
   .your-pets {

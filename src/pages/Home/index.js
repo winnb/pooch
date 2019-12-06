@@ -4,15 +4,13 @@ import React from "react";
 //Firebase
 import Fire from "../../config/Fire.js";
 
-// Styles
-import "./styles.scss";
-
-//Grahpics and Animation
+//Grahpics, Styles, Animation
 import Logo from "../../pooch-logo-small.png";
-import Slide from "react-reveal";
 import Paw from "./media/paw-icon.png";
 import Walking from "./media/walking-icon.png";
 import Doghouse from "./media/doghouse-icon.png";
+import "./styles.scss";
+import Slide from "react-reveal";
 
 class Home extends React.Component {
   constructor(props) {
@@ -267,7 +265,7 @@ class Home extends React.Component {
             </div>
           </div>
           </Slide>
-        </div> 
+        </div>
       </div>
     );
   };

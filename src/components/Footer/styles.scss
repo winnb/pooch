@@ -1,0 +1,17 @@
+Footer {
+    background-color: rgb(240, 240, 242);
+  }
+
+.footer-element {
+    background-color: rgb(245, 245, 245);
+    border-radius: 5px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgb(242, 242, 243);
+}
+
+.footer-element:hover {
+    background-color: rgb(230, 230, 230);
+    transform: scale(1.03);
+    transition-duration: 0.5s;
+}

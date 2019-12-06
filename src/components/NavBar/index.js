@@ -29,9 +29,9 @@ class NavBar extends React.Component {
   render() {
     return (
       <div>
-        <nav className="navbar navbar-expand-lg bg-light fixed-top">
-          <img className="border" src={Richard} alt="Good ol' Richard"/>
-          <a className="navbar-brand" href="/">
+        <nav className="navbar navbar-expand-lg bg-light fixed-top py-5">
+          <img className="border mx-3 ml-5 overlay" src={Richard} alt="Good ol' Richard"/>
+          <a className="navbar-brand trak_nav-title" href="/">
             POOCH
           </a>
           <button
@@ -46,7 +46,7 @@ class NavBar extends React.Component {
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav mr-auto trak_body-small">
+            <ul className="navbar-nav mr-auto ml-3 trak_nav-item">
               <li className="nav-item">
                 <a className="nav-link your-pets" href="/your-pets">
                 Your Pets
