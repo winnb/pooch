@@ -109,7 +109,7 @@ class WalkerForm extends React.Component {
 
   render() {
     return (
-      <div className="mt-6 ml-5 input-group-prepend">
+      <div className="mt-7 ml-5 input-group-prepend">
         <form onSubmit={this.addWalker}>
           <Slide down>
             <div className="trak_heading-medium">

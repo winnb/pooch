@@ -5,7 +5,6 @@ import React from "react";
 import Fire from "../../config/Fire.js";
 
 //Grahpics, Styles, Animation
-import Logo from "../../pooch-logo-small.png";
 import Paw from "./media/paw-icon.png";
 import Walking from "./media/walking-icon.png";
 import Doghouse from "./media/doghouse-icon.png";
@@ -34,7 +33,7 @@ class Home extends React.Component {
     const db = Fire.firestore();
     // get the data from the collection
     db.collection("walkers")
-    .orderBy("name", "desc")
+    .orderBy("timestamp", "desc")
     .limit(3)
     .get()
     .then(snapshot => {
@@ -118,7 +117,6 @@ class Home extends React.Component {
         <Slide down>
           <div className="title trak_heading-medium mt-6 mb-3">
             Your one stop shop for puppers, doggos, and good boys
-            <img src={Logo} alt="Pooch logo" className="logo pull-right mr-5"></img>
           </div>
         </Slide>
         <div className="row mb-5 mt-2">

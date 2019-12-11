@@ -24,9 +24,14 @@ class FileUpload extends React.Component{
 
     render(){
         return( 
-            <div className="Upload">
-                <input type="file" onChange={this.fileSelectedHandler} />
-                <button onClick={this.fileUploadHandler}>Upload Dog Record</button>
+            <div className="mt-7">
+                <div className="trak_heading-medium mb-5">
+                    Dog Records
+                </div>
+                <div className="Upload mb-5">
+                    <input type="file" onChange={this.fileSelectedHandler} />
+                    <button onClick={this.fileUploadHandler}>Upload Dog Record</button>   
+                </div>
             </div>
         );
     }

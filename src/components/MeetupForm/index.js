@@ -123,7 +123,7 @@ class MeetupForm extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="mt-7 mx-6">
         <Slide down>
           <div className="trak_heading-medium mb-6">
             Schedule a New Meetup

@@ -8,7 +8,7 @@ import "./styles.scss";
 class DogMeetup extends React.Component {
   render() {
     return (
-      <div className="mt-6 mx-6">
+      <div>
         <MeetupForm />
       </div>
     );
