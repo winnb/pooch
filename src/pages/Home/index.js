@@ -125,6 +125,7 @@ class Home extends React.Component {
             <div className="trak_heading-small mb-3">
               Profile
             </div>
+
             <form>
               <span className="form-group">
                 <label>Display Name</label>

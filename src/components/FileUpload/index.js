@@ -1,10 +1,7 @@
+// React
 import React from "react";
-import Card from "../Card/index";
+// Tools
 import Axios from 'axios';
-
-import fire from "../../config/Fire";
-
-import { Link }  from  "@reach/router";
 
 class FileUpload extends React.Component{
     state={
@@ -21,6 +18,14 @@ class FileUpload extends React.Component{
         Axios.post('')
     }
 
+    toggleCollapse() {
+        if (document.getElementById("profileDropdown").className === "collapse") {
+            document.getElementById("profileDropdown").className = "collapse.show";
+        }
+        else if (document.getElementById("profileDropdown").className === "collapse.show") {
+            document.getElementById("profileDropdown").className = "collapse"; 
+        }
+    }
 
     render(){
         return( 

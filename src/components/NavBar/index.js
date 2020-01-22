@@ -14,6 +14,10 @@ import Richard from "./richard.png";
 class NavBar extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      dropdownOpen: false
+    };
+
     this.logout = this.logout.bind(this);
   }
 
@@ -26,12 +30,34 @@ class NavBar extends React.Component {
     }, 100);
   }
 
+  toggleCollapse() {
+    if (document.getElementById("profile-dropdown").className === "collapse col") {
+        document.getElementById("profile-dropdown").className = "collapse.show col";
+    }
+    else if (document.getElementById("profile-dropdown").className === "collapse.show col") {
+        document.getElementById("profile-dropdown").className = "collapse col"; 
+    }
+  }
+
+  collapseDropdown() {
+        document.getElementById("profile-dropdown").className = "collapse col";
+  }
+
+  openDropdown() {
+    document.getElementById("profile-dropdown").className = "collapse.show col";
+  }
+
   render() {
     return (
       <div>
-        <nav className="navbar navbar-expand-lg bg-light fixed-top py-5">
-          <img className="border mx-3 ml-5 overlay" src={Richard} alt="Good ol' Richard"/>
-          <a className="navbar-brand trak_nav-title" href="/">
+        <nav className="navbar navbar-expand-lg fixed-top py-5" onMouseLeave={this.collapseDropdown}>
+          <img className="mx-3 ml-5" id="profile-pic" src={Richard} alt="Profile" onMouseEnter={this.openDropdown} onClick={this.toggleCollapse}/>
+          <div className="collapse.show col" id="profile-dropdown">
+            <a className="pull-left pl-2 row trak_body-small" id="dropdown-item" href="/">Profile</a>
+            <a className="pull-left pl-2 row trak_body-small" id="dropdown-middle" href="/">Preferences</a>
+            <a className="pull-left pl-2 row trak_body-small" id="dropdown-item" href="/" onClick={this.logout}>Logout</a>
+          </div>
+          <a className="navbar-brand trak_nav-title ml-2" href="/">
             POOCH
           </a>
           <button
@@ -45,7 +71,7 @@ class NavBar extends React.Component {
           >
             <span className="navbar-toggler-icon"></span>
           </button>
-          <div className="collapse navbar-collapse" id="navbarSupportedContent">
+          <div className="collapse navbar-collapse" id="navbarSupportedContent"> 
             <ul className="navbar-nav mr-auto ml-3 trak_nav-item">
               <li className="nav-item">
                 <a className="nav-link your-pets" href="/your-pets">
@@ -76,21 +102,21 @@ class NavBar extends React.Component {
                 <a className="nav-link dog-records" href="/dog-records">
                   Dog Records
                 </a>
-              </li>
-              
+              </li> 
             </ul>
             <form className="form-inline my-2 my-lg-0">
-            <div className="trak_body-small" onClick={this.logout}>
+            {/* Old logout button went here */}
+            {/* <div className="trak_body-small pull-left row" onClick={this.logout}>
                 <Button
                 type="submit"
                 buttonStyle="btn-primary"
                 buttonText="Logout"
                 buttonTitle="Logout">
               </Button>
-            </div>
+            </div> */}
             </form>
           </div>
-        </nav>
+        </nav>     
       </div>
     );
   }
