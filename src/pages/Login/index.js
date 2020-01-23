@@ -41,7 +41,9 @@ class Login extends React.Component {
         document.getElementById("error-message-login").innerHTML =
           error.message;
       });
-      window.location.replace("/");
+      setTimeout(() => {
+         window.location.replace("/"); 
+      }, 750);
   }
 
   googleLogin(e) {
