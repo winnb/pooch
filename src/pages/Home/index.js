@@ -11,6 +11,9 @@ import Doghouse from "./media/doghouse-icon.png";
 import "./styles.scss";
 import Slide from "react-reveal";
 
+// Components
+import Slideshow from "../../components/Slideshow";
+
 class Home extends React.Component {
   constructor(props) {
     super(props);
@@ -113,89 +116,79 @@ class Home extends React.Component {
 
   render() {
     return (
-      <div className="mt-5">
+      <div className="mt-7">
         <Slide down>
-          <div className="title trak_heading-medium mt-6 mb-3">
-            Your one stop shop for puppers, doggos, and good boys
-          </div>
+          <Slideshow/> 
         </Slide>
-        <div className="row mb-5 mt-2">
+        <div className="row mb-5 mt-3">
           <Slide left>
-          <div className="col mx-5">
-            <div className="trak_heading-small mb-3">
-              Profile
+            <div className="row my-2">
+              <div className="col mx-5">
+                Paragraph 1 will go here. Paragraph 1 will go here. Paragraph 1 will go here. Paragraph 1 will go here. 
+                Paragraph 1 will go here. Paragraph 1 will go here. Paragraph 1 will go here. Paragraph 1 will go here. 
+                Paragraph 1 will go here. Paragraph 1 will go here. Paragraph 1 will go here. Paragraph 1 will go here. 
+                Paragraph 1 will go here. Paragraph 1 will go here. 
+              </div>
+              <div className="col mx-5 my-5">
+                Image 1
+              </div>
             </div>
-
-            <form>
-              <span className="form-group">
-                <label>Display Name</label>
-                <input type="text" className="form-control" placeholder="Enter name"/>
-                <small className="form-text text-muted">This is what the community will see you as!</small>
-              </span>
-              <span className="form-group">
-                <label>Metropolitan Area</label>
-                <select
-                name="city"
-                className="form-control"
-                value={this.state.city}
-                onChange={this.handleChange}
-                required
-                title="Select a city"
-              >
-                <option value="New-York">New York, NY</option>
-                <option value="Los-Angeles">Los Angeles, CA</option>
-                <option value="Chicago">Chicago, IL</option>
-                <option value="Dallas">Dallas, TX</option>
-                <option value="Houston">Houston, TX</option>
-                <option value="Washington-DC">Washington D.C.</option>
-                <option value="Miami">Miami, FL</option>
-                <option value="Philadelphia">Philadelphia, PA</option>
-                <option value="Atlanta">Atlanta, GA</option>
-                <option value="Boston">Chicago, MA</option>
-                <option value="Phoenix">Phoenix, AZ</option>
-                <option value="San-Francisco">San Francisco, CA</option>
-                <option value="Riverside">Riverside, CA</option>
-                <option value="Seattle">Seattle, WA</option>
-                <option value="Minneapolis">Minneapolis, MN</option>
-                <option value="San-Diego">San Diego, CA</option>
-                <option value="Tampa">Tampa, FL</option>
-                <option value="Denver">Denver, CO</option>
-                <option value="St-Louis">St. Louis, MO</option>
-                <option value="Baltimore">Baltimore, MD</option>
-                <option value="Orlando">Orlando, FL</option>
-                <option value="Charlotte">Charlotte, NC</option>
-                <option value="San-Antonio">San Antonio, TX</option>
-                <option value="Portland">Portland, OR</option>
-                <option value="Sacramento">Sacramento, CA</option>
-                <option value="Pittsburg">Pittsburg, PA</option>
-                <option value="Las-Vegas">Las Vegas, NV</option>
-                <option value="Cincinnati">Cincinnati, OH</option>
-                <option value="Austin">Austin, TX</option>
-              </select>
-              </span>
-              <span className="form-check">
-                <input className="form-check-input" type="checkbox" value="" defaultChecked/>
-                <label className="form-control-sm">
-                  Display city publically?
-                </label>
-              </span>
-              <span className="form-group">
-                <label for="exampleFormControlTextarea1">Bio</label>
-                <textarea className="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-              </span>
-              <div className="row mt-3">
-                <div className="col trak_body-medium"># of Pets</div>
-                <div className="col"><input class="form-control" type="text" value="# of pets"/></div>
+            </Slide>
+            <Slide right>
+            <div className="row my-2">
+              <div className="col mx-5 my-5">
+                Image 2
               </div>
-              <div className="mt-4 mx-7">
-                <button type="submit" className="btn btn-primary pull-left ml-6">Update Profile</button>
+              <div className="col mx-5">
+                Paragraph 2 will go here. Paragraph 2 will go here. Paragraph 2 will go here. Paragraph 2 will go here. 
+                Paragraph 2 will go here. Paragraph 2 will go here. Paragraph 2 will go here. Paragraph 2 will go here. 
+                Paragraph 2 will go here. Paragraph 2 will go here. Paragraph 2 will go here. Paragraph 2 will go here. 
+                Paragraph 2 will go here. Paragraph 2 will go here.  
               </div>
-            </form>
-          </div>
-          </Slide>
-          <Slide right>
+            </div>
+            </Slide>
+            <Slide left>
+            <div className="row my-2">
+              <div className="col mx-5">
+                Paragraph 3 will go here. Paragraph 3 will go here. Paragraph 3 will go here. Paragraph 3 will go here. 
+                Paragraph 3 will go here. Paragraph 3 will go here. Paragraph 3 will go here. Paragraph 3 will go here. 
+                Paragraph 3 will go here. Paragraph 3 will go here. Paragraph 3 will go here. Paragraph 3 will go here. 
+                Paragraph 3 will go here. Paragraph 3 will go here. 
+              </div>
+              <div className="col mx-5 my-5">
+                Image 3
+              </div>
+            </div>
+            </Slide>
+            <Slide right>
+            <div className="row my-2">
+              <div className="col mx-5 my-5">
+                Image 4
+              </div>
+              <div className="col mx-5">
+                Paragraph 4 will go here. Paragraph 4 will go here. Paragraph 4 will go here. Paragraph 4 will go here. 
+                Paragraph 4 will go here. Paragraph 4 will go here. Paragraph 4 will go here. Paragraph 4 will go here. 
+                Paragraph 4 will go here. Paragraph 4 will go here. Paragraph 4 will go here. Paragraph 4 will go here. 
+                Paragraph 4 will go here. Paragraph 4 will go here.  
+              </div>
+            </div>
+            </Slide>
+            <Slide left>
+            <div className="row my-2">
+              <div className="col mx-5">
+                Paragraph 5 will go here. Paragraph 5 will go here. Paragraph 5 will go here. Paragraph 5 will go here. 
+                Paragraph 5 will go here. Paragraph 5 will go here. Paragraph 5 will go here. Paragraph 5 will go here. 
+                Paragraph 5 will go here. Paragraph 5 will go here. Paragraph 5 will go here. Paragraph 5 will go here. 
+                Paragraph 5 will go here. Paragraph 5 will go here. 
+              </div>
+              <div className="col mx-5 my-5">
+                Image 5
+              </div>
+            </div>
+            </Slide>
+            <Slide up>
           <div className="col">
-            <div className="trak_heading-small mb-3">
+            <div className="trak_heading-small my-5">
               News Feed
             </div>
             <div className="quick-access-box px-5 py-5 mx-2 my-3">

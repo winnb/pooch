@@ -4,9 +4,6 @@ import React from "react";
 // Firebase
 import fire from "../../config/Fire";
 
-// Components
-import Button from "../Button";
-
 // Styles
 import "./styles.scss";
 import Richard from "./richard.png";
@@ -52,8 +49,8 @@ class NavBar extends React.Component {
       <div>
         <nav className="navbar navbar-expand-lg fixed-top py-5" onMouseLeave={this.collapseDropdown}>
           <img className="mx-3 ml-5" id="profile-pic" src={Richard} alt="Profile" onMouseEnter={this.openDropdown} onClick={this.toggleCollapse}/>
-          <div className="collapse.show col" id="profile-dropdown">
-            <a className="pull-left pl-2 row trak_body-small" id="dropdown-item" href="/">Profile</a>
+          <div className="collapse col" id="profile-dropdown">
+            <a className="pull-left pl-2 row trak_body-small" id="dropdown-item" href="/profile">Profile</a>
             <a className="pull-left pl-2 row trak_body-small" id="dropdown-middle" href="/">Preferences</a>
             <a className="pull-left pl-2 row trak_body-small" id="dropdown-item" href="/" onClick={this.logout}>Logout</a>
           </div>

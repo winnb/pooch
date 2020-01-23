@@ -18,6 +18,7 @@ import Login from "../src/pages/Login/";
 import Signup from "./pages/Signup";
 import ChangePassword from "./pages/ChangePassword";
 import Home from "./pages/Home";
+import Profile from "./pages/Profile";
 import YourPets from "./pages/YourPets";
 import DogWalking from "./pages/DogWalking";
 import DogBoarding from "./pages/DogBoarding";
@@ -57,6 +58,7 @@ class App extends React.Component {
             <NavBar />
             <Router>
               <Home path="/" />
+              <Profile path="/profile" />
               <YourPets path="/your-pets" />
               <DogWalking path="/dog-walking" />
               <DogBoarding path="/dog-boarding" />

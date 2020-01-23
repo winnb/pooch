@@ -61,7 +61,7 @@ class SignUpForm extends React.Component {
 
   render() {
     return (
-      <div className="mt-6 mx-6 signupForm">
+      <div className="mt-6 mx-6 mb-7 signupForm">
         <Card
           cardTitle={<div className="trak_heading-xlarge">P O O C H</div>}
           cardContent={

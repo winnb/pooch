@@ -43,7 +43,7 @@ class PasswordForm extends React.Component {
 
   render() {
     return (
-      <div className="mt-6 mx-6">
+      <div className="mt-6 mx-6 mb-8">
         <Card
           cardTitle={<div className="trak_heading-xlarge">P O O C H</div>}
           cardContent={
