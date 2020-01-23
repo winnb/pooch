@@ -56,32 +56,32 @@ class NavBarLoggedOut extends React.Component {
           <div className="collapse navbar-collapse" id="navbarSupportedContent"> 
             <ul className="navbar-nav mr-auto ml-3 trak_nav-item">
               <li className="nav-item">
-                <a className="nav-link your-pets" href="/">
+                <a className="nav-link your-pets" href="/#section1">
                 Your Pets
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link dog-walking" href="/">
+                <a className="nav-link dog-walking" href="/#section2">
                   Dog Walking
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link dog-boarding" href="/">
+                <a className="nav-link dog-boarding" href="/#section3">
                   Dog Boarding
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link dog-services" href="/">
+                <a className="nav-link dog-services" href="/#section4">
                   Dog Services
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link dog-meetup" href="/">
+                <a className="nav-link dog-meetup" href="/#section5">
                   Dog Meetup
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link dog-records" href="/">
+                <a className="nav-link dog-records" href="/#section6">
                   Dog Records
                 </a>
               </li> 
