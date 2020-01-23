@@ -15,18 +15,6 @@ import fire, { googleProvider } from "../../config/Fire";
 // Animations
 import Slide from "react-reveal";
 
-// Pictures
-import Alerted from "./alerted.png";
-import Boxer from "./boxer.png";
-import Howling from "./howling.png";
-import Laying from "./laying.png";
-import Playing from "./playing.png";
-import Shepard from "./shepard.png";
-import Dachshund from "./dachshund.png";
-import Curious from "./curious.png";
-import Jumping from "./jumping.png";
-import Standing from "./standing.png";
-
 class Login extends React.Component {
   constructor(props) {
     super(props);
@@ -53,6 +41,7 @@ class Login extends React.Component {
         document.getElementById("error-message-login").innerHTML =
           error.message;
       });
+      window.location.replace("/");
   }
 
   googleLogin(e) {
@@ -75,15 +64,8 @@ class Login extends React.Component {
 
   render() {
     return (
-      <div className="body mx-6">
+      <div className="body mx-6 mt-7 mb-6">
         <Slide left>
-          <div className="row mx-5">
-            <img src={Howling} alt="Howling dog" className="col dog-shadows"/>
-            <img src={Laying} alt="Laying dog" className="col dog-shadows"/>
-            <img src={Playing} alt="Playing dog" className="col dog-shadows"/>
-            <img src={Dachshund} alt="Dachshund dog" className="col dog-shadows"/>
-            <img src={Standing} alt="Standing dog" className="col dog-shadows"/>
-          </div>
           <Card
             cardTitle={<div className="trak_heading-xlarge">P O O C H</div>}
             cardContent={
@@ -126,7 +108,7 @@ class Login extends React.Component {
                   <Link className="mr-3" to="/change-password">
                     Can't remember your password?
                   </Link>
-                  <Link className="ml-3" to="/sign-up">
+                  <Link className="ml-3" to="/signup">
                     Don't have an account?
                   </Link>
                 </div>
@@ -157,13 +139,6 @@ class Login extends React.Component {
               </div>
             }
           />
-          <div className="row mx-5">
-            <img src={Alerted} alt="Alerted dog" className="col dog-shadows"/>
-            <img src={Boxer} alt="Boxer dog" className="col dog-shadows"/>
-            <img src={Shepard} alt="Shepard dog" className="col dog-shadows"/>
-            <img src={Curious} alt="Curious dog" className="col dog-shadows"/>
-            <img src={Jumping} alt="Jumping dog" className="col dog-shadows"/>
-          </div>
         </Slide>
       </div>
     );

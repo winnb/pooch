@@ -3,6 +3,7 @@ import "./scss/main.scss";
 
 //Navigation
 import NavBar from "./components/NavBar";
+import NavBarLoggedOut from "./components/NavBarLoggedOut";
 
 // Router
 import { Router } from "@reach/router";
@@ -70,10 +71,12 @@ class App extends React.Component {
           </div>
         ) : (
           <div>
+            <NavBarLoggedOut />
             <Router>
-              <Login path="/" />
-              <Signup path="/sign-up" />
-              <ChangePassword path="change-password" />
+              <Home path="/" />
+              <Login path="/login" />
+              <Signup path="/signup" />
+              <ChangePassword path="/change-password" />
               <PageNotFound path="/page-not-found" default />
             </Router>
           </div>

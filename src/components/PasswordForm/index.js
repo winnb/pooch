@@ -43,7 +43,7 @@ class PasswordForm extends React.Component {
 
   render() {
     return (
-      <div className="mt-6 mx-6 mb-8">
+      <div className="mt-6 mx-6 mt-7 mb-6">
         <Card
           cardTitle={<div className="trak_heading-xlarge">P O O C H</div>}
           cardContent={
@@ -69,7 +69,7 @@ class PasswordForm extends React.Component {
                 Type in your email and click submit to recover your password
                 </small>
                 <div className="trak_body-small mt-2">
-                    <Link className="mt-5" to="/">Not what you wanted? Go back to Login</Link>
+                    <Link className="mt-5" to="/login">Not what you wanted? Go back to Login</Link>
                 </div>
                 <div className="submitButton trak_body-medium mt-3" onClick={this.sendEmail}>
                     <Button

@@ -5,13 +5,13 @@ import React from "react";
 import SignUpForm from "../../components/SignUpForm";
 
 // Animations
-//import Flip from "react-reveal";
+import Flip from "react-reveal";
 
 const SignUp = () => {
   return (
-    <div>
+    <Flip right>
         <SignUpForm/>
-    </div>
+    </Flip>
   );
 };
 

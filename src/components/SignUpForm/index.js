@@ -61,7 +61,7 @@ class SignUpForm extends React.Component {
 
   render() {
     return (
-      <div className="mt-6 mx-6 mb-7 signupForm">
+      <div className="mt-6 mx-6 mt-7 mb-6 signupForm">
         <Card
           cardTitle={<div className="trak_heading-xlarge">P O O C H</div>}
           cardContent={
@@ -121,7 +121,7 @@ class SignUpForm extends React.Component {
               </div>
 
               <div className="trak_body-small mb-3">
-                  <Link className="mr-3" to="/">Not what you wanted? Go back to login</Link>
+                  <Link className="mr-3" to="/login">Not what you wanted? Go back to login</Link>
               </div>
 
               <button
