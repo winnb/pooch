@@ -1,8 +1,6 @@
 import React from "react";
 import PetForm from "../../components/PetForm";
 
-// Styles
-//import "./styles.scss";
 
 class YourPets extends React.Component {
   render() {

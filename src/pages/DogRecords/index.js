@@ -1,13 +1,11 @@
 import React from "react";
+import FileUpload from "../../components/FileUpload";
 
 class DogRecords extends React.Component {
-  render() {
+  render(){
     return (
-      <div className="mt-5 mx-6">
-        Your Pets' Medical Records: All in One Place
-        <div className="mt-10">
-          <button type="submit">Add Document</button>
-        </div>
+      <div>
+        <FileUpload />
       </div>
     );
   }

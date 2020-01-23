@@ -1,62 +1,118 @@
+// React
 import React from "react";
 
+//Grahpics, Styles, Animation
+// import Paw from "./media/paw-icon.png";
+// import Walking from "./media/walking-icon.png";
+// import Doghouse from "./media/doghouse-icon.png";
 import "./styles.scss";
+import Slide from "react-reveal";
+import FamilyPets from './media/familypets.jpg';
+import DogWalking from './media/dogwalking.jpg';
+import DogBoarding from './media/dogboarding.jpg';
+import DogGrooming from './media/grooming.jpg';
+import DogPark from './media/dogpark.jpg';
+import Vet from './media/vet.jpg';
 
-const Home = () => {
-  return (
-    <div>
-      <div className="title trak_heading-large mt-4 mb-5">Your one stop shop for puppers, doggos, and good boys</div>
-      <form>
-        <div className="form-group col-4">
-          <label>Display Name</label>
-          <input type="text" className="form-control" placeholder="Enter name"/>
-          <small className="form-text text-muted">This is what the community will see you as!</small>
-        </div>
-        <div className="form-group col-4">
-          <label>Age</label>
-          <input type="number" className="form-control"/>
-        </div>
-        <div className="form-check col-4">
-          <input className="form-check-input" type="checkbox" value=""/>
-          <label className="form-control-sm">
-            Display age publicly?
-          </label>
-        </div>
-        <div className="form-group col-4">
-          <label for="exampleFormControlTextarea1">Bio</label>
-          <textarea className="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-        </div>
-        <div className="col-1">
-          <input class="form-control" type="text" value="# of pets"/>
-        </div>
-        <button type="submit" className="btn btn-primary pull-left ml-6">Update Profile</button>
-      </form>
-    </div>
-    /* <div>
-      <div classNameName="title trak_heading-medium mt-5" name="title">Your one stop shop for puppers, doggos, and good boys</div>
-      <div classNameName="pull-left trak_heading-small mt-3">Your Profile:</div>
-      <div classNameName="trak_body mt-5 pull-left">
-      <div classNameName="profile-pic mt-3">Profile Pic</div>
-        <div classNameName="mt-3">Name:
-          <input  placeholder="Doug Ohnar"></input>
-        </div>
-        <div classNameName="mt-3">Age:
-          <input placeholder="30"></input>
-        </div>
-        <div classNameName="mt-3">Number of Pets:
-          <input placeholder="3"></input>
-        </div>
-        <div>
-          <textarea cols="40" rows="8" classNameName="trak_body-small mt-3" placeholder="Tell fellow dog owners about yourself. Add a bio!"></textarea>
-        </div>
-        <div classNameName="mt-3">
-          <button type="submit">Update Profile</button>
+// Components
+import Slideshow from "../../components/Slideshow";
+
+class Home extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+    };
+
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
+  }
+
+  render() {
+    return (
+      <div className="mt-7" id="section1">
+        <Slide down>
+          <Slideshow/> 
+        </Slide>
+        <div className="row mb-5 mt-3">
+          <Slide left>
+            <div className="row my-5" id="section2">
+              <div className="col mx-5 mb-7">
+                Paragraph 1 will go here. This paragraph will talk about the features of the Your Pets page. 
+                Paragraph 1 will go here. This paragraph will talk about the features of the Your Pets page. 
+                Paragraph 1 will go here. This paragraph will talk about the features of the Your Pets page. 
+              </div>
+              <div className="col mx-5 my-5">
+                <img src={FamilyPets} alt="Family pets"/>
+              </div>
+            </div>
+            </Slide>
+            <Slide right>
+            <div className="row my-5" id="section3">
+              <div className="col mx-5 my-5">
+                <img src={DogWalking} alt="Walking dogs"/>
+              </div>
+              <div className="col mx-5 mb-7">
+                Paragraph 2 will go here. This paragraph will talk about the features of the Dog Walking page.  
+                Paragraph 2 will go here. This paragraph will talk about the features of the Dog Walking page.  
+                Paragraph 2 will go here. This paragraph will talk about the features of the Dog Walking page.   
+              </div>
+            </div>
+            </Slide>
+            <Slide left>
+            <div className="row my-5" id="section4">
+              <div className="col mx-5 mb-7">
+                Paragraph 3 will go here. This paragraph will talk about the features of the Dog Boarding page.  
+                Paragraph 3 will go here. This paragraph will talk about the features of the Dog Boarding page.  
+                Paragraph 3 will go here. This paragraph will talk about the features of the Dog Boarding page.  
+              </div>
+              <div className="col mx-5 my-5">
+                <img src={DogBoarding} alt="Dog boarding"/>
+              </div>
+            </div>
+            </Slide>
+            <Slide right>
+            <div className="row my-5" id="section5">
+              <div className="col mx-5 my-5">
+                <img src={DogGrooming} alt="Dog grooming"/>
+              </div>
+              <div className="col mx-5 mb-7">
+                Paragraph 4 will go here. This paragraph will talk about the features of the Dog Services page.  
+                Paragraph 4 will go here. This paragraph will talk about the features of the Dog Services page.  
+                Paragraph 4 will go here. This paragraph will talk about the features of the Dog Services page.  
+              </div>
+            </div>
+            </Slide>
+            <Slide left>
+            <div className="row my-5" id="section6">
+              <div className="col mx-5 mb-7">
+                Paragraph 5 will go here. This paragraph will talk about the features of the Dog Meetup page.  
+                Paragraph 5 will go here. This paragraph will talk about the features of the Dog Meetup page.  
+                Paragraph 5 will go here. This paragraph will talk about the features of the Dog Meetup page.  
+              </div>
+              <div className="col mx-5 my-5">
+                <img src={DogPark} alt="Dog park"/>
+              </div>
+            </div>
+            </Slide>
+            <Slide right>
+            <div className="row my-5" id="section7">
+              <div className="col mx-5 my-5">
+                <img src={Vet} alt="Vet visit"/>
+              </div>
+              <div className="col mx-5 mb-7">
+                Paragraph 6 will go here. This paragraph will talk about the features of the Dog Records page. 
+                Paragraph 6 will go here. This paragraph will talk about the features of the Dog Records page. 
+                Paragraph 6 will go here. This paragraph will talk about the features of the Dog Records page. 
+              </div>
+            </div>
+            </Slide>
         </div>
       </div>
-      
-      
-    </div> */
-  );
-};
+    );
+  };
+}
 
 export default Home;

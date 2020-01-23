@@ -3,6 +3,7 @@ import "./scss/main.scss";
 
 //Navigation
 import NavBar from "./components/NavBar";
+import NavBarLoggedOut from "./components/NavBarLoggedOut";
 
 // Router
 import { Router } from "@reach/router";
@@ -10,9 +11,15 @@ import { Router } from "@reach/router";
 //Firebase
 import fire from "./config/Fire";
 
+// Components
+import Footer from "./components/Footer";
+
 // Pages
 import Login from "../src/pages/Login/";
+import Signup from "./pages/Signup";
+import ChangePassword from "./pages/ChangePassword";
 import Home from "./pages/Home";
+import Profile from "./pages/Profile";
 import YourPets from "./pages/YourPets";
 import DogWalking from "./pages/DogWalking";
 import DogBoarding from "./pages/DogBoarding";
@@ -52,6 +59,7 @@ class App extends React.Component {
             <NavBar />
             <Router>
               <Home path="/" />
+              <Profile path="/profile" />
               <YourPets path="/your-pets" />
               <DogWalking path="/dog-walking" />
               <DogBoarding path="/dog-boarding" />
@@ -63,12 +71,17 @@ class App extends React.Component {
           </div>
         ) : (
           <div>
+            <NavBarLoggedOut />
             <Router>
-              <Login path="/" />
+              <Home path="/" />
+              <Login path="/login" />
+              <Signup path="/signup" />
+              <ChangePassword path="/change-password" />
               <PageNotFound path="/page-not-found" default />
             </Router>
           </div>
         )}
+        <Footer/>
       </div>
     );
   }

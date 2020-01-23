@@ -10,6 +10,8 @@ import Fire from "../../config/Fire.js";
 //styles
 import "../AllMeetups/styles.scss";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import "../MeetupForm/styles.scss";
+import Slide from "react-reveal";
 
 class MeetupForm extends React.Component {
   constructor(props) {
@@ -63,7 +65,6 @@ class MeetupForm extends React.Component {
       let sta = document.createElement("td");
       let zipcode = document.createElement("td");
       let description = document.createElement("td");
-      let cross = document.createElement("button");
 
       li.setAttribute("data-id", doc.id);
 
@@ -74,7 +75,6 @@ class MeetupForm extends React.Component {
       sta.textContent = doc.data().sta;
       zipcode.textContent = doc.data().zipcode;
       description.textContent = doc.data().description;
-      cross.textContent = " X ";
 
       // Add all contents to the list
       li.appendChild(timestamp);
@@ -83,17 +83,6 @@ class MeetupForm extends React.Component {
       li.appendChild(sta);
       li.appendChild(zipcode);
       li.appendChild(description);
-      li.appendChild(cross);
-
-      // Delete Meetup
-      cross.addEventListener("click", e => {
-        e.stopPropagation();
-        e.preventDefault();
-        let id = e.target.parentElement.getAttribute("data-id");
-        db.collection("meetups")
-          .doc(id)
-          .delete();
-      });
 
       // Add list to grid
       grid.appendChild(li);
@@ -134,8 +123,13 @@ class MeetupForm extends React.Component {
 
   render() {
     return (
-      <div className=" ml-5 input-group-prepend">
-        <form onSubmit={this.addMeetup}>
+      <div className="mt-7 mx-6">
+        <Slide down>
+          <div className="trak_heading-medium mb-6">
+            Schedule a New Meetup
+          </div>
+        </Slide>
+        <form onSubmit={this.addMeetup} className="mx-6">
             <div className="mb-1">
             {/* Timestamp */}
               <span className="input-group-text" id="inputGroup-sizing-default">
@@ -249,18 +243,22 @@ class MeetupForm extends React.Component {
             <div className="mt-2">
             {/* Submit Button */}
             <Button
+              id = "submit"
               buttonType="submit"
               buttonText="Submit"
               buttonStyle="btn-primary ml-5"
               buttonTitle="Submit"
             />
             </div>
+            <div id = "success-message">
+                Meetup Successfully Created 
+            </div>
           <div className="trak_heading-medium mt-5">Local Doggy Meetups</div>
           <div id="loader" className="mb-4">
             <Loader
               type="Grid"
               // type="MutatingDots"
-              color="#fffa6a"
+              color="black"
               height={75}
               width={75}
               // timeout={3000} //3 secs

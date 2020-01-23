@@ -10,6 +10,8 @@ import Fire from "../../config/Fire.js";
 //styles
 import "../AllMeetups/styles.scss";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import "../BoardingForm/styles.scss";
+import Slide from "react-reveal";
 
 class BoardingForm extends React.Component {
   constructor(props) {
@@ -93,7 +95,8 @@ class BoardingForm extends React.Component {
       phone: this.state.phone,
       dailyRate: this.state.dailyRate,
       address: this.state.address,
-      city: this.state.city
+      city: this.state.city,
+      timestamp: new Date()
     });
 
     // Reset state
@@ -114,14 +117,18 @@ class BoardingForm extends React.Component {
 
   render() {
     return (
-      <div className=" ml-5 input-group-prepend">
+      <div className="mt-7 ml-5 input-group-prepend">
         <form onSubmit={this.addBoarder}>
-        <div className="trak_heading-medium mt-5">Local Dog Boarders</div>
+          <Slide down>
+            <div className="trak_heading-medium">
+            Local Dog Boarders
+            </div>
+          </Slide>
           <div id="loader" className="mb-4">
             <Loader
               type="Grid"
               // type="MutatingDots"
-              color="#fffa6a"
+              color="black"
               height={75}
               width={75}
               // timeout={3000} //3 secs
@@ -143,7 +150,11 @@ class BoardingForm extends React.Component {
               <tbody id="boarder-grid"></tbody>
             </table>
           </div>
-            <div className="trak_heading-medium mt-5 mb-3">Get Started as a Verified Dog Boarder
+          <div id = "success-message">
+                Form Successfully Submitted 
+          </div>
+          <div className="trak_heading-medium mt-5 mb-3" id = "space">Get Started as a Verified Dog Boarder</div>
+            <div>
             {/* Name */}
               <span className="input-group-text" id="inputGroup-sizing-default">
                 Boarder Name
@@ -231,7 +242,7 @@ class BoardingForm extends React.Component {
               aria-describedby="inputGroup-sizing-default"
             />
             </div>
-            <div className="mt-2">
+            <div className="mt-2 mb-5">
             {/* Submit Button */}
             <Button
               buttonType="submit"

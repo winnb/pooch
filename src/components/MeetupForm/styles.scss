@@ -1,0 +1,11 @@
+@import "../../scss/main.scss";
+
+#success-message {
+  color: theme-color("light");
+  display: none;
+  border-radius: 30px;
+  background: theme-color("primary");
+  padding: 10px;
+  
+}
+

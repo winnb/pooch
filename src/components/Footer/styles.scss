@@ -1,0 +1,17 @@
+Footer {
+    background-color: #bababa;
+  }
+
+.footer-element {
+    background-color: #bcbcbc;
+    border-radius: 5px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #bbbbbb;
+}
+
+.footer-element:hover {
+    font-weight: 550;
+    transform: scale(1.02);
+    transition-duration: 0.25s;
+}
