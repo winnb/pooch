@@ -159,6 +159,7 @@ class WalkerForm extends React.Component {
               className="form-control"
               aria-label="Default"
               aria-describedby="inputGroup-sizing-default"
+              maxlength="32"
             />
             </div>
             <div className="mb-1">
@@ -196,6 +197,8 @@ class WalkerForm extends React.Component {
               className="form-control"
               aria-label="Default"
               aria-describedby="inputGroup-sizing-default"
+              min="7.25"
+              max="100"
             />
             </div>
             <div className="mb-1">
@@ -213,6 +216,7 @@ class WalkerForm extends React.Component {
               className="form-control"
               aria-label="Default"
               aria-describedby="inputGroup-sizing-default"
+              maxlength="32"
             />
             </div>
             <div className="mt-2 mb-5">

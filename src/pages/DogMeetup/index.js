@@ -6,6 +6,9 @@ import MeetupForm from "../../components/MeetupForm";
 import "./styles.scss";
 
 class DogMeetup extends React.Component {
+
+  handleChange(e) {
+  }
   render() {
     return (
       <div>

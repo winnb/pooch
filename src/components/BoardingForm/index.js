@@ -169,6 +169,7 @@ class BoardingForm extends React.Component {
               className="form-control"
               aria-label="Default"
               aria-describedby="inputGroup-sizing-default"
+              maxlength="32"
             />
             </div>
             <div className="mb-1">
@@ -206,6 +207,8 @@ class BoardingForm extends React.Component {
               className="form-control"
               aria-label="Default"
               aria-describedby="inputGroup-sizing-default"
+              min="1"
+              max="1000"
             />
             </div>
             <div className="mb-1">
@@ -223,6 +226,7 @@ class BoardingForm extends React.Component {
               className="form-control"
               aria-label="Default"
               aria-describedby="inputGroup-sizing-default"
+              maxlength="64"
             />
             </div>
             <div className="mb-1">
@@ -240,6 +244,7 @@ class BoardingForm extends React.Component {
               className="form-control"
               aria-label="Default"
               aria-describedby="inputGroup-sizing-default"
+              maxlength="32"
             />
             </div>
             <div className="mt-2 mb-5">

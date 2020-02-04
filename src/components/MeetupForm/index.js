@@ -182,6 +182,7 @@ class MeetupForm extends React.Component {
               className="form-control"
               aria-label="Default"
               aria-describedby="inputGroup-sizing-default"
+              maxlength="32"
             />
             </div>
             <div className="mb-1">
@@ -230,7 +231,7 @@ class MeetupForm extends React.Component {
             <textarea
               name="description"
               type="text"
-              maxLength="256"
+              maxLength="128"
               placeholder="i.e. Weekly play time for small dogs at Ruff Park"
               title="Meetup Description"
               value={this.state.description}

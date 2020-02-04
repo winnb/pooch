@@ -187,6 +187,7 @@ class PetForm extends React.Component {
               className="form-control"
               aria-label="Default"
               aria-describedby="inputGroup-sizing-default"
+              maxlength="32"
             />
             </div>
             <div className="mb-1">
@@ -466,6 +467,10 @@ class PetForm extends React.Component {
               <option value="Yakutian-Laika">Yakutian Laika</option>
               <option value="Yorkshire-Terrier">Yorkshire Terrier</option>
             </select>
+            <div className="row">
+              <input type="checkbox" className="col" value="breedCheckbox"/>
+              <div className="col">Show all breeds</div>
+            </div>
             </div>
             <div className="mb-1">
             {/* Color */}
@@ -482,6 +487,7 @@ class PetForm extends React.Component {
               className="form-control"
               aria-label="Default"
               aria-describedby="inputGroup-sizing-default"
+              maxlength="64"
             />
             </div>
             <div className="mb-1">
