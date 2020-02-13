@@ -43,7 +43,7 @@ class PetForm extends React.Component {
     setTimeout(() => {
       document.getElementById("loader").style.display = "none";
       document.getElementById("result-table").style.display = "block";
-    }, 2000);
+    }, 500);
   }
 
   updateGrid() {
@@ -62,7 +62,7 @@ class PetForm extends React.Component {
           renderPets(doc);
         });
       });
-    }, 2000);
+    }, 500);
 
       // Create a grid to store meetup data
     const grid = document.querySelector("#pet-grid");

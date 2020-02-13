@@ -1,0 +1,52 @@
+.signup {
+    background-color: #eeeeee;
+    border-radius: 40px;
+    border-width: 1px;
+}
+
+.signup:hover {
+    background-color: rgb(216, 216, 218);
+    transition-duration: 0.5s;
+}
+
+.profile-box {
+    background-color: rgb(216, 216, 218);
+    border-radius: 5px;
+}
+
+#profile-pic-large {
+    width: 150px;
+    height: 150px;
+    transform: scale(1);
+    border-radius: 80px;
+}
+
+#edit-profile-pic-button {
+    width: 6%;
+    font-size: 30%;
+    border-radius: 10px;
+}
+
+#edit-profile-pic-button:hover {
+    background-color: rgb(216, 216, 218);
+    transition-duration: 0.5s;
+}
+
+#profile-pic-large:hover {
+    opacity:0.6;
+}
+
+#parent-bio {
+    color: rgb(100, 100, 100);
+    font-size: 75%;
+}
+
+#walker-bio {
+    color: rgb(100, 100, 100);
+    font-size: 75%;
+}
+
+#boarder-bio {
+    color: rgb(100, 100, 100);
+    font-size: 75%;
+}
