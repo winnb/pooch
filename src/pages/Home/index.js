@@ -59,7 +59,7 @@ class Home extends React.Component {
               <font color = "#FFE675"> <center><b>DOG WALKING</b></center> </font>
                 The web page gives you an elaborate list of all the nearby dog walkers and their contact information.
                 All the listed dog walkers would be verified, so you and your pups feel safe, when being walked around.
-                You can choose to be a dog walker itself, if you that is what interests you. 
+                You can choose to be a dog walker yourself if that is what interests you. 
                                 </div>
             </div>
             </Slide>
