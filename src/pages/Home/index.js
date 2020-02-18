@@ -56,7 +56,7 @@ class Home extends React.Component {
                 <img src={DogWalking} alt="Walking dogs"/>
               </div>
               <div className="col mx-5 mb-7">
-              <font color = "#FFE675"> <center><b>DOG WALKING</b></center> </font>
+              <font color = "#FFE675"> <center><div className="mb-2 paragraph-title">DOG WALKING</div></center> </font>
                 The web page gives you an elaborate list of all the nearby dog walkers and their contact information.
                 All the listed dog walkers would be verified, so you and your pups feel safe, when being walked around.
                 You can choose to be a dog walker yourself if that is what interests you. 
