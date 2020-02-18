@@ -9,7 +9,7 @@ import "./styles.scss";
 
 //Animation and Images
 import Slide from "react-reveal";
-import LadyAndDog from "./LadyAndDog.png";
+import GenericPic from "./generic-profile.png";
 
 class ProfileForm extends React.Component {
   constructor(props) {
@@ -49,7 +49,7 @@ class ProfileForm extends React.Component {
         });
       });
     }, 1750);
-    setTimeout(() => { // Check if user is a parent
+    setTimeout(() => { // Check if user is a boarder
       db.collection("boarders")
       .where("email", "==", Fire.auth().currentUser.email)
       .get()
@@ -59,22 +59,47 @@ class ProfileForm extends React.Component {
         });
       });
     }, 1750);
+    setTimeout(() => { // Check if user has profile picture
+      db.collection("profile-pictures")
+      .where("email", "==", Fire.auth().currentUser.email)
+      .get()
+      .then(snapshot => {
+        snapshot.docs.forEach(doc => {
+          renderProfilePic(doc);
+        });
+      });
+    }, 1750);
 
     function renderParentProfile(doc) {
       document.getElementById("parent-button").innerHTML = "✓ Parent";
-      document.getElementById("profile-email").value = Fire.auth().currentUser.email;
+      document.getElementById("parent-email").value = Fire.auth().currentUser.email;
       document.getElementById("parent-name").value = doc.data().name;
       document.getElementById("parent-phone").value = doc.data().phone;
-      document.getElementById("profile-city").value = doc.data().city;
+      document.getElementById("parent-city").value = doc.data().city;
       document.getElementById("parent-bio").value = doc.data().bio;
     }
   
     function renderWalkerProfile(doc) {
       document.getElementById("walker-button").innerHTML = "✓ Walker";
+      document.getElementById("walker-email").value = Fire.auth().currentUser.email;
+      document.getElementById("walker-name").value = doc.data().name;
+      document.getElementById("walker-phone").value = doc.data().phone;
+      document.getElementById("walker-city").value = doc.data().city;
+      document.getElementById("walker-bio").value = doc.data().bio;
     }
   
     function renderBoarderProfile(doc) {
       document.getElementById("boarder-button").innerHTML = "✓ Boarder";
+      document.getElementById("boarder-email").value = Fire.auth().currentUser.email;
+      document.getElementById("boarder-name").value = doc.data().name;
+      document.getElementById("boarder-phone").value = doc.data().phone;
+      document.getElementById("boarder-address").value = doc.data().address;
+      document.getElementById("boarder-city").value = doc.data().city;
+      document.getElementById("boarder-bio").value = doc.data().bio;
+    }
+
+    function renderProfilePic(doc) {
+      document.getElementById("profile-pic-large").src = doc.data().pic;
     }
   }
 
@@ -100,55 +125,124 @@ class ProfileForm extends React.Component {
   }
 
   toggleCollapse() {
-    if (document.getElementById("edit-profile-pic-button").className === "collapse")
-        document.getElementById("edit-profile-pic-button").className = "collapse.show";
-    else if (document.getElementById("edit-profile-pic-button").className === "collapse.show")
-        document.getElementById("edit-profile-pic-button").className = "collapse"; 
+    if (document.getElementById("edit-profile-pic-col").className === "react-reveal mb-3 collapse")
+        document.getElementById("edit-profile-pic-col").className = "react-reveal mb-3 collapse.show";
+    else if (document.getElementById("edit-profile-pic-col").className === "react-reveal mb-3 collapse.show")
+        document.getElementById("edit-profile-pic-col").className = "react-reveal mb-3 collapse"; 
   }
 
   updateParent() {
     const db = Fire.firestore();
     // Takes too long to delete old before updating new
-    // Works without deleting old, but junk will accumulate in database
-    // var query = db.collection("parents").where('email', '==', Fire.auth().currentUser.email);
+    // Delete old data, wait 1 seconds, then update
+    // Wait 1 more second, reload page
+    var query = db.collection("parents").where('email', '==', Fire.auth().currentUser.email);
+    query.get().then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc) {
+          doc.ref.delete();
+      });
+    });
+    // query = db.collection("profile-pictures").where('email', '==', Fire.auth().currentUser.email);
     // query.get().then(function(querySnapshot) {
     //   querySnapshot.forEach(function(doc) {
-    //     doc.ref.delete();
+    //       doc.ref.delete();
     //   });
     // });
-    db.collection("parents").add({
+    setTimeout(() => {
+       db.collection("parents").add({
       email: Fire.auth().currentUser.email,
       name: document.getElementById("parent-name").value,
       phone: document.getElementById("parent-phone").value,
-      city: document.getElementById("profile-city").value
+      city: document.getElementById("parent-city").value,
+      bio: document.getElementById("parent-bio").value,
     });
+    }, 1000);
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000);
   }
 
   updateWalker() {
     const db = Fire.firestore();
-    db.collection("walkers").add({
+    var query = db.collection("walkers").where('email', '==', Fire.auth().currentUser.email);
+    query.get().then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc) {
+        doc.ref.delete();
+      });
+    });
+    setTimeout(() => {
+      db.collection("walkers").add({
       email: Fire.auth().currentUser.email,
       name: document.getElementById("walker-name").value,
       phone: document.getElementById("walker-phone").value,
-      city: document.getElementById("profile-city").value
+      city: document.getElementById("walker-city").value,
+      bio: document.getElementById("walker-bio").value,
+      pic: document.getElementById("profile-pic-large").src
     });
+    }, 1000);
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000);
   }
 
   updateBoarder() {
     const db = Fire.firestore();
-    db.collection("boarders").add({
+    var query = db.collection("boarders").where('email', '==', Fire.auth().currentUser.email);
+    query.get().then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc) {
+        doc.ref.delete();
+      });
+    });
+    setTimeout(() => {
+      db.collection("boarders").add({
       email: Fire.auth().currentUser.email,
       name: document.getElementById("boarder-name").value,
       phone: document.getElementById("boarder-phone").value,
       address: document.getElementById("boarder-address").value,
-      city: document.getElementById("profile-city").value
+      city: document.getElementById("boarder-city").value,
+      bio: document.getElementById("boarder-bio").value,
+      pic: document.getElementById("profile-pic-large").src
     });
+    }, 1000);
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000);
   }
+
+  updateProfilePic() {
+    const db = Fire.firestore();
+    var query = db.collection("profile-pictures").where('email', '==', Fire.auth().currentUser.email);
+    query.get().then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc) {
+        doc.ref.delete();
+      });
+    });
+    setTimeout(() => {
+    db.collection("profile-pictures").add({
+      email: Fire.auth().currentUser.email,
+      pic: document.getElementById("profile-pic-large").src
+    });
+  }, 1000);
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000);
+  }
+
+  fileUploadHandler = event => {
+    var input = event.target; // Get image that changed state of input element
+    var reader = new FileReader();
+    reader.onload = function() {
+    var dataURL = reader.result;
+    var output = document.getElementById('profile-pic-large');
+    output.src = dataURL;
+    };
+    reader.readAsDataURL(input.files[0]); // Show preview of image
+}
 
   render() {
     return (
       <div className="mt-7 mx-6 mb-8">
-        <Slide left>
+        <Slide up>
           <div className="row px-4 py-4">
             <button className="col mx-4 py-1 signup" id="parent-button" onClick={this.openParentProfile} href="/profile#update-parent-button">
               Create a parent profile
@@ -161,9 +255,12 @@ class ProfileForm extends React.Component {
             </button>
           </div>
           <div className="mb-1">
-              <img id="profile-pic-large" src={LadyAndDog} alt="Profile" onClick={this.toggleCollapse}/>  
+              <img id="profile-pic-large" src={GenericPic} alt="Profile" onClick={this.toggleCollapse}/>  
           </div>
-          <div className="mb-3"><button id="edit-profile-pic-button" className="collapse" onClick={this.editProfilePic}>Edit profile picture</button></div>
+          <div className="mb-3 collapse" id="edit-profile-pic-col">
+            <input className="row mx-10" type="file" id="edit-profile-pic-input" onChange={this.fileUploadHandler}/>
+            <button className="row mx-10" id="edit-profile-pic-button" onClick={this.updateProfilePic}>Update Picture</button>
+          </div>
           <div id="parent-profile" className="collapse.show">
                <div className="row">
                   <div className="col profile-box mx-2 py-4">
@@ -171,16 +268,16 @@ class ProfileForm extends React.Component {
                           <div className="trak_nav-item">Parent</div>
                       </span>
                       <span className="trak_body row my-2 mx-4 mr-8">
-                          <input id="profile-email" type="text" className="form-control" placeholder="Email (same as account)"/>
+                          <input id="parent-email" type="text" className="form-control" placeholder="Email (same as account)"/>
                       </span>
                       <span className="trak_body row my-2 mx-4 mr-8">
-                          <input id="parent-name" type="text" className="form-control" placeholder="Name"/>
+                          <input id="parent-name" type="text" className="form-control" placeholder="Name" maxlength="50"/>
                       </span>
                       <span className="trak_body row my-2 mx-4 mr-8">
-                          <input id="parent-phone" type="number" min="0000000000" max="9999999999" className="form-control" placeholder="Phone Number"/>
+                          <input id="parent-phone" type="number" className="form-control" placeholder="Phone Number" min="0" max="9999999999" minlength="10"/>
                       </span>
                       <span className="trak_body row my-2 mx-4 mr-8">
-                           <input id="profile-city" type="text" className="form-control" placeholder="City"/>
+                           <input id="parent-city" type="text" className="form-control" placeholder="City" maxlength="50"/>
                       </span>
                   </div>
                   <div className="col profile-box mx-2 py-4">
@@ -196,16 +293,16 @@ class ProfileForm extends React.Component {
                           <div className="trak_nav-item">Walker</div>
                       </span>
                       <span className="trak_body row my-2 mx-4 mr-8">
-                          <input id="profile-email" type="text" className="form-control" placeholder="Email (same as account)"/>
+                          <input id="walker-email" type="text" className="form-control" placeholder="Email (same as account)"/>
                       </span>
                       <span className="trak_body row my-2 mx-4 mr-8">
-                          <input id="walker-name" type="text" className="form-control" placeholder="Name"/>
+                          <input id="walker-name" type="text" className="form-control" placeholder="Name" maxlength="50"/>
                       </span>
                       <span className="trak_body row my-2 mx-4 mr-8">
-                          <input id="walker-phone" type="text" className="form-control" placeholder="Phone Number"/>
+                          <input id="walker-phone" type="text" className="form-control" placeholder="Phone Number" min="0" max="9999999999" minlength="10"/>
                       </span>
                       <span className="trak_body row my-2 mx-4 mr-8">
-                           <input id="profile-city" type="text" className="form-control" placeholder="City"/>
+                           <input id="walker-city" type="text" className="form-control" placeholder="City" maxlength="50"/>
                       </span>
                   </div>
                   <div className="col profile-box mx-2 py-4">
@@ -221,19 +318,19 @@ class ProfileForm extends React.Component {
                           <div className="trak_nav-item">Boarder</div>
                       </span>
                       <span className="trak_body row my-2 mx-4 mr-8">
-                          <input id="profile-email" type="text" className="form-control" placeholder="Email (same as account)"/>
+                          <input id="boarder-email" type="text" className="form-control" placeholder="Email (same as account)"/>
                       </span>
                       <span className="trak_body row my-2 mx-4 mr-8">
-                          <input id="boarder-name" type="text" className="form-control" placeholder="Name"/>
+                          <input id="boarder-name" type="text" className="form-control" placeholder="Name" maxlength="50"/>
                       </span>
                       <span className="trak_body row my-2 mx-4 mr-8">
-                          <input id="boarder-phone" type="text" className="form-control" placeholder="Phone Number"/>
+                          <input id="boarder-phone" type="text" className="form-control" placeholder="Phone Number" min="0" max="9999999999" minlength="10"/>
                       </span>
                       <span className="trak_body row my-2 mx-4 mr-8">
-                          <input id="boarder-address" type="text" className="form-control" placeholder="Address"/>
+                          <input id="boarder-address" type="text" className="form-control" placeholder="Address" maxlength="50"/>
                       </span>
                       <span className="trak_body row my-2 mx-4 mr-8">
-                           <input id="profile-city" type="text" className="form-control" placeholder="City"/>
+                           <input id="boarder-city" type="text" className="form-control" placeholder="City" maxlength="50"/>
                       </span>
                   </div>
                   <div className="col profile-box mx-2 py-4">
