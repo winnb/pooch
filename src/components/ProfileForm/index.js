@@ -49,13 +49,23 @@ class ProfileForm extends React.Component {
         });
       });
     }, 1750);
-    setTimeout(() => { // Check if user is a parent
+    setTimeout(() => { // Check if user is a boarder
       db.collection("boarders")
       .where("email", "==", Fire.auth().currentUser.email)
       .get()
       .then(snapshot => {
         snapshot.docs.forEach(doc => {
           renderBoarderProfile(doc);
+        });
+      });
+    }, 1750);
+    setTimeout(() => { // Check if user has profile picture
+      db.collection("profile-pictures")
+      .where("email", "==", Fire.auth().currentUser.email)
+      .get()
+      .then(snapshot => {
+        snapshot.docs.forEach(doc => {
+          renderProfilePic(doc);
         });
       });
     }, 1750);
@@ -67,7 +77,6 @@ class ProfileForm extends React.Component {
       document.getElementById("parent-phone").value = doc.data().phone;
       document.getElementById("parent-city").value = doc.data().city;
       document.getElementById("parent-bio").value = doc.data().bio;
-      document.getElementById("profile-pic-large").src = doc.data().pic;
     }
   
     function renderWalkerProfile(doc) {
@@ -77,7 +86,6 @@ class ProfileForm extends React.Component {
       document.getElementById("walker-phone").value = doc.data().phone;
       document.getElementById("walker-city").value = doc.data().city;
       document.getElementById("walker-bio").value = doc.data().bio;
-      //document.getElementById("profile-pic-large").src = doc.data().pic;
     }
   
     function renderBoarderProfile(doc) {
@@ -88,7 +96,10 @@ class ProfileForm extends React.Component {
       document.getElementById("boarder-address").value = doc.data().address;
       document.getElementById("boarder-city").value = doc.data().city;
       document.getElementById("boarder-bio").value = doc.data().bio;
-      //document.getElementById("profile-pic-large").src = doc.data().pic;
+    }
+
+    function renderProfilePic(doc) {
+      document.getElementById("profile-pic-large").src = doc.data().pic;
     }
   }
 
@@ -114,10 +125,10 @@ class ProfileForm extends React.Component {
   }
 
   toggleCollapse() {
-    if (document.getElementById("edit-profile-pic-button").className === "collapse")
-        document.getElementById("edit-profile-pic-button").className = "collapse.show";
-    else if (document.getElementById("edit-profile-pic-button").className === "collapse.show")
-        document.getElementById("edit-profile-pic-button").className = "collapse"; 
+    if (document.getElementById("edit-profile-pic-col").className === "react-reveal mb-3 collapse")
+        document.getElementById("edit-profile-pic-col").className = "react-reveal mb-3 collapse.show";
+    else if (document.getElementById("edit-profile-pic-col").className === "react-reveal mb-3 collapse.show")
+        document.getElementById("edit-profile-pic-col").className = "react-reveal mb-3 collapse"; 
   }
 
   updateParent() {
@@ -129,9 +140,14 @@ class ProfileForm extends React.Component {
     query.get().then(function(querySnapshot) {
       querySnapshot.forEach(function(doc) {
           doc.ref.delete();
-          console.log("Deleted data entry");
       });
     });
+    // query = db.collection("profile-pictures").where('email', '==', Fire.auth().currentUser.email);
+    // query.get().then(function(querySnapshot) {
+    //   querySnapshot.forEach(function(doc) {
+    //       doc.ref.delete();
+    //   });
+    // });
     setTimeout(() => {
        db.collection("parents").add({
       email: Fire.auth().currentUser.email,
@@ -139,13 +155,11 @@ class ProfileForm extends React.Component {
       phone: document.getElementById("parent-phone").value,
       city: document.getElementById("parent-city").value,
       bio: document.getElementById("parent-bio").value,
-      pic: document.getElementById("profile-pic-large").src
     });
-    console.log("Added data entry");
     }, 1000);
     setTimeout(() => {
       window.location.reload();
-    }, 1000);
+    }, 2000);
   }
 
   updateWalker() {
@@ -168,7 +182,7 @@ class ProfileForm extends React.Component {
     }, 1000);
     setTimeout(() => {
       window.location.reload();
-    }, 1000);
+    }, 2000);
   }
 
   updateBoarder() {
@@ -192,7 +206,26 @@ class ProfileForm extends React.Component {
     }, 1000);
     setTimeout(() => {
       window.location.reload();
-    }, 1000);
+    }, 2000);
+  }
+
+  updateProfilePic() {
+    const db = Fire.firestore();
+    var query = db.collection("profile-pictures").where('email', '==', Fire.auth().currentUser.email);
+    query.get().then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc) {
+        doc.ref.delete();
+      });
+    });
+    setTimeout(() => {
+    db.collection("profile-pictures").add({
+      email: Fire.auth().currentUser.email,
+      pic: document.getElementById("profile-pic-large").src
+    });
+  }, 1000);
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000);
   }
 
   fileUploadHandler = event => {
@@ -209,7 +242,7 @@ class ProfileForm extends React.Component {
   render() {
     return (
       <div className="mt-7 mx-6 mb-8">
-        <Slide left>
+        <Slide up>
           <div className="row px-4 py-4">
             <button className="col mx-4 py-1 signup" id="parent-button" onClick={this.openParentProfile} href="/profile#update-parent-button">
               Create a parent profile
@@ -224,7 +257,10 @@ class ProfileForm extends React.Component {
           <div className="mb-1">
               <img id="profile-pic-large" src={GenericPic} alt="Profile" onClick={this.toggleCollapse}/>  
           </div>
-          <div className="mb-3"><input className="collapse" type="file" id="edit-profile-pic-button" onChange={this.fileUploadHandler}/></div>
+          <div className="mb-3 collapse" id="edit-profile-pic-col">
+            <input className="row mx-10" type="file" id="edit-profile-pic-input" onChange={this.fileUploadHandler}/>
+            <button className="row mx-10" id="edit-profile-pic-button" onClick={this.updateProfilePic}>Update Picture</button>
+          </div>
           <div id="parent-profile" className="collapse.show">
                <div className="row">
                   <div className="col profile-box mx-2 py-4">

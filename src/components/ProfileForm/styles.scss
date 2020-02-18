@@ -21,10 +21,19 @@
     border-radius: 80px;
 }
 
-#edit-profile-pic-button {
-    width: 10%;
+#edit-profile-pic-input {
+    width: 15%;
     font-size: 50%;
-    border-radius: 10px;
+}
+
+#edit-profile-pic-input:hover {
+    background-color: rgb(216, 216, 218);
+    transition-duration: 0.5s;
+}
+
+#edit-profile-pic-button {
+    width: 7;
+    font-size: 50%;
 }
 
 #edit-profile-pic-button:hover {

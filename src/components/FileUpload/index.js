@@ -20,7 +20,7 @@ class FileUpload extends React.Component{
             });
           }, 1750);
           function renderRecords(doc) {
-              document.getElementById("record-row").innerHTML += "<img id=\"record\" className=\"mx-2\" src="+doc.data().pic+" />";
+              document.getElementById("record-row").innerHTML += "<img id=\"record\" alt=\"record\" className=\"mx-2\" src="+doc.data().pic+" />";
           }
     }
 
@@ -63,7 +63,7 @@ class FileUpload extends React.Component{
                         <button onClick={this.fileUpload}>Upload Dog Record</button>
                     </div>
                     <div className="row" id="record-row">
-                        <img id="record-pic"/>
+
                     </div>
                 </div>
             </div>
