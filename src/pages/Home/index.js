@@ -38,24 +38,24 @@ class Home extends React.Component {
         </Slide>
         <div className="row mb-5 mt-3">
           <Slide left>
-            <div className="row my-5" id="section2">
-              <div className="col mx-5 mb-7">
+            <div className="row my-5 home-row" id="section2">
+              <div className="col mx-6 mb-7 paragraph">
                 <font color = "#FFC375"> <center><b>YOUR PETS</b></center> </font>
                 The users are privileged to get a perfect opportunity to show off their poochies and dogs.  
                 The page has a form type for you to add your pups' profile and keep a check on your dogs and
                 save all the essentials on your profile page.  
               </div>
-              <div className="col mx-5 my-5">
-                <img src={FamilyPets} alt="Family pets"/>
+              <div className="col mx-6 my-5">
+                <img className="paragraph-pic mt-5" src={FamilyPets} alt="Family pets"/>
               </div>
             </div>
             </Slide>
             <Slide right>
-            <div className="row my-5" id="section3">
-              <div className="col mx-5 my-5">
-                <img src={DogWalking} alt="Walking dogs"/>
+            <div className="row my-5 home-row" id="section3">
+              <div className="col mx-6 my-5">
+                <img className="paragraph-pic mt-5" src={DogWalking} alt="Walking dogs"/>
               </div>
-              <div className="col mx-5 mb-7">
+              <div className="col mx-6 mb-7 paragraph">
               <font color = "#FFE675"> <center><div className="mb-2 paragraph-title">DOG WALKING</div></center> </font>
                 The web page gives you an elaborate list of all the nearby dog walkers and their contact information.
                 All the listed dog walkers would be verified, so you and your pups feel safe, when being walked around.
@@ -64,24 +64,24 @@ class Home extends React.Component {
             </div>
             </Slide>
             <Slide left>
-            <div className="row my-5" id="section4">
-              <div className="col mx-5 mb-7">
+            <div className="row my-5 home-row" id="section4">
+              <div className="col mx-6 mb-7 paragraph">
               <font color = "#ACFF75"> <center><b>DOG BOARDING</b></center> </font>
                 The web page gives you an elaborate list of all the nearby dog boarders and boarding service providers.
                 Feel free to provide your poochie with their favorite choice of a nearby dog boarder 
                 and let them enjoy their time to the fullest. 
               </div>
-              <div className="col mx-5 my-5">
-                <img src={DogBoarding} alt="Dog boarding"/>
+              <div className="col mx-6 my-5">
+                <img className="paragraph-pic mt-5" src={DogBoarding} alt="Dog boarding"/>
               </div>
             </div>
             </Slide>
             <Slide right>
-            <div className="row my-5" id="section5">
-              <div className="col mx-5 my-5">
-                <img src={DogGrooming} alt="Dog grooming"/>
+            <div className="row my-5 home-row" id="section5">
+              <div className="col mx-6 my-5">
+                <img className="paragraph-pic mt-5" src={DogGrooming} alt="Dog grooming"/>
               </div>
-              <div className="col mx-5 mb-7">
+              <div className="col mx-6 mb-7 paragraph">
               <font color = "#B1F7CF"> <center><b>DOG SERVICES</b></center> </font>
                 The web page is sectionalised into various segments, each section giving out accurate information 
                 about the particular dog servie you are looking forward to. First section is supply stores, followed by 
@@ -91,24 +91,24 @@ class Home extends React.Component {
             </div>
             </Slide>
             <Slide left>
-            <div className="row my-5" id="section6">
-              <div className="col mx-5 mb-7"> 
+            <div className="row my-5 home-row" id="section6">
+              <div className="col mx-6 mb-7 paragraph"> 
               <font color = "#75DFFF"> <center><b>DOG MEETUP</b></center> </font> 
               Meetups make people come together for new possible opportunities. Let your Pooch enjoy the time with other dogs 
               in a safe community being surrounded by magnificent dog lovers. Don’t wait for the event, make your own. 
               A ride with the Pooch!  
               </div>
-              <div className="col mx-5 my-5">
-                <img src={DogPark} alt="Dog park"/>
+              <div className="col mx-6 my-5">
+                <img className="paragraph-pic mt-5" src={DogPark} alt="Dog park"/>
               </div>
             </div>
             </Slide>
             <Slide right>
-            <div className="row my-5" id="section7">
-              <div className="col mx-5 my-5">
-                <img src={Vet} alt="Vet visit"/>
+            <div className="row my-5 home-row" id="section7">
+              <div className="col mx-6 my-5">
+                <img className="paragraph-pic mt-5" src={Vet} alt="Vet visit"/>
               </div>
-              <div className="col mx-5 mb-7">
+              <div className="col mx-6 mb-7 paragraph">
               <font color = "#BC75FF"> <center><b>DOG RECORDS</b></center> </font> 
               To keep track with all the veterinary records for your dog is important. But we all know how we can easily 
               lose a document that may determine what type of care and treatment your Pooch may need. 

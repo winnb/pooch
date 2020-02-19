@@ -263,7 +263,7 @@ class ProfileForm extends React.Component {
               Create a walker profile
             </button>
             <button className="col mx-4 py-1 signup" id="boarder-button" onClick={this.openBoarderProfile}>
-              <a href="/profile#boarder-profile">Create a dog boarder profile</a>
+              Create a dog boarder profile
             </button>
           </div>
           <div className="mb-1">
