@@ -85,7 +85,7 @@ class NavBar extends React.Component {
           >
             <span className="navbar-toggler-icon">Menu</span>
           </button> */}
-          <div className="collapse navbar-collapse" id="navbarSupportedContent"> 
+          <div> 
             <div className="row trak_nav-item" id="nav-pages">
               <div className="col nav-item">
                 <a className="nav-link your-pets" href="/your-pets">

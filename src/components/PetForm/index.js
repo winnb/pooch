@@ -5,7 +5,7 @@ import React from "react";
 // import Loader from "react-loader-spinner";
 
 //Firebase
-// import Fire from "../../config/Fire.js";
+import Fire from "../../config/Fire.js";
 
 //styles
 import "../AllMeetups/styles.scss";
@@ -132,6 +132,65 @@ class PetForm extends React.Component {
   //   });
 
   // };
+  toggleCollapse() {
+    if (document.getElementById("profile-pic-buttons").className === "col ml-5 my-3 collapse")
+        document.getElementById("profile-pic-buttons").className = "col ml-5 my-3 collapse.show";
+    else if (document.getElementById("profile-pic-buttons").className === "col ml-5 my-3 collapse.show")
+        document.getElementById("profile-pic-buttons").className = "col ml-5 my-3 collapse"; 
+  }
+
+  fileUploadHandler = event => {
+    var input = event.target; // Get image that changed state of input element
+    var reader = new FileReader();
+    reader.onload = function() {
+    var dataURL = reader.result;
+    var output = document.getElementById('profile-pic-large');
+    output.src = dataURL;
+    };
+    reader.readAsDataURL(input.files[0]); // Show preview of image
+}
+
+updateProfilePic() {
+  const db = Fire.firestore();
+  var query = db.collection("profile-pictures").where('email', '==', Fire.auth().currentUser.email);
+  query.get().then(function(querySnapshot) {
+    querySnapshot.forEach(function(doc) {
+      doc.ref.delete();
+    });
+  });
+  setTimeout(() => {
+  db.collection("profile-pictures").add({
+    email: Fire.auth().currentUser.email,
+    pic: document.getElementById("profile-pic-large").src
+  });
+}, 1000);
+  setTimeout(() => {
+    window.location.reload();
+  }, 2000);
+}
+
+updateDog() {
+  const db = Fire.firestore();
+  var query = db.collection("pets").where('email', '==', Fire.auth().currentUser.email);
+  query.get().then(function(querySnapshot) {
+    querySnapshot.forEach(function(doc) {
+      doc.ref.delete();
+    });
+  });
+  setTimeout(() => {
+    db.collection("walkers").add({
+    email: Fire.auth().currentUser.email,
+    name: document.getElementById("walker-name").value,
+    phone: document.getElementById("walker-phone").value,
+    city: document.getElementById("walker-city").value,
+    bio: document.getElementById("walker-bio").value,
+    pic: document.getElementById("profile-pic-large").src
+  });
+  }, 1000);
+  setTimeout(() => {
+    window.location.reload();
+  }, 2000);
+}
 
   render() {
     return (
@@ -185,7 +244,7 @@ class PetForm extends React.Component {
                           <option value="Terrier">Terrier</option>
                         </select>
                       </span>
-                      <span className="trak_body row my-2 mx-4 mr-8 collapse">
+                      <span className="trak_body row my-2 mx-4 mr-8 collapse.show">
                         <select className="col" id="dog-breed">
                           <option value="">Select dog breed</option>
                           <option value="Affenpinscher">Affenpinscher</option>
@@ -482,17 +541,15 @@ class PetForm extends React.Component {
                   </div>
                   <div className="col profile-box mx-2 py-4">
                     <div className="row mx-5">
-                      {/* <div className="col"> */}
-                        <img id="profile-pic-large" src={DogBust} alt="Profile" onClick={this.toggleCollapse}/>
-                      {/* </div> */}
-                      <div className="col ml-5 my-3 collapse.show">
+                      <img id="profile-pic-large" src={DogBust} alt="Profile" onClick={this.toggleCollapse}/>
+                      <div className="col ml-5 my-3 collapse" id="profile-pic-buttons">
                         <div className="row"><input type="file" id="edit-profile-pic-input" onChange={this.fileUploadHandler}/></div>
                         <div className="row"><button id="edit-profile-pic-button" onClick={this.updateProfilePic}>Update Picture</button></div>
                         <div className="row"><text className="ml-2" id="tooltip">Ensure image is square</text></div>
                       </div>
                     </div>
                     <div className="row mx-3">
-                      <textarea id="parent-bio" className="my-3" cols="50" rows="4" maxlength="120" placeholder="Biography..."></textarea>                 
+                      <textarea id="parent-bio" className="my-3" cols="40" rows="4" maxlength="120" placeholder="Biography..."></textarea>                 
                     </div>
                       </div>
               </div>
