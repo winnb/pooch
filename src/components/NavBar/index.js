@@ -72,7 +72,7 @@ class NavBar extends React.Component {
           <a className="navbar-brand trak_nav-title ml-2" href="/">
             POOCH
           </a>
-          <button
+          {/* <button
             className="navbar-toggler"
             type="button"
             data-toggle="collapse"
@@ -81,8 +81,8 @@ class NavBar extends React.Component {
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
-            <span className="navbar-toggler-icon"></span>
-          </button>
+            <span className="navbar-toggler-icon">Menu</span>
+          </button> */}
           <div className="collapse navbar-collapse" id="navbarSupportedContent"> 
             <ul className="navbar-nav mr-auto ml-3 trak_nav-item">
               <li className="nav-item">
