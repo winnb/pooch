@@ -33,9 +33,9 @@ class NavBarLoggedOut extends React.Component {
   render() {
     return (
       <div className="navbar">
-        <nav className="navbar navbar-expand-lg fixed-top py-5" onMouseLeave={this.collapseDropdown}>
-          <img className="mx-3 ml-5" id="profile-pic" src={Generic} alt="Profile" onMouseEnter={this.openDropdown} onClick={this.toggleCollapse}/>
-          <div className="collapse col" id="profile-dropdown">
+        <nav className="navbar navbar-expand-lg fixed-top py-5">
+          <img className="mx-3 ml-5" id="profile-pic" src={Generic} alt="Profile" onClick={this.toggleCollapse}/>
+          <div className="collapse.show col" id="profile-dropdown">
             <a className="row pl-2 trak_body-small" id="dropdown-item" href="/login">Login</a>
             <a className="row pl-2 trak_body-small" id="dropdown-middle" href="/signup" onClick={this.logout}>Sign Up</a>
           </div>

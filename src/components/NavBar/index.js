@@ -2,11 +2,11 @@
 import React from "react";
 
 // Firebase
-import fire from "../../config/Fire";
+import Fire from "../../config/Fire";
 
 // Styles
 import "./styles.scss";
-import LadyAndDog from "./LadyAndDog.png";
+import GenericProfile from "./generic-profile.png";
 
 class NavBar extends React.Component {
   constructor(props) {
@@ -17,9 +17,26 @@ class NavBar extends React.Component {
     this.logout = this.logout.bind(this);
   }
 
+  componentDidMount() {
+    const db = Fire.firestore();
+    Fire.auth().onAuthStateChanged(function(user) {
+      if (user) { // User is signed in
+        db.collection("profile-pictures") // Check if user has profile picture
+        .where("email", "==", Fire.auth().currentUser.email)
+        .get()
+        .then(snapshot => {
+          snapshot.docs.forEach(doc => {
+            document.getElementById("profile-pic").src = doc.data().pic;
+          });
+        });
+      }
+    });
+    
+  }
+
   logout(e) {
     e.preventDefault();
-    fire.auth().signOut();
+    Fire.auth().signOut();
     // Redirect to login page so user doesn't get 404 error
     setTimeout(() => {
       window.location.replace("/");
@@ -47,7 +64,7 @@ class NavBar extends React.Component {
     return (
       <div className="navbar">
         <nav className="navbar navbar-expand-lg fixed-top py-5" onMouseLeave={this.collapseDropdown}>
-          <img className="mx-3 ml-5" id="profile-pic" src={LadyAndDog} alt="Profile" onMouseEnter={this.openDropdown} onClick={this.toggleCollapse}/>
+          <img className="mx-3 ml-5" id="profile-pic" src={GenericProfile} alt="Profile" onMouseEnter={this.openDropdown} onClick={this.toggleCollapse}/>
           <div className="collapse col" id="profile-dropdown">
             <a className="row pl-2 trak_body-small" id="dropdown-item" href="/profile">Profile</a>
             <a className="row pl-2 trak_body-small" id="dropdown-middle" href="/" onClick={this.logout}>Logout</a>

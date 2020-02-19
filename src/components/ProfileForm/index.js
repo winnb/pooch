@@ -38,7 +38,7 @@ class ProfileForm extends React.Component {
           renderParentProfile(doc);
         });
       });
-    }, 1750);
+    }, 750);
     setTimeout(() => { // Check if user is a walker
       db.collection("walkers")
       .where("email", "==", Fire.auth().currentUser.email)
@@ -48,7 +48,7 @@ class ProfileForm extends React.Component {
           renderWalkerProfile(doc);
         });
       });
-    }, 1750);
+    }, 750);
     setTimeout(() => { // Check if user is a boarder
       db.collection("boarders")
       .where("email", "==", Fire.auth().currentUser.email)
@@ -58,7 +58,7 @@ class ProfileForm extends React.Component {
           renderBoarderProfile(doc);
         });
       });
-    }, 1750);
+    }, 750);
     setTimeout(() => { // Check if user has profile picture
       db.collection("profile-pictures")
       .where("email", "==", Fire.auth().currentUser.email)
@@ -68,10 +68,10 @@ class ProfileForm extends React.Component {
           renderProfilePic(doc);
         });
       });
-    }, 1750);
+    }, 750);
 
     function renderParentProfile(doc) {
-      document.getElementById("parent-button").innerHTML = "✓ Parent";
+      document.getElementById("parent-button").innerHTML = "Scroll to view Parent Profile";
       document.getElementById("parent-email").value = Fire.auth().currentUser.email;
       document.getElementById("parent-name").value = doc.data().name;
       document.getElementById("parent-phone").value = doc.data().phone;
@@ -80,7 +80,7 @@ class ProfileForm extends React.Component {
     }
   
     function renderWalkerProfile(doc) {
-      document.getElementById("walker-button").innerHTML = "✓ Walker";
+      document.getElementById("walker-button").innerHTML = "Show Walker Profile";
       document.getElementById("walker-email").value = Fire.auth().currentUser.email;
       document.getElementById("walker-name").value = doc.data().name;
       document.getElementById("walker-phone").value = doc.data().phone;
@@ -89,7 +89,7 @@ class ProfileForm extends React.Component {
     }
   
     function renderBoarderProfile(doc) {
-      document.getElementById("boarder-button").innerHTML = "✓ Boarder";
+      document.getElementById("boarder-button").innerHTML = "Show Boarder Profile";
       document.getElementById("boarder-email").value = Fire.auth().currentUser.email;
       document.getElementById("boarder-name").value = doc.data().name;
       document.getElementById("boarder-phone").value = doc.data().phone;
@@ -105,23 +105,41 @@ class ProfileForm extends React.Component {
 
   openParentProfile() {
     if (document.getElementById("parent-profile").className === ("react-reveal collapse"))
+    {
         document.getElementById("parent-profile").className = ("react-reveal collapse.show");
+        document.getElementById("parent-button").innerHTML= "Scroll to view Parent Profile";
+    }
     else if (document.getElementById("parent-profile").className === ("react-reveal collapse.show"))
+    {
         document.getElementById("parent-profile").className = ("react-reveal collapse");
+        document.getElementById("parent-button").innerHTML= "Show Parent Profile";
+    }
   }
 
   openWalkerProfile() {
     if (document.getElementById("walker-profile").className === ("react-reveal collapse"))
+    {
         document.getElementById("walker-profile").className = ("react-reveal collapse.show");
+        document.getElementById("walker-button").innerHTML= "Scroll to view Walker Profile";
+    }
     else if (document.getElementById("walker-profile").className === ("react-reveal collapse.show"))
+    {
         document.getElementById("walker-profile").className = ("react-reveal collapse");
+        document.getElementById("walker-button").innerHTML= "Show Walker Profile";
+    }
   }
 
   openBoarderProfile() {
     if (document.getElementById("boarder-profile").className === ("react-reveal collapse"))
+    {
         document.getElementById("boarder-profile").className = ("react-reveal collapse.show");
+        document.getElementById("boarder-button").innerHTML= "Scroll to view Boarder Profile";
+    }
     else if (document.getElementById("boarder-profile").className === ("react-reveal collapse.show"))
+    {
         document.getElementById("boarder-profile").className = ("react-reveal collapse");
+        document.getElementById("boarder-button").innerHTML= "Show Boarder Profile";
+    }
   }
 
   toggleCollapse() {
@@ -142,12 +160,6 @@ class ProfileForm extends React.Component {
           doc.ref.delete();
       });
     });
-    // query = db.collection("profile-pictures").where('email', '==', Fire.auth().currentUser.email);
-    // query.get().then(function(querySnapshot) {
-    //   querySnapshot.forEach(function(doc) {
-    //       doc.ref.delete();
-    //   });
-    // });
     setTimeout(() => {
        db.collection("parents").add({
       email: Fire.auth().currentUser.email,
@@ -244,14 +256,14 @@ class ProfileForm extends React.Component {
       <div className="mt-7 mx-6 mb-8">
         <Slide up>
           <div className="row px-4 py-4">
-            <button className="col mx-4 py-1 signup" id="parent-button" onClick={this.openParentProfile} href="/profile#update-parent-button">
+            <button className="col mx-4 py-1 signup" id="parent-button" onClick={this.openParentProfile}>
               Create a parent profile
             </button>
             <button className="col mx-4 py-1 signup" id="walker-button" onClick={this.openWalkerProfile}>
               Create a walker profile
             </button>
             <button className="col mx-4 py-1 signup" id="boarder-button" onClick={this.openBoarderProfile}>
-              Create a dog boarder profile
+              <a href="/profile#boarder-profile">Create a dog boarder profile</a>
             </button>
           </div>
           <div className="mb-1">
@@ -259,7 +271,10 @@ class ProfileForm extends React.Component {
           </div>
           <div className="mb-3 collapse" id="edit-profile-pic-col">
             <input className="row mx-10" type="file" id="edit-profile-pic-input" onChange={this.fileUploadHandler}/>
-            <button className="row mx-10" id="edit-profile-pic-button" onClick={this.updateProfilePic}>Update Picture</button>
+            <div className="row mx-10">
+              <button id="edit-profile-pic-button" onClick={this.updateProfilePic}>Update Picture</button>
+              <text className="ml-1" id="tooltip">Ensure image is square</text>
+            </div>
           </div>
           <div id="parent-profile" className="collapse.show">
                <div className="row">

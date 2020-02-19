@@ -9,7 +9,7 @@ const Footer = props => {
     <div>
       <footer className="page-footer font-small trak_body_small text-left pt-4 px-3 py-5">
           <div className="row mx-5">
-             <div className="footer-element my-2 mx-4 px-4">2019 POOCH, Inc.</div>
+             <div className="footer-element my-2 mx-4 px-4">2020 POOCH, Inc.</div>
              <div className="footer-element my-2 mx-4 px-4">About</div>
              <div className="footer-element my-2 mx-4 px-4">FAQ</div>
              <div className="footer-element my-2 mx-4 px-4">Privacy Policy</div>
