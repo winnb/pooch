@@ -1,25 +1,29 @@
-@import "../../scss/main.scss";
-
-#success-message {
-  color: theme-color("light");
-  display: none;
-  border-radius: 25px;
-  background: theme-color("primary");
-  width: 300px;
-  padding: 10px;
+span {
+  width: 65%;
 }
 
-#space {
-  margin-top: 15px;
+#profile-pic-large {
+  width: 150px;
+  height: 150px;
+  transform: scale(1);
+  border-radius: 80px;
 }
 
-tr:hover{
-  transform: scale(1.02);
+#edit-profile-pic-input {
+  width: 100%;
+  font-size: 40%;
+}
+
+#edit-profile-pic-button {
+  width: 7;
+  font-size: 40%;
+}
+
+#edit-profile-pic-button:hover {
+  background-color: rgb(216, 216, 218);
   transition-duration: 0.5s;
-  background-color: rgb(250, 250, 250);
 }
 
-.dog-icon {
-  transform: scale(.85);
-  border-radius: 40px;
+#tooltip {
+  font-size: 40%;
 }
