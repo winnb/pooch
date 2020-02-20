@@ -132,6 +132,58 @@ class PetForm extends React.Component {
   //   });
 
   // };
+  componentDidMount() {
+    const db = Fire.firestore();
+    setTimeout(() => { // Check if user has dog profiles
+      db.collection("pets")
+      .where("email", "==", Fire.auth().currentUser.email)
+      .get()
+      .then(snapshot => {
+        snapshot.docs.forEach(doc => {
+          renderPetProfile(doc);
+        });
+      });
+    }, 750);
+
+    function renderPetProfile(doc) {
+      // Rest in peace all my hard work was probably for nothing
+      document.getElementById("existing-profiles").innerHTML += '<div id="outer1" className="row"></div>';
+      document.getElementById("outer1").innerHTML += '<div id="outer2" className="col profile-box mx-2 py-4"></div>';
+      document.getElementById("outer2").innerHTML += '<span id="outer3" className="trak_body row my-2 mx-4 mr-8"></span>';
+      document.getElementById("outer3").innerHTML += '<div id="outer4" className="trak_nav-item ml-6"></div>';
+      document.getElementById("outer4").innerHTML += 'Existing Dog Profile';
+      document.getElementById("outer2").innerHTML += '<span id="outer5" className="trak_body row my-2 mx-4 mr-8"></span>';
+      document.getElementById("outer5").innerHTML += doc.data().name;
+      document.getElementById("outer2").innerHTML += '<span id="outer6" className="trak_body row my-2 mx-4 mr-8"></span>';
+      document.getElementById("outer6").innerHTML += doc.data().gender;
+      document.getElementById("outer2").innerHTML += '<span id="outer7" className="trak_body row my-2 mx-4 mr-8"></span>';
+      document.getElementById("outer7").innerHTML += doc.data().breed;
+      document.getElementById("outer2").innerHTML += '<span id="outer8" className="trak_body row my-2 mx-4 mr-8"></span>';
+      document.getElementById("outer8").innerHTML += doc.data().colorPrimary;
+      document.getElementById("outer2").innerHTML += '<span id="outer9" className="trak_body row my-2 mx-4 mr-8"></span>';
+      document.getElementById("outer9").innerHTML += doc.data().colorSecondary;
+      document.getElementById("outer2").innerHTML += '<span id="outer10" className="trak_body row my-2 mx-4 mr-8"></span>';
+      document.getElementById("outer10").innerHTML += doc.data().colorTertiary;
+      document.getElementById("outer2").innerHTML += '<span id="outer11" className="trak_body row my-2 mx-4 mr-8"></span>';
+      document.getElementById("outer11").innerHTML += doc.data().birthday;
+      document.getElementById("outer1").innerHTML += '<div id="outer12" className="col profile-box mx-2 py-4"></div>';
+      document.getElementById("outer12").innerHTML += '<div id="outer13" className="row mx-5"></div>';
+      document.getElementById("outer13").innerHTML += '<img id="profile-pic-large" src={'+doc.data().pic+'} alt="Profile"/>';
+      document.getElementById("outer12").innerHTML += '<div id="outer14" className="row mx-3"></div>';
+      document.getElementById("outer14").innerHTML += '<div id="outer15" className="my-3" cols="30" rows="4" maxlength="120"></div>';
+      document.getElementById("outer15").innerHTML += doc.data().bio;
+      // document.getElementById("dog-name").value = doc.data().name;
+      // document.getElementById("dog-gender").value = doc.data().gender;
+      // document.getElementById("dog-breed").value = doc.data().breed;
+      // document.getElementById("primary-color").value = doc.data().colorPrimary;
+      // document.getElementById("secondary-color").value = doc.data().colorSecondary;
+      // document.getElementById("tertiary-color").value = doc.data().colorTertiary;
+      // document.getElementById("dog-birthday").value = doc.data().birthday;
+      // document.getElementById("dog-bio").value = doc.data().bio;
+      // document.getElementById("profile-pic-large").src = doc.data().pic;
+    }
+  }
+
   toggleCollapse() {
     if (document.getElementById("profile-pic-buttons").className === "col ml-5 my-3 collapse")
         document.getElementById("profile-pic-buttons").className = "col ml-5 my-3 collapse.show";
@@ -150,43 +202,29 @@ class PetForm extends React.Component {
     reader.readAsDataURL(input.files[0]); // Show preview of image
 }
 
-updateProfilePic() {
+updateDog() {
   const db = Fire.firestore();
-  var query = db.collection("profile-pictures").where('email', '==', Fire.auth().currentUser.email);
+  var query = db.collection("pets").where('email', '==', Fire.auth().currentUser.email)
+  .where("name", "==", document.getElementById("dog-name").value);
   query.get().then(function(querySnapshot) {
     querySnapshot.forEach(function(doc) {
       doc.ref.delete();
     });
   });
   setTimeout(() => {
-  db.collection("profile-pictures").add({
+  db.collection("pets").add({
     email: Fire.auth().currentUser.email,
+    name: document.getElementById("dog-name").value,
+    gender: document.getElementById("dog-gender").value,
+    breed: document.getElementById("dog-breed-simple").value,
+    colorPrimary: document.getElementById("primary-color").value,
+    colorSecondary: document.getElementById("secondary-color").value,
+    colorTertiary: document.getElementById("tertiary-color").value,
+    birthday: document.getElementById("dog-birthday").value,
+    bio: document.getElementById("dog-bio").value,
     pic: document.getElementById("profile-pic-large").src
   });
 }, 1000);
-  setTimeout(() => {
-    window.location.reload();
-  }, 2000);
-}
-
-updateDog() {
-  const db = Fire.firestore();
-  var query = db.collection("pets").where('email', '==', Fire.auth().currentUser.email);
-  query.get().then(function(querySnapshot) {
-    querySnapshot.forEach(function(doc) {
-      doc.ref.delete();
-    });
-  });
-  setTimeout(() => {
-    db.collection("walkers").add({
-    email: Fire.auth().currentUser.email,
-    name: document.getElementById("walker-name").value,
-    phone: document.getElementById("walker-phone").value,
-    city: document.getElementById("walker-city").value,
-    bio: document.getElementById("walker-bio").value,
-    pic: document.getElementById("profile-pic-large").src
-  });
-  }, 1000);
   setTimeout(() => {
     window.location.reload();
   }, 2000);
@@ -549,11 +587,14 @@ updateDog() {
                       </div>
                     </div>
                     <div className="row mx-3">
-                      <textarea id="parent-bio" className="my-3" cols="40" rows="4" maxlength="120" placeholder="Biography..."></textarea>                 
+                      <textarea id="dog-bio" className="my-3" cols="30" rows="4" maxlength="120" placeholder="Biography..."></textarea>                 
                     </div>
                       </div>
               </div>
               <button type="submit" className="btn btn-primary mx-9 my-4" onClick={this.updateDog}>Add New Dog</button>
+          </div>
+          <div className="col" id="existing-profiles">
+
           </div>
         {/* <form onSubmit={this.addPet}>
           <Slide down>
