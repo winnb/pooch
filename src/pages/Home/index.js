@@ -38,12 +38,12 @@ class Home extends React.Component {
         </Slide>
         <div className="row mb-5 mt-3">
           <Slide left>
-            <div className="row my-5 home-row" id="section2">
+            <div className="row my-5 pt-6 home-row" id="section2">
               <div className="col mx-6 mb-7 paragraph">
-                <font color = "#FFC375"> <center><b>YOUR PETS</b></center> </font>
-                The users are privileged to get a perfect opportunity to show off their poochies and dogs.  
-                The page has a form type for you to add your pups' profile and keep a check on your dogs and
-                save all the essentials on your profile page.  
+                <font color = "#FFC375"> <center><div className="mb-2 paragraph-title">YOUR PETS</div></center> </font>
+                Add pets to your profile to let your future vet, dog walker, or dog groomer get to know your pooch before
+                meeting them. Keep track of your pets and show them off to the world. With Pooch, your pets have never
+                been closer to everything they need to stay happy and healthy.
               </div>
               <div className="col mx-6 my-5">
                 <img className="paragraph-pic mt-5" src={FamilyPets} alt="Family pets"/>
@@ -51,25 +51,25 @@ class Home extends React.Component {
             </div>
             </Slide>
             <Slide right>
-            <div className="row my-5 home-row" id="section3">
+            <div className="row my-5 pt-6 home-row" id="section3">
               <div className="col mx-6 my-5">
                 <img className="paragraph-pic mt-5" src={DogWalking} alt="Walking dogs"/>
               </div>
               <div className="col mx-6 mb-7 paragraph">
-              <font color = "#FFE675"> <center><div className="mb-2 paragraph-title">DOG WALKING</div></center> </font>
-                The web page gives you an elaborate list of all the nearby dog walkers and their contact information.
-                All the listed dog walkers would be verified, so you and your pups feel safe, when being walked around.
-                You can choose to be a dog walker yourself if that is what interests you. 
-                                </div>
+              <font color = "#f5dc6b"> <center><div className="mb-2 paragraph-title">DOG WALKING</div></center> </font>
+                Find a dog walker that matches your desired experience level, price, and availability. With Pooch, you
+                can find verified walkers with reviews from your friends and neighbors. View their profiles and schedule
+                a walk that works when you do. Sign up to be a dog walker if you have a passion for pups.
+                </div>
             </div>
             </Slide>
             <Slide left>
-            <div className="row my-5 home-row" id="section4">
+            <div className="row my-5 pt-6 home-row" id="section4">
               <div className="col mx-6 mb-7 paragraph">
-              <font color = "#ACFF75"> <center><b>DOG BOARDING</b></center> </font>
-                The web page gives you an elaborate list of all the nearby dog boarders and boarding service providers.
-                Feel free to provide your poochie with their favorite choice of a nearby dog boarder 
-                and let them enjoy their time to the fullest. 
+              <font color = "#9ef566"> <center><div className="mb-2 paragraph-title">DOG BOARDING</div></center> </font>
+                Find the most qualified local dog boarders for your four-legged friend when you go out of town. Whether
+                you need a provider with no appointment needed, spacious rooms, or even a pool, Pooch has you covered.
+                Let your dog enjoy their stay to the fullest.
               </div>
               <div className="col mx-6 my-5">
                 <img className="paragraph-pic mt-5" src={DogBoarding} alt="Dog boarding"/>
@@ -77,26 +77,25 @@ class Home extends React.Component {
             </div>
             </Slide>
             <Slide right>
-            <div className="row my-5 home-row" id="section5">
+            <div className="row my-5 pt-6 home-row" id="section5">
               <div className="col mx-6 my-5">
                 <img className="paragraph-pic mt-5" src={DogGrooming} alt="Dog grooming"/>
               </div>
               <div className="col mx-6 mb-7 paragraph">
-              <font color = "#B1F7CF"> <center><b>DOG SERVICES</b></center> </font>
-                The web page is sectionalised into various segments, each section giving out accurate information 
-                about the particular dog servie you are looking forward to. First section is supply stores, followed by 
-                lovely groomers around the area. Even adoption centres, if you are looking to go around and get some more 
-                beauties and finally vets around the area, since your pups need proper care. 
+              <font color = "#6bf5a5"> <center><div className="mb-2 paragraph-title">DOG SERVICES</div></center> </font>
+                Find vets, pet supply stores, dog groomers, and adoption centers all without leaving Pooch. With your 
+                dog's info easily accessible, speed up the process of finding the dog services you need. Take the care
+                of your pooch to the next level with highly-reccomended dog service providers at your fingertips.
               </div>
             </div>
             </Slide>
             <Slide left>
-            <div className="row my-5 home-row" id="section6">
+            <div className="row my-5 pt-6 home-row" id="section6">
               <div className="col mx-6 mb-7 paragraph"> 
-              <font color = "#75DFFF"> <center><b>DOG MEETUP</b></center> </font> 
-              Meetups make people come together for new possible opportunities. Let your Pooch enjoy the time with other dogs 
+              <font color = "#6bd5f5"> <center><div className="mb-2 paragraph-title">DOG MEETUP</div></center> </font> 
+              Meetups help people come together for doggy dates without the need to hand out your phone number. With Pooch,
+              there's no more guessing when the dog park is full of friends. Let your pooch enjoy time with other dogs 
               in a safe community being surrounded by magnificent dog lovers. Don’t wait for the event, make your own. 
-              A ride with the Pooch!  
               </div>
               <div className="col mx-6 my-5">
                 <img className="paragraph-pic mt-5" src={DogPark} alt="Dog park"/>
@@ -104,16 +103,16 @@ class Home extends React.Component {
             </div>
             </Slide>
             <Slide right>
-            <div className="row my-5 home-row" id="section7">
+            <div className="row my-5 pt-6 home-row" id="section7">
               <div className="col mx-6 my-5">
                 <img className="paragraph-pic mt-5" src={Vet} alt="Vet visit"/>
               </div>
               <div className="col mx-6 mb-7 paragraph">
-              <font color = "#BC75FF"> <center><b>DOG RECORDS</b></center> </font> 
-              To keep track with all the veterinary records for your dog is important. But we all know how we can easily 
-              lose a document that may determine what type of care and treatment your Pooch may need. 
-              Do not need to waste time looking for records, upload your pets documents and other essentials. 
-              Pooch will have them handy when they are needed, at your convenience. Go paperless with Pooch!
+              <font color = "#BC75FF"> <center><div className="mb-2 paragraph-title">DOG RECORDS</div></center> </font> 
+              Keeping track of all the veterinary records for your dog is important and we know how easy 
+              it can be to lose a document that may determine what type of care and treatment your pet may need. 
+              With Pooch, there's no wasting time looking for records. Upload your pets documents and other essentials. 
+              Pooch will have them handy when you need them. Go paperless with Pooch!
               </div>
             </div>
             </Slide>
