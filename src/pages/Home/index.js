@@ -16,6 +16,8 @@ import Vet from './media/vet.jpg';
 
 // Components
 import Slideshow from "../../components/Slideshow";
+import Signup from "../Signup";
+import Login from "../Login";
 
 class Home extends React.Component {
   constructor(props) {
@@ -30,9 +32,25 @@ class Home extends React.Component {
     this.setState({ [e.target.name]: e.target.value });
   }
 
+  showSignup() {
+    document.getElementById("signup-box").className="fixed-top collapse.show";
+    document.getElementById("signup-box").style.width = "33%";
+    document.getElementById("signup-box").style.marginLeft = "33%";
+  }
+
+  componentDidMount() {
+    
+  }
+
   render() {
     return (
       <div className="mt-7" id="section1">
+        <div id="login-box" className="fixed-top">
+          <Login/>
+        </div>
+        <div id="signup-box" className="fixed-top">
+          <Signup/>
+        </div>
         <Slide down>
           <Slideshow/> 
         </Slide>

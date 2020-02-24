@@ -30,14 +30,22 @@ class NavBarLoggedOut extends React.Component {
     document.getElementById("profile-dropdown").className = "collapse.show col";
   }
 
+  openSignup() {
+    document.getElementById("signup-outer").className = "collapse.show";
+  }
+
+  openLogin() {
+    document.getElementById("login-outer").className = "collapse.show";
+  }
+
   render() {
     return (
       <div className="navbar">
         <nav className="navbar navbar-expand-lg fixed-top py-5">
           <img className="mx-3 ml-5" id="profile-pic" src={Generic} alt="Profile" onClick={this.toggleCollapse}/>
           <div className="collapse.show col" id="profile-dropdown">
-            <a className="row pl-2 trak_body-small" id="dropdown-item" href="/login">Login</a>
-            <a className="row pl-2 trak_body-small" id="dropdown-middle" href="/signup" onClick={this.logout}>Sign Up</a>
+            <button className="row pl-2 trak_body-small" id="dropdown-item" onClick={this.openLogin}>Login</button>
+            <button className="row pl-2 trak_body-small" id="dropdown-item" onClick={this.openSignup}>Sign Up</button>
           </div>
           <a className="navbar-brand trak_nav-title ml-2" href="/">
             POOCH

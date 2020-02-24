@@ -1,72 +1,91 @@
 .navbar {
-    background-color: #eeeeee;
+  background-color: #eeeeee;
+}
+
+#profile-pic {
+    width: 85px;
+    height: 85px;
+    transform: scale(1);
+    border-radius: 50px;
   }
-  
-  #profile-pic {
-      width: 85px;
-      height: 85px;
-      transform: scale(1);
-      border-radius: 50px;
-    }
-  
-    #profile-pic:hover {
-      opacity:0.6;
-  }
-  
-  #profile-dropdown {
-    background-color: rgb(216, 216, 218);
-    border-radius: 5px;
-  }
-  
-  #dropdown-item {
+
+  #profile-pic:hover {
+    opacity:0.6;
+}
+
+#profile-dropdown {
+  background-color: rgb(216, 216, 218);
+  max-width: 140px;
+  min-width: 100px;
+}
+
+#dropdown-item {
+  border-style: hidden;
+  background-color: rgb(216, 216, 218);
+}
+
+#dropdown-item:hover {
+  transform: scale(1.02);
+  font-weight: 600;
+  transition-duration: 0.1s;
+}
+
+#brand {
+  width: 10%;
+  margin-left: 1%;
+  margin-right: 1%;
+}
+
+#nav-pages {
+  min-width: 1000px;
+  margin-left: 30px;
+}
+
+  .navbar-brand {
     border-bottom-style: hidden;
   }
-  
-  #dropdown-middle {
+
+  .your-pets {
+    border-bottom-color: rgb(255, 195, 117);
     border-bottom-style: solid;
-    border-top-style: solid;
-    border-bottom-color: white;
-    border-top-color: white;
-    border-bottom-width: 1px;
-    border-top-width: 1px;
+    min-width: 175px;
   }
-  
-    a:hover {
-      transform: scale(1);
-      transition-duration: 0.33s;
-    }
-  
-    a {
-      transform: scale(0.95);
-      border-bottom-style: solid;
-      border-bottom-width: 5;
-      font-weight: 500;
-    }
-  
-    .navbar-brand {
-      border-bottom-style: hidden;
-    }
-  
-    .your-pets {
-      border-bottom-color: rgb(255, 195, 117);
-    }
-  
-    .dog-walking {
-      border-bottom-color: rgb(245, 220, 107);
-    }
-  
-    .dog-boarding {
-      border-bottom-color: rgb(158, 245, 102);
-    }
-  
-    .dog-services {
-      border-bottom-color: rgb(107, 245, 165);
-    }
-  
-    .dog-meetup {
-      border-bottom-color: rgb(107, 213, 245);
-    }
-  
-    .dog-records {
-      border-bottom-color: rgb(188, 117, 255);
-    }
+
+  .dog-walking {
+    border-bottom-color: rgb(245, 220, 107);
+    border-bottom-style: solid;
+    min-width: 220px;
+  }
+
+  .dog-boarding {
+    border-bottom-color: rgb(158, 245, 102);
+    border-bottom-style: solid;
+    min-width: 230px;
+  }
+
+  .dog-services {
+    border-bottom-color: rgb(107, 245, 165);
+    border-bottom-style: solid;
+    min-width: 220px;
+  }
+
+  .dog-meetup {
+    border-bottom-color: rgb(107, 213, 245);
+    border-bottom-style: solid;
+    min-width: 210px;
+  }
+
+  .dog-records {
+    border-bottom-color: rgb(188, 117, 255);
+    border-bottom-style: solid;
+    min-width: 220px;
+  }
+
+  a {
+    transform: scale(0.97);
+  }
+
+  a:hover {
+    transform: scale(1.03);
+    transition-duration: 0.33s;
+  }

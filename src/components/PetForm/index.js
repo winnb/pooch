@@ -233,7 +233,7 @@ swapBreedList() {
                       <img id="database-profile-pic-large" src={DogBust} alt="Profile"/>
                   </div>
                   <div className="row mx-3">
-                      <div className="my-3 px-2 py-1 database-profile-field" id="database-dog-bio" cols="30" rows="4" maxlength="120"></div>                 
+                      <div className="my-3 px-2 py-1 database-profile-field" id="database-dog-bio" cols="30" rows="4" maxLength="120"></div>                 
                   </div>
               </div>
           </div>
@@ -244,7 +244,7 @@ swapBreedList() {
                           <div className="trak_nav-item ml-6" id="new-dog-profile-title">New Dog Profile</div>
                       </span>
                       <span className="trak_body row my-2 mx-4 mr-8">
-                          <input className="col profile-field" id="dog-name" type="text" placeholder="Dog Name" maxlength="50"/>
+                          <input className="col profile-field" id="dog-name" type="text" placeholder="Dog Name" maxLength="50"/>
                       </span>
                       <span className="trak_body row my-2 mx-4 mr-8">
                         <select className="col profile-field" id="dog-gender">
@@ -594,7 +594,7 @@ swapBreedList() {
                       </div>
                     </div>
                     <div className="row mx-3">
-                      <textarea id="dog-bio" className="my-3" cols="30" rows="4" maxlength="120" placeholder="Biography..."></textarea>                 
+                      <textarea id="dog-bio" className="my-3" cols="30" rows="4" maxLength="120" placeholder="Biography..."></textarea>                 
                     </div>
                   </div>
               </div>

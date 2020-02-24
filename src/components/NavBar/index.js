@@ -64,12 +64,12 @@ class NavBar extends React.Component {
     return (
       <div className="navbar">
         <nav className="navbar navbar-expand-lg fixed-top py-5" onMouseLeave={this.collapseDropdown}>
-          <img className="mx-3 ml-5" id="profile-pic" src={GenericProfile} alt="Profile" onMouseEnter={this.openDropdown} onClick={this.toggleCollapse}/>
+          <img className="ml-5" id="profile-pic" src={GenericProfile} alt="Profile" onMouseEnter={this.openDropdown} onClick={this.toggleCollapse}/>
           <div className="collapse col" id="profile-dropdown">
-            <a className="row pl-2 trak_body-small" id="dropdown-item" href="/profile">Profile</a>
-            <a className="row pl-2 trak_body-small" id="dropdown-middle" href="/" onClick={this.logout}>Logout</a>
+            <button className="row pl-2 trak_body-small" id="dropdown-item">Profile</button>
+            <button className="row pl-2 trak_body-small" id="dropdown-item" onClick={this.logout}>Logout</button>
           </div>
-          <div id="brand">
+          <div id="brand" className="mr-5">
             <a className="navbar-brand trak_nav-title"  href="/">
             POOCH
             </a>
