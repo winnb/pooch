@@ -10,18 +10,26 @@ import "./styles.scss";
 class SignUpForm extends React.Component {
   constructor(props) {
     super(props);
-
+    this.state = {
+      email: "",
+      password: "",
+      confirmPassword: ""
+    };
     this.signup = this.signup.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
   }
 
   signup(e) {
     e.preventDefault();
-    if (document.getElementById("signup-password").value === document.getElementById("signup-password-confirm").value) {
+    if (this.state.password === this.state.confirmPassword) {
        fire
       .auth()
-      .createUserWithEmailAndPassword(document.getElementById("signup-email").value, document.getElementById("signup-password").value)
+      .createUserWithEmailAndPassword(this.state.email, this.state.password)
       .catch(error => {
-        console.log(error.message);
         document.querySelector("#error-message-signup").style.display = "block";
         document.getElementById("error-message-signup").innerHTML = error.message;
       }); 
@@ -29,17 +37,22 @@ class SignUpForm extends React.Component {
       setTimeout(() => {
         fire
       .auth()
-      .signInWithEmailAndPassword(document.getElementById("signup-email").value, document.getElementById("signup-password").value)
+      .signInWithEmailAndPassword(this.state.email, this.state.password)
       .catch(error => {
-        console.log(error.message);
         document.querySelector("#error-message-login").style.display = "block";
         document.getElementById("error-message-login").innerHTML = error.message;
       });
       }, 500);
       setTimeout(() => {
-        document.getElementById("signup-outer").className = "collapse";
-        window.location.replace("/profile");  
-      }, 1000);
+        fire.auth().onAuthStateChanged(user => {
+            if (user) {
+                document.getElementById("login-outer").className = "collapse";
+                window.location.replace("/profile"); 
+            } else {
+                console.log("Error: User could not be logged in due to bad credentials");
+            }
+        });
+    }, 500);
     }
     else {
         document.querySelector("#error-message-signup").style.display = "block";
@@ -60,13 +73,13 @@ class SignUpForm extends React.Component {
                     <div className="trak_nav-item">Create an Account</div>
                 </span>
                 <span className="trak_body row my-2">
-                    <input id="signup-email" type="text" className="form-control" placeholder="Email"/>
+                    <input name="email" id="signup-email" type="text" className="form-control" placeholder="Email" value={this.state.email} onChange={this.handleChange}/>
                 </span>
                 <span className="trak_body row my-2">
-                    <input id="signup-password" type="password" className="form-control" placeholder="Password" maxlength="50"/>
+                    <input name="password" id="signup-password" type="password" className="form-control" placeholder="Password" maxlength="50" value={this.state.password} onChange={this.handleChange}/>
                 </span>
                 <span className="trak_body row my-2">
-                    <input id="signup-password-confirm" type="password" className="form-control" placeholder="Confirm Password" maxlength="50"/>
+                    <input name="confirmPassword" id="signup-password-confirm" type="password" className="form-control" placeholder="Confirm Password" maxlength="50" value={this.state.confirmPassword} onChange={this.handleChange}/>
                 </span>
               </div>
                <button type="submit" onClick={this.signup} className="btn btn-secondary my-2">Create Account</button>

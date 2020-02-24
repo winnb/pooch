@@ -3,38 +3,16 @@ import React from "react";
 
 // Styles
 import "./styles.scss";
-import Generic from "./generic-profile.png";
 
 class NavBarLoggedOut extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      dropdownOpen: false
-    };
-  }
-
-  toggleCollapse() {
-    if (document.getElementById("profile-dropdown").className === "collapse col") {
-        document.getElementById("profile-dropdown").className = "collapse.show col";
-    }
-    else if (document.getElementById("profile-dropdown").className === "collapse.show col") {
-        document.getElementById("profile-dropdown").className = "collapse col"; 
-    }
-  }
-
-  collapseDropdown() {
-        document.getElementById("profile-dropdown").className = "collapse col";
-  }
-
-  openDropdown() {
-    document.getElementById("profile-dropdown").className = "collapse.show col";
-  }
 
   openSignup() {
+    document.getElementById("login-outer").className = "collapse";
     document.getElementById("signup-outer").className = "collapse.show";
   }
 
   openLogin() {
+    document.getElementById("signup-outer").className = "collapse";
     document.getElementById("login-outer").className = "collapse.show";
   }
 
@@ -42,11 +20,6 @@ class NavBarLoggedOut extends React.Component {
     return (
       <div className="navbar">
         <nav className="navbar navbar-expand-lg fixed-top py-5">
-          <img className="mx-3 ml-5" id="profile-pic" src={Generic} alt="Profile" onClick={this.toggleCollapse}/>
-          <div className="collapse.show col" id="profile-dropdown">
-            <button className="row pl-2 trak_body-small" id="dropdown-item" onClick={this.openLogin}>Login</button>
-            <button className="row pl-2 trak_body-small" id="dropdown-item" onClick={this.openSignup}>Sign Up</button>
-          </div>
           <a className="navbar-brand trak_nav-title ml-2" href="/">
             POOCH
           </a>
@@ -94,8 +67,10 @@ class NavBarLoggedOut extends React.Component {
                 </a>
               </li> 
             </ul>
-            <form className="form-inline my-2 my-lg-0">
-            </form>
+            <div className="col trak_nav-item" id="profile-dropdown">
+              <button className="row mb-3" id="dropdown-item" onClick={this.openLogin}>Login</button>
+              <button className="row mt-3" id="dropdown-item" onClick={this.openSignup}>Create Account</button>
+            </div>
           </div>
         </nav>     
       </div>

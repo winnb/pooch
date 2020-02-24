@@ -62,14 +62,14 @@ class NavBar extends React.Component {
 
   render() {
     return (
-      <div className="navbar">
-        <nav className="navbar navbar-expand-lg fixed-top py-5" onMouseLeave={this.collapseDropdown}>
-          <img className="ml-5" id="profile-pic" src={GenericProfile} alt="Profile" onMouseEnter={this.openDropdown} onClick={this.toggleCollapse}/>
+      <div>
+        <nav className="navbar navbar-expand-lg fixed-top py-5" >
+          <img className="ml-2" id="profile-pic" src={GenericProfile} alt="Profile" onClick={this.toggleCollapse}/>
           <div className="collapse col" id="profile-dropdown">
-            <button className="row pl-2 trak_body-small" id="dropdown-item">Profile</button>
-            <button className="row pl-2 trak_body-small" id="dropdown-item" onClick={this.logout}>Logout</button>
+            <div className="row trak_nav-item mb-2" id="dropdown-row"><button id="dropdown-button">Profile</button></div>
+            <div className="row trak_nav-item mt-2" id="dropdown-row"><button id="dropdown-button" onClick={this.logout}>Logout</button></div>
           </div>
-          <div id="brand" className="mr-5">
+          <div id="brand">
             <a className="navbar-brand trak_nav-title"  href="/">
             POOCH
             </a>
@@ -87,32 +87,32 @@ class NavBar extends React.Component {
           </button> */}
           <div> 
             <div className="row trak_nav-item" id="nav-pages">
-              <div className="col nav-item">
+              <div className="nav-item">
                 <a className="nav-link your-pets" href="/your-pets">
                 Your Pets
                 </a>
               </div>
-              <div className="col nav-item">
+              <div className="nav-item">
                 <a className="nav-link dog-walking" href="/dog-walking">
                   Dog Walking
                 </a>
               </div>
-              <div className="col nav-item">
+              <div className="nav-item">
                 <a className="nav-link dog-boarding" href="/dog-boarding">
                   Dog Boarding
                 </a>
               </div>
-              <div className="col nav-item">
+              <div className="nav-item">
                 <a className="nav-link dog-services" href="/dog-services">
                   Dog Services
                 </a>
               </div>
-              <div className="col nav-item">
+              <div className="nav-item">
                 <a className="nav-link dog-meetup" href="/dog-meetup">
                   Dog Meetup
                 </a>
               </div>
-              <div className="col nav-item">
+              <div className="nav-item">
                 <a className="nav-link dog-records" href="/dog-records">
                   Dog Records
                 </a>

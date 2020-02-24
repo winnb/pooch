@@ -2,26 +2,19 @@
   background-color: #eeeeee;
 }
 
-#profile-pic {
-    width: 85px;
-    height: 85px;
-    transform: scale(1);
-    border-radius: 50px;
-  }
-
   #profile-pic:hover {
     opacity:0.6;
 }
 
 #profile-dropdown {
-  background-color: rgb(216, 216, 218);
-  max-width: 140px;
-  min-width: 100px;
+  background-color: #eeeeee;;
+  max-width: 230px;
+  min-width: 230px;
 }
 
 #dropdown-item {
   border-style: hidden;
-  background-color: rgb(216, 216, 218);
+  background-color: #eeeeee;
 }
 
 #dropdown-item:hover {
