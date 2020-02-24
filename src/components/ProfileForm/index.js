@@ -27,80 +27,171 @@ class ProfileForm extends React.Component {
     this.setState({ [e.target.name]: e.target.value });
   }
 
+  // componentDidMount() {
+  //   const db = Fire.firestore();
+  //   setTimeout(() => { // Check if user is a parent
+  //     db.collection("parents")
+  //     .where("email", "==", Fire.auth().currentUser.email)
+  //     .get()
+  //     .then(snapshot => {
+  //       snapshot.docs.forEach(doc => {
+  //         renderParentProfile(doc);
+  //       });
+  //     });
+  //   }, 750);
+  //   setTimeout(() => { // Check if user is a walker
+  //     db.collection("walkers")
+  //     .where("email", "==", Fire.auth().currentUser.email)
+  //     .get()
+  //     .then(snapshot => {
+  //       snapshot.docs.forEach(doc => {
+  //         renderWalkerProfile(doc);
+  //       });
+  //     });
+  //   }, 750);
+  //   setTimeout(() => { // Check if user is a boarder
+  //     db.collection("boarders")
+  //     .where("email", "==", Fire.auth().currentUser.email)
+  //     .get()
+  //     .then(snapshot => {
+  //       snapshot.docs.forEach(doc => {
+  //         renderBoarderProfile(doc);
+  //       });
+  //     });
+  //   }, 750);
+  //   setTimeout(() => { // Check if user has profile picture
+  //     db.collection("profile-pictures")
+  //     .where("email", "==", Fire.auth().currentUser.email)
+  //     .get()
+  //     .then(snapshot => {
+  //       snapshot.docs.forEach(doc => {
+  //         renderProfilePic(doc);
+  //       });
+  //     });
+  //   }, 750);
+
+  //   function renderParentProfile(doc) {
+  //     document.getElementById("parent-button").innerHTML = "Scroll to view Parent Profile";
+  //     document.getElementById("parent-email").value = Fire.auth().currentUser.email;
+  //     document.getElementById("parent-name").value = doc.data().name;
+  //     document.getElementById("parent-phone").value = doc.data().phone;
+  //     document.getElementById("parent-city").value = doc.data().city;
+  //     document.getElementById("parent-bio").value = doc.data().bio;
+  //   }
+  
+  //   function renderWalkerProfile(doc) {
+  //     document.getElementById("walker-button").innerHTML = "Show Walker Profile";
+  //     document.getElementById("walker-email").value = Fire.auth().currentUser.email;
+  //     document.getElementById("walker-name").value = doc.data().name;
+  //     document.getElementById("walker-phone").value = doc.data().phone;
+  //     document.getElementById("walker-city").value = doc.data().city;
+  //     document.getElementById("walker-bio").value = doc.data().bio;
+  //   }
+  
+  //   function renderBoarderProfile(doc) {
+  //     document.getElementById("boarder-button").innerHTML = "Show Boarder Profile";
+  //     document.getElementById("boarder-email").value = Fire.auth().currentUser.email;
+  //     document.getElementById("boarder-name").value = doc.data().name;
+  //     document.getElementById("boarder-phone").value = doc.data().phone;
+  //     document.getElementById("boarder-address").value = doc.data().address;
+  //     document.getElementById("boarder-city").value = doc.data().city;
+  //     document.getElementById("boarder-bio").value = doc.data().bio;
+  //   }
+
+  //   function renderProfilePic(doc) {
+  //     document.getElementById("profile-pic-large").src = doc.data().pic;
+  //   }
+  // }
+
   componentDidMount() {
     const db = Fire.firestore();
-    setTimeout(() => { // Check if user is a parent
-      db.collection("parents")
+    setTimeout(() => { // Determine user type
+      db.collection("profile-types")
       .where("email", "==", Fire.auth().currentUser.email)
       .get()
       .then(snapshot => {
         snapshot.docs.forEach(doc => {
-          renderParentProfile(doc);
+          if (doc.data().type === "parent")
+            renderParentProfile(doc);
+          else if (doc.data().type === "walker")
+            renderWalkerProfile(doc);
+          else if (doc.data().type === "boarder")
+            renderBoarderProfile(doc);
         });
       });
     }, 750);
-    setTimeout(() => { // Check if user is a walker
-      db.collection("walkers")
-      .where("email", "==", Fire.auth().currentUser.email)
-      .get()
-      .then(snapshot => {
-        snapshot.docs.forEach(doc => {
-          renderWalkerProfile(doc);
-        });
-      });
-    }, 750);
-    setTimeout(() => { // Check if user is a boarder
-      db.collection("boarders")
-      .where("email", "==", Fire.auth().currentUser.email)
-      .get()
-      .then(snapshot => {
-        snapshot.docs.forEach(doc => {
-          renderBoarderProfile(doc);
-        });
-      });
-    }, 750);
-    setTimeout(() => { // Check if user has profile picture
-      db.collection("profile-pictures")
-      .where("email", "==", Fire.auth().currentUser.email)
-      .get()
-      .then(snapshot => {
-        snapshot.docs.forEach(doc => {
-          renderProfilePic(doc);
-        });
-      });
-    }, 750);
+    // If no profile visible, then do first time setup
+    if (document.getElementById("parent-profile").className === "react-reveal collapse" && 
+        document.getElementById("walker-profile").className === "react-reveal collapse" &&
+        document.getElementById("boarder-profile").className === "react-reveal collapse") {
+          document.getElementById("profile-page1").className = "collapse.show";
+        }
 
-    function renderParentProfile(doc) {
-      document.getElementById("parent-button").innerHTML = "Scroll to view Parent Profile";
-      document.getElementById("parent-email").value = Fire.auth().currentUser.email;
-      document.getElementById("parent-name").value = doc.data().name;
-      document.getElementById("parent-phone").value = doc.data().phone;
-      document.getElementById("parent-city").value = doc.data().city;
-      document.getElementById("parent-bio").value = doc.data().bio;
-    }
-  
-    function renderWalkerProfile(doc) {
-      document.getElementById("walker-button").innerHTML = "Show Walker Profile";
-      document.getElementById("walker-email").value = Fire.auth().currentUser.email;
-      document.getElementById("walker-name").value = doc.data().name;
-      document.getElementById("walker-phone").value = doc.data().phone;
-      document.getElementById("walker-city").value = doc.data().city;
-      document.getElementById("walker-bio").value = doc.data().bio;
-    }
-  
-    function renderBoarderProfile(doc) {
-      document.getElementById("boarder-button").innerHTML = "Show Boarder Profile";
-      document.getElementById("boarder-email").value = Fire.auth().currentUser.email;
-      document.getElementById("boarder-name").value = doc.data().name;
-      document.getElementById("boarder-phone").value = doc.data().phone;
-      document.getElementById("boarder-address").value = doc.data().address;
-      document.getElementById("boarder-city").value = doc.data().city;
-      document.getElementById("boarder-bio").value = doc.data().bio;
-    }
+        function renderParentProfile(doc) {
+          document.getElementById("parent-button").innerHTML = "Scroll to view Parent Profile";
+          document.getElementById("parent-email").value = Fire.auth().currentUser.email;
+          document.getElementById("parent-name").value = doc.data().name;
+          document.getElementById("parent-phone").value = doc.data().phone;
+          document.getElementById("parent-city").value = doc.data().city;
+          document.getElementById("parent-bio").value = doc.data().bio;
+        }
+      
+        function renderWalkerProfile(doc) {
+          document.getElementById("walker-button").innerHTML = "Show Walker Profile";
+          document.getElementById("walker-email").value = Fire.auth().currentUser.email;
+          document.getElementById("walker-name").value = doc.data().name;
+          document.getElementById("walker-phone").value = doc.data().phone;
+          document.getElementById("walker-city").value = doc.data().city;
+          document.getElementById("walker-bio").value = doc.data().bio;
+        }
+      
+        function renderBoarderProfile(doc) {
+          document.getElementById("boarder-button").innerHTML = "Show Boarder Profile";
+          document.getElementById("boarder-email").value = Fire.auth().currentUser.email;
+          document.getElementById("boarder-name").value = doc.data().name;
+          document.getElementById("boarder-phone").value = doc.data().phone;
+          document.getElementById("boarder-address").value = doc.data().address;
+          document.getElementById("boarder-city").value = doc.data().city;
+          document.getElementById("boarder-bio").value = doc.data().bio;
+        }
+    
+        function renderProfilePic(doc) {
+          document.getElementById("profile-pic-large").src = doc.data().pic;
+        }
+  }
 
-    function renderProfilePic(doc) {
-      document.getElementById("profile-pic-large").src = doc.data().pic;
-    }
+  startParentProfile() {
+    document.getElementById("parent-button").style.backgroundColor="gray"; // Start parent profile
+    document.getElementById("profile-page2").className="collapse.show";
+    document.getElementById("service-button").style.backgroundColor="#f2f4f7"; // Close potentially open service profile
+    document.getElementById("profile-page3").className="collapse";
+    document.getElementById("profile-page4").className="collapse";
+    document.getElementById("profile-page5").className="collapse";
+  }
+
+  startServiceProfile() {
+    document.getElementById("service-button").style.backgroundColor="gray"; // Start service profile
+    document.getElementById("profile-page3").className="collapse.show";
+    document.getElementById("parent-button").style.backgroundColor="#f2f4f7"; // Close potentially open parent profile
+    document.getElementById("walker-button").style.backgroundColor="#f2f4f7";
+    document.getElementById("boarder-button").style.backgroundColor="#f2f4f7";
+    document.getElementById("profile-page2").className="collapse";
+    document.getElementById("profile-page4").className="collapse";
+    document.getElementById("profile-page5").className="collapse";
+  }
+
+  startWalkerProfile() {
+    document.getElementById("walker-button").style.backgroundColor="gray"; // Start walker profile
+    document.getElementById("profile-page4").className="collapse.show";
+    document.getElementById("boarder-button").style.backgroundColor="#f2f4f7"; // Close potentially open boarder profile
+    document.getElementById("profile-page5").className="collapse";
+  }
+
+  startBoarderProfile() {
+    document.getElementById("boarder-button").style.backgroundColor="gray"; // Start boarder profile
+    document.getElementById("profile-page5").className="collapse.show";
+    document.getElementById("walker-button").style.backgroundColor="#f2f4f7"; // Close potentially open walker profile
+    document.getElementById("profile-page4").className="collapse";
   }
 
   openParentProfile() {
@@ -255,18 +346,101 @@ class ProfileForm extends React.Component {
     return (
       <div className="mt-7 mx-6 mb-8">
         <Slide up>
-          <div className="row px-4 py-4">
-            <button className="col mx-4 py-1 signup" id="parent-button" onClick={this.openParentProfile}>
-              Create a parent profile
-            </button>
-            <button className="col mx-4 py-1 signup" id="walker-button" onClick={this.openWalkerProfile}>
-              Create a walker profile
-            </button>
-            <button className="col mx-4 py-1 signup" id="boarder-button" onClick={this.openBoarderProfile}>
-              Create a dog boarder profile
-            </button>
+          <div id="profile-page1" className="collapse">
+          <div className="my-4">Thank you for joining POOCH!</div>
+          <div className="my-4">Help us get to know you by answering a few questions:</div>
+          <div className="mt-6 mb-4">I am a...</div>
+            <div className="row my-5 mx-8">
+              <button className="col mx-4 py-1 signup" id="parent-button" onClick={this.startParentProfile}>
+                Dog Parent
+              </button>
+              or a
+              <button className="col mx-4 py-1 signup" id="service-button" onClick={this.startServiceProfile}>
+                Dog Service Provider
+              </button>
+            </div>
           </div>
-          <div className="mb-1">
+  
+          <div id="profile-page2" className="collapse">
+            <div className="mb-3"><img id="profile-pic-large" src={GenericPic} alt="Profile" onClick={this.toggleCollapse}/></div>
+              <div className="col">
+                <div className="my-4 row"><input id="parent-name" type="text" placeholder="Name" maxlength="50"/></div>
+                <div className="my-4 row"><input id="parent-phone" type="text" placeholder="Phone Number" min="0" max="9999999999" minlength="10" maxLength="11"/></div>
+                <div className="my-4 row"><input id="parent-city" type="text" placeholder="City" maxlength="50"/></div> 
+              </div>
+              <button type="submit" className="btn btn-primary" onClick={this.updateParent}>Create Parent Profile</button>
+          </div>
+
+          <div id="profile-page3" className="collapse">
+          <div className="mt-6 mb-4">I would like to offer...</div>
+            <div className="row my-5 mx-8">
+              <button className="col mx-4 py-1 signup" id="walker-button" onClick={this.startWalkerProfile}>
+                Dog Walking
+              </button>
+              or
+              <button className="col mx-4 py-1 signup" id="boarder-button" onClick={this.startBoarderProfile}>
+                Dog Boarding
+              </button>
+            </div>
+          </div>
+          
+          <div id="profile-page4" className="collapse">
+            <div className="mb-3"><img id="profile-pic-large" src={GenericPic} alt="Profile" onClick={this.toggleCollapse}/></div>
+              <div className="col">
+                <div className="my-4 row"><input id="walker-name" type="text" placeholder="Name" maxlength="50"/></div>
+                <div className="my-4 row"><input id="walker-phone" type="text" placeholder="Phone Number" min="0" max="9999999999" maxLength="11"/></div>
+                <div className="my-4 row"><input id="walker-city" type="text" placeholder="City" maxlength="50"/></div>
+                <div className="my-4 row"><input id="walker-hourly-rate" type="text" placeholder="Hourly Rate" min="12" max="100" maxLength="3"/></div>
+              </div>
+              <button type="submit" className="btn btn-primary" onClick={this.updateWalker}>Create Dog Walking Profile</button>
+          </div>
+
+          <div id="profile-page5" className="collapse">
+            <div className="mb-3"><img id="profile-pic-large" src={GenericPic} alt="Profile" onClick={this.toggleCollapse}/></div>
+              <div className="col">
+                <div className="my-4 row"><input id="boarder-name" type="text" placeholder="Name" maxlength="50"/></div>
+                <div className="my-4 row"><input id="boarder-phone" type="text" placeholder="Phone Number" min="0" max="9999999999" maxLength="11"/></div>
+                <div className="my-4 row"><input id="boarder-address" type="text" placeholder="Address" maxlength="50"/></div>
+                <div className="my-4 row"><input id="boarder-city" type="text" placeholder="City" maxlength="50"/></div>
+                <div className="my-4 row"><input id="boarder-hourly-rate" type="text" placeholder="Daily Rate" min="12" max="1000" maxLength="4"/></div>
+              </div>
+              <button type="submit" className="btn btn-primary" onClick={this.updateBoarder}>Create Dog Boarding Profile</button>
+          </div>
+
+          <div id="parent-profile" className="collapse">
+            <div className="mb-3"><img id="profile-pic-large" src={GenericPic} alt="Profile" onClick={this.toggleCollapse}/></div>
+              <div className="col">
+                <div className="my-4 row"><input id="database-parent-name" type="text" placeholder="Name" maxlength="50"/></div>
+                <div className="my-4 row"><input id="database-parent-phone" type="text" placeholder="Phone Number" min="0" max="9999999999" minlength="10" maxLength="11"/></div>
+                <div className="my-4 row"><input id="database-parent-city" type="text" placeholder="City" maxlength="50"/></div> 
+              </div>
+              <button type="submit" className="btn btn-primary" onClick={this.updateParent}>Edit Profile</button>
+          </div>
+
+          <div id="walker-profile" className="collapse">
+            <div className="mb-3"><img id="profile-pic-large" src={GenericPic} alt="Profile" onClick={this.toggleCollapse}/></div>
+              <div className="col">
+                <div className="my-4 row"><input id="database-walker-name" type="text" placeholder="Name" maxlength="50"/></div>
+                <div className="my-4 row"><input id="database-walker-phone" type="text" placeholder="Phone Number" min="0" max="9999999999" maxLength="11"/></div>
+                <div className="my-4 row"><input id="database-walker-city" type="text" placeholder="City" maxlength="50"/></div>
+                <div className="my-4 row"><input id="database-walker-hourly-rate" type="text" placeholder="Hourly Rate" min="12" max="100" maxLength="3"/></div>
+              </div>
+              <button type="submit" className="btn btn-primary" onClick={this.updateWalker}>Edit Profile</button>
+          </div>
+
+          <div id="boarder-profile" className="collapse">
+            <div className="mb-3"><img id="profile-pic-large" src={GenericPic} alt="Profile" onClick={this.toggleCollapse}/></div>
+              <div className="col">
+                <div className="my-4 row"><input id="database-boarder-name" type="text" placeholder="Name" maxlength="50"/></div>
+                <div className="my-4 row"><input id="database-boarder-phone" type="text" placeholder="Phone Number" min="0" max="9999999999" maxLength="11"/></div>
+                <div className="my-4 row"><input id="database-boarder-address" type="text" placeholder="Address" maxlength="50"/></div>
+                <div className="my-4 row"><input id="database-boarder-city" type="text" placeholder="City" maxlength="50"/></div>
+                <div className="my-4 row"><input id="database-boarder-hourly-rate" type="text" placeholder="Daily Rate" min="12" max="1000" maxLength="4"/></div>
+              </div>
+              <button type="submit" className="btn btn-primary" onClick={this.updateBoarder}>Edit Profile</button>
+          </div>
+
+          {/* <div className="mb-1">
               <img id="profile-pic-large" src={GenericPic} alt="Profile" onClick={this.toggleCollapse}/>  
           </div>
           <div className="mb-3 collapse" id="edit-profile-pic-col">
@@ -353,7 +527,7 @@ class ProfileForm extends React.Component {
                   </div>
               </div>
               <button type="submit" id="update-boarder-button" className="btn btn-primary mx-9 my-4" onClick={this.updateBoarder}>Update Boarder Profile</button>
-          </div>
+          </div> */}
           </Slide>
       </div>
     ); 

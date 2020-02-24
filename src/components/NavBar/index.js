@@ -43,32 +43,37 @@ class NavBar extends React.Component {
     }, 100);
   }
 
+  goToProfile() {
+    window.location.replace("/profile");
+  }
+
   toggleCollapse() {
-    if (document.getElementById("profile-dropdown").className === "collapse col") {
-        document.getElementById("profile-dropdown").className = "collapse.show col";
+    if (document.getElementById("profile-dropdown").className === "collapse fixed-top") {
+        document.getElementById("profile-dropdown").className = "collapse.show fixed-top";
     }
-    else if (document.getElementById("profile-dropdown").className === "collapse.show col") {
-        document.getElementById("profile-dropdown").className = "collapse col"; 
+    else if (document.getElementById("profile-dropdown").className === "collapse.show fixed-top") {
+        document.getElementById("profile-dropdown").className = "collapse fixed-top"; 
     }
   }
 
   collapseDropdown() {
-        document.getElementById("profile-dropdown").className = "collapse col";
+        document.getElementById("profile-dropdown").className = "collapse fixed-top";
   }
 
   openDropdown() {
-    document.getElementById("profile-dropdown").className = "collapse.show col";
+    document.getElementById("profile-dropdown").className = "collapse.show fixed-top";
   }
 
   render() {
     return (
       <div>
+        <div className="collapse fixed-top" id="profile-dropdown">
+            <div className="trak_nav-item mb-3" id="dropdown-row"><button id="dropdown-button" onClick={this.goToProfile}>Profile</button></div>
+            <div className="trak_nav-item mt-3" id="dropdown-row"><button id="dropdown-button" onClick={this.logout}>Logout</button></div>
+        </div>
         <nav className="navbar navbar-expand-lg fixed-top py-5" >
-          <img className="ml-2" id="profile-pic" src={GenericProfile} alt="Profile" onClick={this.toggleCollapse}/>
-          <div className="collapse col" id="profile-dropdown">
-            <div className="row trak_nav-item mb-2" id="dropdown-row"><button id="dropdown-button">Profile</button></div>
-            <div className="row trak_nav-item mt-2" id="dropdown-row"><button id="dropdown-button" onClick={this.logout}>Logout</button></div>
-          </div>
+          <img className="ml-2" id="profile-pic" src={GenericProfile} alt="Profile" onClick={this.toggleCollapse} onMouseEnter={this.openDropdown}/>
+          
           <div id="brand">
             <a className="navbar-brand trak_nav-title"  href="/">
             POOCH
