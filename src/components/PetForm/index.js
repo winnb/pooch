@@ -73,18 +73,36 @@ updateDog() {
     });
   });
   setTimeout(() => {
-  db.collection("pets").add({
-    email: Fire.auth().currentUser.email,
-    name: document.getElementById("dog-name").value,
-    gender: document.getElementById("dog-gender").value,
-    breed: document.getElementById("dog-breed-simple").value,
-    colorPrimary: document.getElementById("primary-color").value,
-    colorSecondary: document.getElementById("secondary-color").value,
-    colorTertiary: document.getElementById("tertiary-color").value,
-    birthday: document.getElementById("dog-birthday").value,
-    bio: document.getElementById("dog-bio").value,
-    pic: document.getElementById("profile-pic-large").src
+  if (document.getElementById("breed-checkbox").checked === true) {
+    console.log("adding from simple dog breeds");
+    db.collection("pets").add({
+      email: Fire.auth().currentUser.email,
+      name: document.getElementById("dog-name").value,
+      gender: document.getElementById("dog-gender").value,
+      breed: document.getElementById("dog-breed-simple").value,
+      colorPrimary: document.getElementById("primary-color").value,
+      colorSecondary: document.getElementById("secondary-color").value,
+      colorTertiary: document.getElementById("tertiary-color").value,
+      birthday: document.getElementById("dog-birthday").value,
+      bio: document.getElementById("dog-bio").value,
+      pic: document.getElementById("profile-pic-large").src
   });
+  }
+  else if (document.getElementById("breed-checkbox").checked === false) {
+    console.log("adding from all dog breeds");
+    db.collection("pets").add({
+      email: Fire.auth().currentUser.email,
+      name: document.getElementById("dog-name").value,
+      gender: document.getElementById("dog-gender").value,
+      breed: document.getElementById("dog-breed").value,
+      colorPrimary: document.getElementById("primary-color").value,
+      colorSecondary: document.getElementById("secondary-color").value,
+      colorTertiary: document.getElementById("tertiary-color").value,
+      birthday: document.getElementById("dog-birthday").value,
+      bio: document.getElementById("dog-bio").value,
+      pic: document.getElementById("profile-pic-large").src
+    });
+  }
 }, 1000);
   setTimeout(() => {
     window.location.reload();
@@ -145,12 +163,25 @@ triggerAction() {
       .get()
       .then(snapshot => {
         snapshot.docs.forEach(doc => {
+          window.alert(document.getElementById("profile-select").value+"'s profile was deleted");
           document.getElementById("profile-select").options[document.getElementById("profile-select").selectedIndex].remove();
           doc.ref.delete();
+          document.getElementById("action-select").value = "";
         });
       });
       document.getElementById("new-dog-profile-title").innerHTML = "New Dog Profile";
       document.getElementById("dog-profile-button").innerHTML = "Add New Dog";
+  }
+}
+
+swapBreedList() {
+  if (document.getElementById("breed-checkbox").checked === true) {
+    document.getElementById("dog-breed-row").className = "trak_body row my-2 mx-4 mr-8 collapse";
+    document.getElementById("dog-breed-simple-row").className = "trak_body row my-2 mx-4 mr-8 collapse.show";
+  }
+  else if (document.getElementById("breed-checkbox").checked === false) {
+    document.getElementById("dog-breed-row").className = "trak_body row my-2 mx-4 mr-8 collapse.show";
+    document.getElementById("dog-breed-simple-row").className = "trak_body row my-2 mx-4 mr-8 collapse";
   }
 }
 
@@ -222,8 +253,8 @@ triggerAction() {
                           <option value="Female">Female</option>
                         </select>
                       </span>
-                      <span className="trak_body row my-2 mx-4 mr-8">
-                        <select className="col collapse.show" id="dog-breed-simple" name="Dog Breed:">
+                      <span className="trak_body row my-2 mx-4 mr-8 collapse.show" id="dog-breed-simple-row">
+                        <select className="col" id="dog-breed-simple" name="Dog Breed:">
                           <option value="">Select dog breed</option>
                           <option value="Australian Shepard">Australian Shepard</option>
                           <option value="Beagle">Beagle</option>
@@ -255,9 +286,9 @@ triggerAction() {
                           <option value="Terrier">Terrier</option>
                         </select>
                       </span>
-                      <span className="trak_body row my-2 mx-4 mr-8 collapse">
+                      <span className="trak_body row my-2 mx-4 mr-8 collapse" id="dog-breed-row">
                         <select className="col" id="dog-breed">
-                          <option value="">Select dog breed</option>
+                          <option value="">Select dog breed (all)</option>
                           <option value="Affenpinscher">Affenpinscher</option>
                           <option value="Afghan Hound">Afghan Hound</option>
                           <option value="Airedale Terrier">Airedale Terrier</option>
@@ -505,6 +536,9 @@ triggerAction() {
                           <option value="Yakutian Laika">Yakutian Laika</option>
                           <option value="Yorkshire Terrier">Yorkshire Terrier</option>
                         </select>
+                      </span>
+                      <span className="trak_body row my-2 mx-4 mr-8 px-3 database-profile-field">
+                        <input type="checkbox" id="breed-checkbox" className="mr-4 my-2" onChange={this.swapBreedList} defaultChecked></input>Show only common dog breeds
                       </span>
                       <span className="trak_body row my-2 mx-4 mr-8">
                         <select className="col profile-field" id="primary-color">
