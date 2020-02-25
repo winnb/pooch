@@ -21,17 +21,51 @@ class NavBar extends React.Component {
     const db = Fire.firestore();
     Fire.auth().onAuthStateChanged(function(user) {
       if (user) { // User is signed in
-        db.collection("profile-pictures") // Check if user has profile picture
+        db.collection("profile-types") // Check if user has profile picture
         .where("email", "==", Fire.auth().currentUser.email)
         .get()
         .then(snapshot => {
           snapshot.docs.forEach(doc => {
-            document.getElementById("profile-pic").src = doc.data().pic;
+            if (doc.data().type === "parent")
+            renderParentPic();
+          if (doc.data().type === "walker")
+            renderWalkerPic();
+          if (doc.data().type === "boarder")
+            renderBoarderPic();
           });
         });
       }
     });
-    
+    function renderParentPic(doc) {
+      db.collection("parents")
+      .where("email", "==", Fire.auth().currentUser.email)
+      .get()
+      .then(snapshot => {
+        snapshot.docs.forEach(doc => {
+        document.getElementById("profile-pic").src = doc.data().pic; 
+        });
+      });
+    }
+    function renderWalkerPic(doc) {
+      db.collection("walkers")
+      .where("email", "==", Fire.auth().currentUser.email)
+      .get()
+      .then(snapshot => {
+        snapshot.docs.forEach(doc => {
+        document.getElementById("profile-pic").src = doc.data().pic; 
+        });
+      });
+    }
+    function renderBoarderPic(doc) {
+      db.collection("boarders")
+      .where("email", "==", Fire.auth().currentUser.email)
+      .get()
+      .then(snapshot => {
+        snapshot.docs.forEach(doc => {
+        document.getElementById("profile-pic").src = doc.data().pic; 
+        });
+      });
+    }
   }
 
   logout(e) {

@@ -15,6 +15,10 @@ import "./styles.scss";
 // Graphics and Animation
 // import Slide from "react-reveal";
 import DogBust from "./dog-bust.png";
+import Gray1 from "./graydog1.png";
+import Gray2 from "./graydog2.png";
+import Gray3 from "./graydog3.png";
+import Plus from "./plus.png";
 
 class PetForm extends React.Component {
 
@@ -26,6 +30,9 @@ class PetForm extends React.Component {
       .get()
       .then(snapshot => {
         snapshot.docs.forEach(doc => {
+          for (var i=0; i<document.getElementsByClassName("dog-icon gray").length; i++)
+            document.getElementsByClassName("dog-icon gray")[i].className += " collapse";
+          document.getElementById("dog-icon-row").innerHTML = '<img class="dog-icon" alt="dog-icon" src="'+doc.data().pic+'"/>' + document.getElementById("dog-icon-row").innerHTML;
           document.getElementById("database-dog-name").innerHTML = doc.data().name;
           document.getElementById("database-dog-gender").innerHTML = doc.data().gender;
           document.getElementById("database-dog-breed").innerHTML = doc.data().breed;
@@ -185,9 +192,93 @@ swapBreedList() {
   }
 }
 
+previewDogPic(event) {
+  var input = event.target; // Get image that changed state of input element
+  var reader = new FileReader();
+  reader.onload = function() {
+  var dataURL = reader.result;
+  var output = document.getElementById('dog-pic');
+  output.src = dataURL;
+  };
+  reader.readAsDataURL(input.files[0]); // Show preview of image
+}
+
+toggleNewProfile() {
+  console.log("collapse");
+  if (document.getElementById("profile-page1").className === "collapse")
+    document.getElementById("profile-page1").className = "collapse.show";
+  else if (document.getElementById("profile-page1").className === "collapse.show")
+    document.getElementById("profile-page1").className = "collapse";
+}
+
   render() {
     return (
       <div className="mt-7 mx-6 mb-8">
+        <div className="row my-5" id="dog-icon-row">
+          <img className="dog-icon gray" alt="dog-icon" src={Gray1}/><img className="dog-icon gray" alt="dog-icon" src={Gray2}/><img className="dog-icon gray" alt="dog-icon" src={Gray3}/><img id="add-dog-button" className="dog-icon" alt="dog-icon" src={Plus} onMouseDown={this.toggleNewProfile}/>
+        </div>
+        <div id="profile-page1" className="collapse.show">
+              <div className="mb-3"><img className="profile-pic" id="dog-pic" src={DogBust} alt="Profile"/></div>
+              <input type="file" id="dog-input" onChange={this.previewDogPic}/>
+              <div className="col">
+                <div className="my-4 row"><input id="dog-name" type="text" placeholder="Name" maxLength="50"/></div>
+                <div className="my-4 row">
+                  <select id="dog-gender">
+                      <option value="">Select gender</option>
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
+                    </select>
+                </div>
+                <div className="my-4 row">
+                  <select id="dog-breed-simple" name="Dog Breed:">
+                      <option value="">Select dog breed</option>
+                      <option value="Mixed">Mixed</option>
+                      <option value="Australian Shepard">Australian Shepard</option>
+                      <option value="Beagle">Beagle</option>
+                      <option value="Boxer">Boxer</option>
+                      <option value="Bulldog">Bulldog</option>
+                      <option value="Chihuahua">Chihuahua</option>
+                      <option value="Collie">Collie</option>
+                      <option value="Corgie">Corgie</option>
+                      <option value="Daschund">Daschund</option>
+                      <option value="Dalmation">Dalmation</option>
+                      <option value="German Shepard">German Shepard</option>
+                      <option value="Golden Retreiver">Golden Retreiver</option>
+                      <option value="Great Dane">Great Dane</option>
+                      <option value="Hound">Hound</option>
+                      <option value="Labrador Retreiver">Labrador Retreiver</option>
+                      <option value="Mastiff">Mastiff</option>
+                      <option value="Pinscher">Pinscher</option>
+                      <option value="Pointer">Pointer</option>
+                      <option value="Pomeranian">Pomeranian</option>
+                      <option value="Poodle">Poodle</option>
+                      <option value="Pug">Pug</option>
+                      <option value="Rottweiler">Rottweiler</option>
+                      <option value="Setter">Setter</option>
+                      <option value="Siberian Husky">Siberian Husky</option>
+                      <option value="Schnauzer">Schnauzer</option>
+                      <option value="Sheepdog">Sheepdog</option>
+                      <option value="Shih Tzu">Shih Tzu</option>
+                      <option value="Spaniel">Spaniel</option>
+                      <option value="Terrier">Terrier</option>
+                  </select>
+                </div>
+                <div className="my-4 row">
+                  <select id="primary-color">
+                      <option value="">Select color</option>
+                      <option value="Black">Black</option>
+                      <option value="Grey">Grey</option>
+                      <option value="Blue">Blue</option>
+                      <option value="White">White</option>
+                      <option value="Yellow">Yellow</option>
+                      <option value="Orange">Orange</option>
+                      <option value="Red">Red</option>
+                      <option value="Brown">Brown</option>
+                   </select>
+                </div> 
+              </div>
+              <button type="submit" className="btn btn-primary" onClick={this.newDog}>Create Dog Profile</button>
+          </div>
         <div className="row" id="action-row">
             <div className="my-3 mr-2">I want to</div>
             <select className="my-3 mx-2 pl-3 py-1" id="action-select" onChange={this.triggerAction}>

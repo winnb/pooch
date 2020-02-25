@@ -31,6 +31,7 @@ class ProfileForm extends React.Component {
     const db = Fire.firestore();
     console.log("component mounted");
     setTimeout(() => { // Determine user type
+      //document.getElementById("username").innerHTML = "Welcome, "+Fire.auth().currentUser.email;
       db.collection("profile-types")
       .where("email", "==", Fire.auth().currentUser.email)
       .get()
@@ -48,7 +49,7 @@ class ProfileForm extends React.Component {
         });
       });
     }, 1000);
-    // Wait 1 second, then check if no profile visible, so do first time setup
+    // Wait 2 second, then check if no profile visible, so do first time setup
     setTimeout(() => {
     if (document.getElementById("parent-profile").className === "react-reveal collapse" && 
         document.getElementById("walker-profile").className === "react-reveal collapse" &&
@@ -56,7 +57,7 @@ class ProfileForm extends React.Component {
           console.log("user has not set up a profile!");
           document.getElementById("profile-page1").className = "collapse.show";
         }
-    }, 1500);
+    }, 2000);
 
         function renderParentProfile(doc) {
           console.log("user is a parent!");
@@ -76,16 +77,28 @@ class ProfileForm extends React.Component {
       
         function renderWalkerProfile(doc) {
           console.log("user is a walker!");
+          db.collection("walkers")
+          .where("email", "==", Fire.auth().currentUser.email)
+          .get()
+          .then(snapshot => {
+            snapshot.docs.forEach(doc => {
           document.getElementById("walker-profile").className = "react-reveal collapse.show";
           document.getElementById("database-walker-name").value = doc.data().name;
           document.getElementById("database-walker-phone").value = doc.data().phone;
           document.getElementById("database-walker-city").value = doc.data().city;
           document.getElementById("database-walker-hourly-rate").value = doc.data().hourlyRate;
           document.getElementById("database-walker-pic").src = doc.data().pic;
+            });
+          });
         }
       
         function renderBoarderProfile(doc) {
           console.log("user is a boarder!");
+          db.collection("boarders")
+          .where("email", "==", Fire.auth().currentUser.email)
+          .get()
+          .then(snapshot => {
+            snapshot.docs.forEach(doc => {
           document.getElementById("boarder-profile").className = "react-reveal collapse.show";
           document.getElementById("database-boarder-name").value = doc.data().name;
           document.getElementById("database-boarder-phone").value = doc.data().phone;
@@ -93,6 +106,8 @@ class ProfileForm extends React.Component {
           document.getElementById("database-boarder-city").value = doc.data().city;
           document.getElementById("database-boarder-daily-rate").value = doc.data().dailyRate;
           document.getElementById("database-boarder-pic").src = doc.data().pic;
+            });
+          });
         }
   }
 
@@ -176,6 +191,7 @@ class ProfileForm extends React.Component {
 
   newWalker() {
     const db = Fire.firestore();
+    setTimeout(() => {
       db.collection("walkers").add({
       email: Fire.auth().currentUser.email,
       name: document.getElementById("walker-name").value,
@@ -188,9 +204,10 @@ class ProfileForm extends React.Component {
       email: Fire.auth().currentUser.email,
       type: "walker"
     });
+  }, 1000);
     setTimeout(() => {
       window.location.reload();
-    }, 1000);
+    }, 1750);
   }
 
   updateWalker() {
@@ -217,23 +234,28 @@ class ProfileForm extends React.Component {
   }
 
   newBoarder() {
-    const db = Fire.firestore();
-      db.collection("boarders").add({
-      email: Fire.auth().currentUser.email,
-      name: document.getElementById("boarder-name").value,
-      phone: document.getElementById("boarder-phone").value,
-      address: document.getElementById("boarder-address").value,
-      city: document.getElementById("boarder-city").value,
-      dailyRate: document.getElementById("boarder-daily-rate").value,
-      pic: document.getElementById("boarder-pic").src
-    });
-    db.collection("profile-types").add({
-      email: Fire.auth().currentUser.email,
-      type: "boarder"
-    });
-    setTimeout(() => {
-      window.location.reload();
-    }, 1000);
+    if (document.getElementById("boarder-pic").src.length < 582795) {
+      const db = Fire.firestore();
+        db.collection("boarders").add({
+        email: Fire.auth().currentUser.email,
+        name: document.getElementById("boarder-name").value,
+        phone: document.getElementById("boarder-phone").value,
+        address: document.getElementById("boarder-address").value,
+        city: document.getElementById("boarder-city").value,
+        dailyRate: document.getElementById("boarder-daily-rate").value,
+        pic: document.getElementById("boarder-pic").src
+      });
+      db.collection("profile-types").add({
+        email: Fire.auth().currentUser.email,
+        type: "boarder"
+      });
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+    }
+    else {
+      document.getElementById("profile-error").className = "collapse.show";
+    }
   }
 
   updateBoarder() {
@@ -297,6 +319,8 @@ previewBoarderPic(event) {
     return (
       <div className="mt-7 mx-6 mb-8">
         <Slide up>
+          <div className="trak_nav-item mb-3" id="username"></div>
+
           <div id="profile-page1" className="collapse">
           <div className="my-4">Thank you for joining POOCH!</div>
           <div className="my-4">Help us get to know you by answering a few questions:</div>
@@ -393,6 +417,8 @@ previewBoarderPic(event) {
               </div>
               <button type="submit" className="btn btn-primary" onClick={this.updateBoarder}>Edit Profile</button>
           </div>
+
+          <div id="profile-error" className="collapse">Picture can be at most 400x400 pixels</div>
           </Slide>
       </div>
     ); 
