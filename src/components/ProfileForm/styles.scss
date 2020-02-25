@@ -14,13 +14,6 @@
     border-radius: 5px;
 }
 
-#profile-pic-large {
-    width: 150px;
-    height: 150px;
-    transform: scale(1);
-    border-radius: 80px;
-}
-
 #edit-profile-pic-input {
     width: 15%;
     font-size: 50%;
@@ -41,10 +34,6 @@
     transition-duration: 0.5s;
 }
 
-#profile-pic-large:hover {
-    opacity:0.6;
-}
-
 #parent-bio {
     color: rgb(100, 100, 100);
     font-size: 75%;
@@ -63,6 +52,15 @@
 #tooltip {
     font-size: 50%;
 }
+
+.profile-pic {
+    width: 100%;
+    height: 100%;
+    max-width: 150px;
+    max-height: 150px;
+    border-radius: 75px;
+    transform: scale(1);
+  }
 
 #profile-page2 {
     background-color: rgb(216, 216, 218);
@@ -85,6 +83,36 @@
 }
 
 #profile-page5 {
+    background-color: rgb(216, 216, 218);
+    padding-top: 3%;
+    padding-bottom: 3%;
+    padding-left: 6%;
+    padding-right: 6%;
+    margin-left: 35%;
+    margin-right: 35%;
+}
+
+#parent-profile {
+    background-color: rgb(216, 216, 218);
+    padding-top: 3%;
+    padding-bottom: 3%;
+    padding-left: 6%;
+    padding-right: 6%;
+    margin-left: 35%;
+    margin-right: 35%;
+}
+
+#walker-profile {
+    background-color: rgb(216, 216, 218);
+    padding-top: 3%;
+    padding-bottom: 3%;
+    padding-left: 6%;
+    padding-right: 6%;
+    margin-left: 35%;
+    margin-right: 35%;
+}
+
+#boarder-profile {
     background-color: rgb(216, 216, 218);
     padding-top: 3%;
     padding-bottom: 3%;

@@ -1,7 +1,6 @@
 import React from "react";
 
 // Components
-import Button from "../Button";
 import Loader from "react-loader-spinner";
 
 //Firebase

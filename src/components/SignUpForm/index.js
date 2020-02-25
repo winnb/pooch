@@ -1,6 +1,5 @@
 // React
 import React from "react";
-import { Link }  from  "@reach/router";
 
 // Firebase
 import fire from "../../config/Fire";

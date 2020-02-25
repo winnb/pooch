@@ -30,8 +30,9 @@
 }
 
 #nav-pages {
-  min-width: 1000px;
-  margin-left: 30px;
+  width: 100%;
+  margin-left: 5%;
+  margin-right: 0px;
 }
 
   .navbar-brand {
@@ -41,37 +42,43 @@
   .your-pets {
     border-bottom-color: rgb(255, 195, 117);
     border-bottom-style: solid;
-    min-width: 175px;
+    min-width: 100px;
+    max-width: 150px;
   }
 
   .dog-walking {
     border-bottom-color: rgb(245, 220, 107);
     border-bottom-style: solid;
-    min-width: 220px;
+    min-width: 100px;
+    max-width: 150px;
   }
 
   .dog-boarding {
     border-bottom-color: rgb(158, 245, 102);
     border-bottom-style: solid;
-    min-width: 230px;
+    min-width: 100px;
+    max-width: 150px;
   }
 
   .dog-services {
     border-bottom-color: rgb(107, 245, 165);
     border-bottom-style: solid;
-    min-width: 220px;
+    min-width: 100px;
+    max-width: 150px;
   }
 
   .dog-meetup {
     border-bottom-color: rgb(107, 213, 245);
     border-bottom-style: solid;
-    min-width: 210px;
+    min-width: 100px;
+    max-width: 150px;
   }
 
   .dog-records {
     border-bottom-color: rgb(188, 117, 255);
     border-bottom-style: solid;
-    min-width: 220px;
+    min-width: 100px;
+    max-width: 150px;
   }
 
   a {
