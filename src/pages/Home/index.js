@@ -18,6 +18,7 @@ import Vet from './media/vet.jpg';
 import Slideshow from "../../components/Slideshow";
 import Signup from "../Signup";
 import Login from "../Login";
+import ChangePassword from "../ChangePassword";
 
 class Home extends React.Component {
   constructor(props) {
@@ -38,18 +39,17 @@ class Home extends React.Component {
     document.getElementById("signup-box").style.marginLeft = "33%";
   }
 
-  componentDidMount() {
-    
-  }
-
   render() {
     return (
       <div className="mt-7" id="section1">
-        <div id="login-box" className="fixed-top">
+        <div className="fixed-top home-box">
           <Login/>
         </div>
-        <div id="signup-box" className="fixed-top">
+        <div className="fixed-top home-box">
           <Signup/>
+        </div>
+        <div className="fixed-top home-box">
+          <ChangePassword/>
         </div>
         <Slide down>
           <Slideshow/> 

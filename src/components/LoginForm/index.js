@@ -53,6 +53,12 @@ class LoginForm extends React.Component {
     document.getElementById("login-outer").className = "collapse"
   }
 
+  resetPassword() {
+    document.getElementById("login-outer").className = "collapse";
+    document.getElementById("signup-outer").className = "collapse";
+    document.getElementById("change-password-outer").className = "collapse.show";
+  }
+
   render() {
     return (
       <div id="login-outer" className="collapse">

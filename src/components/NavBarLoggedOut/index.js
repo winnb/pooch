@@ -8,11 +8,13 @@ class NavBarLoggedOut extends React.Component {
 
   openSignup() {
     document.getElementById("login-outer").className = "collapse";
+    document.getElementById("change-password-outer").className = "collapse";
     document.getElementById("signup-outer").className = "collapse.show";
   }
 
   openLogin() {
     document.getElementById("signup-outer").className = "collapse";
+    document.getElementById("change-password-outer").className = "collapse";
     document.getElementById("login-outer").className = "collapse.show";
   }
 
