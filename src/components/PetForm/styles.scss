@@ -37,9 +37,9 @@ span {
   transition-duration: 0.5s;
 }
 
-#tooltip {
-  font-size: 40%;
-}
+// #tooltip {
+//   font-size: 40%;
+// }
 
 .database-profile-field {
   background-color: white;
@@ -62,33 +62,27 @@ span {
   transform: scale(0.8);
 }
 
-#breed-checkbox {
-  color: red;
-}
-
-#overlay {
-  position: absolute;
-  left: 33%;
-  right: 33%;
-  top: 30%;
-  background-color: gray;
-  height: 30%;
-  width: 33%;
+#dog-icon-row {
+  width: 75%;
+  margin-left: 0%;
 }
 
 .dog-icon {
-  border-radius: 50px;
-  width: 1.5%;
-  height: width;
-  margin-right: 7%;
+  transform: scale(1);
+  border-radius: 100%;
+  width: 100px;
+  height: 100px;
+  margin-right: 5%;
+  border-style: hidden;
+  background-color: lightgray;
 }
 
 .dog-icon:hover {
-  transform: scale(3.75);
-  opacity: 0.75;
+  transform: scale(1.05);
+  transition-duration: 0.33s;
 }
 
-#profile-page1 {
+#new-dog-profile {
   background-color: rgb(216, 216, 218);
   padding-top: 3%;
   padding-bottom: 3%;
@@ -98,11 +92,47 @@ span {
   margin-right: 33%;
 }
 
-.profile-pic {
+#database-profile {
+  background-color: rgb(216, 216, 218);
+  padding-top: 3%;
+  padding-bottom: 3%;
+  padding-left: 6%;
+  padding-right: 6%;
+  margin-left: 33%;
+  margin-right: 33%;
+}
+
+.dog-pic {
   width: 100%;
   height: 100%;
   max-width: 150px;
   max-height: 150px;
-  border-radius: 75px;
+  border-radius: 100%;
   transform: scale(1);
+}
+
+#add-dog-button {
+  padding-top: 32px;
+  font-weight: 1000;
+  font-size: 60px;
+}
+
+#pet-welcome-arrow {
+  position: absolute;
+  top: 52%;
+  left: 10%;
+}
+
+#pet-welcome {
+  border-bottom-color: rgb(255, 195, 117);
+  border-bottom-style: solid;
+  margin-left: 30%;
+  margin-right: 30%;
+  margin-bottom: 1%;
+}
+
+#open-dog-profile-tip {
+  position: absolute;
+  top: 37%;
+  left: 18%;
 }
