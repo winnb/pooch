@@ -72,6 +72,7 @@ class PetForm extends React.Component {
             document.getElementById("database-profile").className = "collapse.show";
             document.getElementById("new-dog-profile").className = "collapse";
             
+            document.getElementById("delete-dog-button-row").className = "collapse.show";
           });
         });
     }
@@ -127,19 +128,19 @@ updateDog() {
     });
   });
   setTimeout(() => {
-  // if (document.getElementById("breed-checkbox").checked === true) {
-  //   console.log("adding from simple dog breeds");
-  //   db.collection("pets").add({
-  //     email: Fire.auth().currentUser.email,
-  //     name: document.getElementById("database-dog-name").value,
-  //     gender: document.getElementById("database-dog-gender").value,
-  //     breed: document.getElementById("database-dog-breed-simple").value,
-  //     color: document.getElementById("database-dog-color").value,
-  //     age: document.getElementById("database-dog-age").value,
-  //     pic: document.getElementById("database-dog-profile-pic").src
-  // });
-  // }
-  // else if (document.getElementById("breed-checkbox").checked === false) {
+  if (document.getElementById("breed-checkbox").checked === true) {
+    console.log("adding from simple dog breeds");
+    db.collection("pets").add({
+      email: Fire.auth().currentUser.email,
+      name: document.getElementById("database-dog-name").value,
+      gender: document.getElementById("database-dog-gender").value,
+      breed: document.getElementById("database-dog-breed-simple").value,
+      color: document.getElementById("database-dog-color").value,
+      age: document.getElementById("database-dog-age").value,
+      pic: document.getElementById("database-dog-profile-pic").src
+  });
+  }
+  else if (document.getElementById("breed-checkbox").checked === false) {
     console.log("adding from all dog breeds");
     db.collection("pets").add({
       email: Fire.auth().currentUser.email,
@@ -150,7 +151,7 @@ updateDog() {
       age: document.getElementById("database-dog-age").value,
       pic: document.getElementById("database-dog-profile-pic").src
     });
-  // }
+   }
 }, 1000);
   setTimeout(() => {
     window.location.reload();
@@ -202,9 +203,28 @@ toggleNewProfile() {
   if (document.getElementById("new-dog-profile").className === "collapse") {
     document.getElementById("database-profile").className = "collapse";
     document.getElementById("new-dog-profile").className = "collapse.show";
+    document.getElementById("delete-dog-button-row").className = "collapse";
   }
   else if (document.getElementById("new-dog-profile").className === "collapse.show")
     document.getElementById("new-dog-profile").className = "collapse";
+}
+
+openDeletePopup() {document.getElementById("delete-dog-popup").className="fixed-top collapse.show";}
+
+closeDeletePopup() {document.getElementById("delete-dog-popup").className="fixed-top collapse";}
+
+deleteProfile() {
+  Fire.firestore().collection("pets")
+  .where('email', '==', Fire.auth().currentUser.email)
+  .where('name', '==', document.getElementById("database-dog-name").value)
+  .get().then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc) {
+        doc.ref.delete();
+      });
+    });
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
 }
 
   render() {
@@ -862,6 +882,13 @@ toggleNewProfile() {
               </div>
               <button type="submit" className="btn btn-primary" onClick={this.updateDog}>Update Dog Profile</button>
           </div>
+
+          <div id="delete-dog-popup" className="fixed-top collapse">
+              <div className="trak_nav-item">Are you sure you want to delete the current dog profile?</div>
+              <div><button className="my-2 mr-4 btn-danger popup-button" onClick={this.deleteProfile}>Yes</button><button className="my-2 ml-4 btn-primary popup-button" onClick={this.closeDeletePopup}>No</button></div>
+              <div className="trak_body">WARNING: This is irreversable!</div>
+          </div>
+          <div id="delete-dog-button-row" className="collapse"><button type="submit" className="btn btn-danger mt-8" onClick={this.openDeletePopup}>Delete Dog Profile</button></div>
       </div>
     );
   }

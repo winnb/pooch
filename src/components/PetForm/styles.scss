@@ -146,3 +146,15 @@ span {
 #dog-breed {font-size: 75%;}
 
 #database-dog-breed {font-size: 75%;}
+
+#delete-dog-popup {
+  position: fixed;
+  top: 30%;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  margin-left: 40%;
+  margin-right: 40%;
+  background-color: rgb(140, 140, 140);
+  border-radius: 10px;
+  font-weight: 600;
+}

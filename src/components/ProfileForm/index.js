@@ -31,7 +31,7 @@ class ProfileForm extends React.Component {
     const db = Fire.firestore();
     console.log("component mounted");
     setTimeout(() => { // Determine user type
-      document.getElementById("username").innerHTML = "Welcome, "+Fire.auth().currentUser.email;
+      //document.getElementById("username").innerHTML = "Welcome, "+Fire.auth().currentUser.email;
       db.collection("profile-types")
       .where("email", "==", Fire.auth().currentUser.email)
       .get()
@@ -70,7 +70,8 @@ class ProfileForm extends React.Component {
             document.getElementById("database-parent-name").value = doc.data().name;
             document.getElementById("database-parent-phone").value = doc.data().phone;
             document.getElementById("database-parent-city").value = doc.data().city;
-            document.getElementById("database-parent-pic").src = doc.data().pic; 
+            document.getElementById("database-parent-pic").src = doc.data().pic;
+            document.getElementById("delete-button-row").className = "collapse.show";
             });
           });
         }
@@ -88,6 +89,7 @@ class ProfileForm extends React.Component {
           document.getElementById("database-walker-city").value = doc.data().city;
           document.getElementById("database-walker-hourly-rate").value = doc.data().hourlyRate;
           document.getElementById("database-walker-pic").src = doc.data().pic;
+          document.getElementById("delete-button-row").className = "collapse.show";
             });
           });
         }
@@ -106,6 +108,7 @@ class ProfileForm extends React.Component {
           document.getElementById("database-boarder-city").value = doc.data().city;
           document.getElementById("database-boarder-daily-rate").value = doc.data().dailyRate;
           document.getElementById("database-boarder-pic").src = doc.data().pic;
+          document.getElementById("delete-button-row").className = "collapse.show";
             });
           });
         }
@@ -315,9 +318,40 @@ previewBoarderPic(event) {
   reader.readAsDataURL(input.files[0]); // Show preview of image
 }
 
+openDeletePopup() {document.getElementById("delete-popup").className="fixed-top collapse.show";}
+
+closeDeletePopup() {document.getElementById("delete-popup").className="fixed-top collapse";}
+
+deleteProfile() {
+  Fire.firestore().collection("parents")
+  .where('email', '==', Fire.auth().currentUser.email)
+  .get().then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc) {
+        doc.ref.delete();
+      });
+    });
+  Fire.firestore().collection("walkers")
+  .where('email', '==', Fire.auth().currentUser.email)
+  .get().then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc) {
+        doc.ref.delete();
+      });
+    });
+  Fire.firestore().collection("boarders")
+  .where('email', '==', Fire.auth().currentUser.email)
+  .get().then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc) {
+        doc.ref.delete();
+      });
+    });
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
+}
+
   render() {
     return (
-      <div className="mt-7 mx-6 mb-8">
+      <div className="mt-7 mx-6 mb-4">
         <Slide up>
           <div className="trak_nav-item mb-3" id="username"></div>
 
@@ -418,6 +452,12 @@ previewBoarderPic(event) {
               <button type="submit" className="btn btn-primary" onClick={this.updateBoarder}>Edit Profile</button>
           </div>
 
+          <div id="delete-popup" className="fixed-top collapse">
+              <div className="trak_nav-item">Are you sure you want to delete your profile?</div>
+              <div><button className="my-2 mr-4 btn-danger popup-button" onClick={this.deleteProfile}>Yes</button><button className="my-2 ml-4 btn-primary popup-button" onClick={this.closeDeletePopup}>No</button></div>
+              <div className="trak_body">WARNING: This is irreversable!</div>
+          </div>
+          <div id="delete-button-row" className="collapse"><button type="submit" className="btn btn-danger mt-8" onClick={this.openDeletePopup}>Delete Profile</button></div>
           <div id="profile-error" className="collapse">Picture can be at most 400x400 pixels</div>
           </Slide>
       </div>
