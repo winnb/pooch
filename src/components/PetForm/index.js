@@ -9,11 +9,6 @@ import Gray2 from "./graydog2.png";
 import Gray3 from "./graydog3.png";
 
 class PetForm extends React.Component {
-  constructor(props) {
-    super(props);
-
-    //this.viewProfile = this.viewProfile.bind(this);
-  }
 
   componentDidMount() {
     const db = Fire.firestore();
@@ -29,18 +24,14 @@ class PetForm extends React.Component {
           document.getElementById("pet-welcome").className = "collapse";
           document.getElementById("pet-welcome-arrow").className = "collapse";
           document.getElementById("open-dog-profile-tip").className = "trak_nav-item collapse.show";
-          // Add dog pictues to page
-          document.getElementById("dog-icon-row").innerHTML += '<img id="'+doc.data().name+'-picture" class="dog-icon" alt="dog-picture" src="'+doc.data().pic+'"/>';
-          var dogName = JSON.stringify(doc.data().name);
-          console.log(dogName);
-          //console.log("Adding event listener to "+doc.data().name+"'s profile picture");
-          document.getElementById(doc.data().name+"-picture").addEventListener("click", viewProfile);
-          document.getElementById("database-dog-name").value = doc.data().name;
-          document.getElementById("database-dog-gender").value = doc.data().gender;
-          document.getElementById("database-dog-breed").value = doc.data().breed;
-          document.getElementById("database-dog-color").value = doc.data().color;
-          document.getElementById("database-dog-age").value = doc.data().age;
-          document.getElementById("database-dog-profile-pic").src = doc.data().pic;
+          // Apend dog icon row with next dog pictue
+          var nextPic = document.createElement("img");
+          nextPic.id = doc.data().name+"-picture";
+          nextPic.className = "dog-icon";
+          nextPic.alt = "dog-profile-picture-preview";
+          nextPic.src = doc.data().pic;
+          nextPic.addEventListener("click", ()=>{viewProfile(doc.data().name)});
+          document.getElementById("dog-icon-row").appendChild(nextPic);
         });
       });
     }, 1000);
@@ -50,28 +41,41 @@ class PetForm extends React.Component {
     }, 500);
 
     function viewProfile(dogName) {
-      console.log("View "+dogName+"'s profile");
-      // const db = Fire.firestore();
-      // setTimeout(() => {
-      //   db.collection("pets")
-      //   .where("email", "==", Fire.auth().currentUser.email).where("name", "==", dogName)
-      //   .get()
-      //   .then(snapshot => {
-      //     snapshot.docs.forEach(doc => {
-      //       document.getElementById("database-dog-name").innerHTML = doc.data().name;
-      //       document.getElementById("database-dog-gender").innerHTML = doc.data().gender;
-      //       document.getElementById("database-dog-breed").innerHTML = doc.data().breed;
-      //       document.getElementById("database-dog-color").innerHTML = doc.data().color;
-      //       document.getElementById("database-dog-age").innerHTML = doc.data().age;
-      //       document.getElementById("database-dog-profile-pic").src = doc.data().pic;
-      //       document.getElementById("database-profile").className = "collapse.show";
-      //     });
-      //   });
-      // }, 1000);
+      const db = Fire.firestore();
+        db.collection("pets")
+        .where("email", "==", Fire.auth().currentUser.email).where("name", "==", dogName)
+        .get()
+        .then(snapshot => {
+          snapshot.docs.forEach(doc => {
+            var simpleBreed = false;
+            for (var i=0; i<document.getElementById("database-dog-breed-simple").length; i++) {
+              if (document.getElementById("database-dog-breed-simple").options[i].value === doc.data().breed)
+                simpleBreed = true;
+            }
+            if (simpleBreed === true) {
+              document.getElementById("database-dog-breed-simple").value = doc.data().breed;
+              document.getElementById("database-dog-breed-simple-row").className = "my-4 row collapse.show";
+              document.getElementById("database-dog-breed-row").className = "my-4 row collapse";
+              document.getElementById("database-breed-checkbox").checked = true;
+            }
+            else {
+              document.getElementById("database-dog-breed").value = doc.data().breed;
+              document.getElementById("database-dog-breed-simple-row").className = "my-4 row collapse";
+              document.getElementById("database-dog-breed-row").className = "my-4 row collapse.show";
+              document.getElementById("database-breed-checkbox").checked = false;
+            }
+            document.getElementById("database-dog-name").value = doc.data().name;
+            document.getElementById("database-dog-gender").value = doc.data().gender; 
+            document.getElementById("database-dog-color").value = doc.data().color;
+            document.getElementById("database-dog-age").value = doc.data().age;
+            document.getElementById("database-dog-profile-pic").src = doc.data().pic;
+            document.getElementById("database-profile").className = "collapse.show";
+            document.getElementById("new-dog-profile").className = "collapse";
+            
+          });
+        });
     }
   }
-
-  
 
 newDog() {
   const db = Fire.firestore();
@@ -116,26 +120,26 @@ newDog() {
 updateDog() {
   const db = Fire.firestore();
   var query = db.collection("pets").where('email', '==', Fire.auth().currentUser.email)
-  .where("name", "==", document.getElementById("dog-name").value);
+  .where("name", "==", document.getElementById("database-dog-name").value);
   query.get().then(function(querySnapshot) {
     querySnapshot.forEach(function(doc) {
       doc.ref.delete();
     });
   });
   setTimeout(() => {
-  if (document.getElementById("breed-checkbox").checked === true) {
-    console.log("adding from simple dog breeds");
-    db.collection("pets").add({
-      email: Fire.auth().currentUser.email,
-      name: document.getElementById("database-dog-name").value,
-      gender: document.getElementById("database-dog-gender").value,
-      breed: document.getElementById("database-dog-breed-simple").value,
-      color: document.getElementById("database-dog-color").value,
-      age: document.getElementById("database-dog-age").value,
-      pic: document.getElementById("database-dog-profile-pic").src
-  });
-  }
-  else if (document.getElementById("breed-checkbox").checked === false) {
+  // if (document.getElementById("breed-checkbox").checked === true) {
+  //   console.log("adding from simple dog breeds");
+  //   db.collection("pets").add({
+  //     email: Fire.auth().currentUser.email,
+  //     name: document.getElementById("database-dog-name").value,
+  //     gender: document.getElementById("database-dog-gender").value,
+  //     breed: document.getElementById("database-dog-breed-simple").value,
+  //     color: document.getElementById("database-dog-color").value,
+  //     age: document.getElementById("database-dog-age").value,
+  //     pic: document.getElementById("database-dog-profile-pic").src
+  // });
+  // }
+  // else if (document.getElementById("breed-checkbox").checked === false) {
     console.log("adding from all dog breeds");
     db.collection("pets").add({
       email: Fire.auth().currentUser.email,
@@ -146,7 +150,7 @@ updateDog() {
       age: document.getElementById("database-dog-age").value,
       pic: document.getElementById("database-dog-profile-pic").src
     });
-  }
+  // }
 }, 1000);
   setTimeout(() => {
     window.location.reload();
@@ -161,6 +165,14 @@ swapBreedList() {
   else if (document.getElementById("breed-checkbox").checked === false) {
     document.getElementById("dog-breed-row").className = "my-4 row collapse.show";
     document.getElementById("dog-breed-simple-row").className = "my-4 row collapse";
+  }
+  if (document.getElementById("database-breed-checkbox").checked === true) {
+    document.getElementById("database-dog-breed-row").className = "my-4 row collapse";
+    document.getElementById("database-dog-breed-simple-row").className = "my-4 row collapse.show";
+  }
+  else if (document.getElementById("database-breed-checkbox").checked === false) {
+    document.getElementById("database-dog-breed-row").className = "my-4 row collapse.show";
+    document.getElementById("database-dog-breed-simple-row").className = "my-4 row collapse";
   }
 }
 
@@ -187,9 +199,10 @@ previewDatabaseDogPic(event) {
 }
 
 toggleNewProfile() {
-  console.log("collapse");
-  if (document.getElementById("new-dog-profile").className === "collapse")
+  if (document.getElementById("new-dog-profile").className === "collapse") {
+    document.getElementById("database-profile").className = "collapse";
     document.getElementById("new-dog-profile").className = "collapse.show";
+  }
   else if (document.getElementById("new-dog-profile").className === "collapse.show")
     document.getElementById("new-dog-profile").className = "collapse";
 }
@@ -542,7 +555,7 @@ toggleNewProfile() {
                       <option value="Female">Female</option>
                     </select>
                 </div>
-                <div className="my-4 row collapse.show" id="dog-breed-simple-row">
+                <div className="my-4 row collapse.show" id="database-dog-breed-simple-row">
                   <select id="database-dog-breed-simple" name="Dog Breed:">
                       <option value="">Dog Breed</option>
                       <option value="Mixed">Mixed</option>
@@ -576,7 +589,7 @@ toggleNewProfile() {
                       <option value="Terrier">Terrier</option>
                   </select>
                 </div>
-                <div className="my-4 row collapse" id="dog-breed-row">
+                <div className="my-4 row collapse" id="database-dog-breed-row">
                   <select id="database-dog-breed">
                       <option value="">Dog Breed (all)</option>
                       <option value="Affenpinscher">Affenpinscher</option>

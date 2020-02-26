@@ -1,15 +1,6 @@
-// React
 import React from "react";
-import { Link }  from  "@reach/router";
-
-// Firebase
-import Fire from "../../config/Fire";
-
-// Components
-import Button from "../Button";
-import Card from "../../components/Card/";
-
-import "./styles.scss";
+import Fire from "../../config/Fire"; // Firebase
+import "./styles.scss"; // Styles
 
 class PasswordForm extends React.Component {
   constructor(props) {
