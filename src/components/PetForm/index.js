@@ -22,13 +22,13 @@ class PetForm extends React.Component {
       .where("email", "==", Fire.auth().currentUser.email)
       .get()
       .then(snapshot => {
-        //Hide initial setup elements
+        snapshot.docs.forEach(doc => {
+          //Hide initial setup elements
           for (var i=0; i<document.getElementsByClassName("dog-icon gray").length; i++)
             document.getElementsByClassName("dog-icon gray")[i].className = "dog-icon gray collapse";
           document.getElementById("pet-welcome").className = "collapse";
           document.getElementById("pet-welcome-arrow").className = "collapse";
           document.getElementById("open-dog-profile-tip").className = "trak_nav-item collapse.show";
-        snapshot.docs.forEach(doc => {
           // Add dog pictues to page
           document.getElementById("dog-icon-row").innerHTML += '<img id="'+doc.data().name+'-picture" class="dog-icon" alt="dog-picture" src="'+doc.data().pic+'"/>';
           var dogName = JSON.stringify(doc.data().name);

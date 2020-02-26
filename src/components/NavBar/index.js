@@ -101,7 +101,7 @@ class NavBar extends React.Component {
   render() {
     return (
       <div>
-        <div className="collapse fixed-top" id="profile-dropdown">
+        <div className="collapse fixed-top" id="profile-dropdown" onMouseLeave={this.collapseDropdown}>
             <div className="trak_nav-item mb-3" id="dropdown-row"><button id="dropdown-button" onClick={this.goToProfile}>Profile</button></div>
             <div className="trak_nav-item mt-3" id="dropdown-row"><button id="dropdown-button" onClick={this.logout}>Logout</button></div>
         </div>

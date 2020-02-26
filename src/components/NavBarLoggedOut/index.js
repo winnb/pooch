@@ -21,6 +21,11 @@ class NavBarLoggedOut extends React.Component {
   render() {
     return (
       <div className="navbar">
+        <div className="collapse fixed-top" id="profile-dropdown">
+            <div className="trak_nav-item mb-3" id="dropdown-row"><button id="dropdown-button" onClick={this.goToProfile}>Profile</button></div>
+            <div className="trak_nav-item mt-3" id="dropdown-row"><button id="dropdown-button" onClick={this.logout}>Logout</button></div>
+        </div>
+        <div className="trak_nav-item fixed-top" id="new-tip">New to Pooch? Start here <b>↗</b></div>
         <nav className="navbar navbar-expand-lg fixed-top py-5">
           <a className="navbar-brand trak_nav-title ml-2" href="/">
             POOCH

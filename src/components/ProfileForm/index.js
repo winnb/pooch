@@ -31,7 +31,7 @@ class ProfileForm extends React.Component {
     const db = Fire.firestore();
     console.log("component mounted");
     setTimeout(() => { // Determine user type
-      //document.getElementById("username").innerHTML = "Welcome, "+Fire.auth().currentUser.email;
+      document.getElementById("username").innerHTML = "Welcome, "+Fire.auth().currentUser.email;
       db.collection("profile-types")
       .where("email", "==", Fire.auth().currentUser.email)
       .get()
@@ -57,7 +57,7 @@ class ProfileForm extends React.Component {
           console.log("user has not set up a profile!");
           document.getElementById("profile-page1").className = "collapse.show";
         }
-    }, 2000);
+    }, 2250);
 
         function renderParentProfile(doc) {
           console.log("user is a parent!");
