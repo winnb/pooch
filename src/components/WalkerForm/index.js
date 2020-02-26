@@ -20,15 +20,19 @@ class WalkerForm extends React.Component {
       name: "",
       phone: "",
       hourlyRate: "",
-      city: ""
+      city: "",
+      search: ""
     };
-
     this.handleChange = this.handleChange.bind(this);
-    this.addWalker = this.addWalker.bind(this);
+    this.updateSearch = this.updateSearch.bind(this);
   }
 
   handleChange(e) {
     this.setState({ [e.target.name]: e.target.value });
+  }
+
+  updateSearch(e) {
+    this.setState({search: e.target.value.substr(0,50) });
   }
 
   componentDidMount() {
@@ -38,122 +42,151 @@ class WalkerForm extends React.Component {
     setTimeout(() => {
       document.getElementById("loader").style.display = "none";
       document.getElementById("result-table").style.display = "block";
-    }, 2000);
+    }, 1750);
+  }
+
+  componentDidUpdate() {
+    document.getElementById("walker-grid").innerHTML = null; // Clear old data before updating
     const db = Fire.firestore();
+    // Order results based on search criteria
+    if (document.getElementById("walker-search-category").value === "city") {
+      db.collection("walkers").orderBy("city").get()
+          .then(snapshot => {
+              snapshot.docs.forEach(doc => {
+                renderWalkers(doc);
+              });
+            });
+    }
+    else if (document.getElementById("walker-search-category").value === "hourlyRate") {
+      db.collection("walkers").orderBy("hourlyRate").get()
+          .then(snapshot => {
+              snapshot.docs.forEach(doc => {
+                renderWalkers(doc);
+              });
+            });
+    }
+    else if (document.getElementById("walker-search-category").value === "name") {
+      db.collection("walkers").orderBy("name").get()
+          .then(snapshot => {
+              snapshot.docs.forEach(doc => {
+                renderWalkers(doc);
+              });
+            });
+    }
 
-    // Get walkers from Firebase
-    db.collection("walkers")
-      .orderBy("city")
-      .get()
-      .then(snapshot => {
-        snapshot.docs.forEach(doc => {
-          renderWalkers(doc);
-        });
-      });
-
-      // Create a grid to store walker data
-    const grid = document.querySelector("#walker-grid");
+    const grid = document.querySelector("#walker-grid"); // Set grid to the empty one in render
     function renderWalkers(doc) {
-      // create a list to style the data
-      let li = document.createElement("tr");
+      let li = document.createElement("tr"); // create a new table row to store the data   
       let name = document.createElement("td");
-      let phone = document.createElement("td");
       let hourlyRate = document.createElement("td");
       let city = document.createElement("td");
-
-      li.setAttribute("data-id", doc.id);
-
+      li.setAttribute("data-id", doc.id); // Know the doc id without having to do another Firebase call
       // Update local state to database contents
       name.textContent = doc.data().name;
-      phone.textContent = doc.data().phone;
       hourlyRate.textContent = doc.data().hourlyRate;
       city.textContent = doc.data().city;
+      li.pic = doc.data().pic;
+      li.phone = doc.data().phone;
+      li.className = "walker-table-row my-5";
 
       // Add all contents to the list
       li.appendChild(name);
-      li.appendChild(phone);
       li.appendChild(hourlyRate);
       li.appendChild(city);
+      li.addEventListener("click", ()=>{viewProfile(doc.data().email)});
 
-      // Add list to grid
-      grid.appendChild(li);
+      // Search functionality
+      var matchSearch = true;
+      // Loop through each letter in search bar
+      for (var i=0; i<document.getElementById("walker-search").value.length; i++) {
+        if (document.getElementById("walker-search-category").value === "city") // Searching by city
+          if (document.getElementById("walker-search").value[i].toLowerCase() !== city.innerText[i].toLowerCase())
+            matchSearch = false;
+        else if (document.getElementById("walker-search-category").value === "hourlyRate") // Searching by hourly rate
+          if (document.getElementById("walker-search").value[i].toLowerCase() !== hourlyRate.innerText[i].toLowerCase())
+              matchSearch = false;
+        else if (document.getElementById("walker-search-category").value === "name") // Searching by name
+          if (document.getElementById("walker-search").value[i].toLowerCase() !== name.innerText[i].toLowerCase())
+                matchSearch = false;
+      }
+      // Only add current row to grid if it matches search
+      if (matchSearch === true) {
+        grid.appendChild(li);
+        console.log("Match found!");
+      }
+        
     }
+
+    function viewProfile(email) {
+      const db = Fire.firestore();
+        db.collection("walkers")
+        .where("email", "==", email)
+        .get()
+        .then(snapshot => {
+          snapshot.docs.forEach(doc => {
+            document.getElementById("walker-box").className = "react-reveal collapse";
+            document.getElementById("database-boarder-pic").src = doc.data().pic;
+            document.getElementById("box-walker-name").textContent = doc.data().name;
+            document.getElementById("box-walker-phone").textContent = doc.data().phone;
+            document.getElementById("box-walker-city").textContent = doc.data().city;
+            document.getElementById("box-walker-hourly-rate").textContent = doc.data().hourlyRate;
+          });
+        });
+        setTimeout(() => {
+          document.getElementById("walker-box").className = "react-reveal collapse.show";
+        }, 500);
+    }
+
   }
 
-  addWalker = e => {
-    document.getElementById("success-message").style.display = "block";
-    setTimeout(() => {
-      document.getElementById("success-message").style.display = "none";
-    }, 2000);
-    e.preventDefault();
-    const db = Fire.firestore();
-    db.settings({
-      timestampsInSnapshots: true
-    });
-    db.collection("walkers").add({
-      name: this.state.name,
-      phone: this.state.phone,
-      hourlyRate: this.state.hourlyRate,
-      city: this.state.city,
-      timestamp: new Date()
-    });
-
-    // Reset state
-    this.setState({
-      name: "",
-      phone: "",
-      hourlyRate: "",
-      city: ""
-    });
-  };
 
   render() {
     return (
-      <div className="mt-7 ml-5 input-group-prepend">
-        <div id="walker-box" className="collapse.show">
-          <div className="mb-3"><img className="profile-pic" id="database-boarder-pic" src={GenericPic} alt="Profile" onClick={this.toggleCollapse}/></div>
-            <div className="col">
-              <div className="my-2 row"><input id="box-walker-name" type="text" placeholder="Name" maxLength="50"/></div>
-              <div className="my-2 row"><input id="box-walker-phone" type="text" placeholder="Phone Number" min="0" max="9999999999" maxLength="11"/></div>
-              <div className="my-2 row"><input id="box-walker-city" type="text" placeholder="City" maxLength="50"/></div>
-              <div className="my-2 row"><input id="box-walker-hourly-rate" type="text" placeholder="Hourly Rate" min="12" max="1000" maxLength="4"/></div>
-            </div>
+      <div className="mt-7 mb-8 ml-5">
+        <div className="row">
+          <input id="walker-search" placeholder="Search..." maxLength="50" onChange={this.updateSearch} value={this.state.search}></input>
+          <select id="walker-search-category">
+            <option value="city">City</option>
+            <option value="hourlyRate">Hourly Rate</option>
+            <option value="name">Name</option>
+          </select>
         </div>
-
-        <form onSubmit={this.addWalker}>
-          <Slide down>
-            <div className="trak_heading-medium">
-              Local Dog Walkers
+        <div className="row" id="walker-row">
+          <div id="walker-left-col">
+            <Slide left>
+              <div id="walker-box" className="collapse.show">
+                <div className="mb-3"><img className="profile-pic" id="database-boarder-pic" src={GenericPic} alt="Profile" onClick={this.toggleCollapse}/></div>
+                  <div className="col">
+                    <div className="my-2 row walker-box-row"><div id="box-walker-name" text="blob">Name</div></div>
+                    <div className="my-2 row walker-box-row"><div id="box-walker-phone" className="">Phone</div></div>
+                    <div className="my-2 row walker-box-row"><div id="box-walker-city" className="">City</div></div>
+                    <div className="my-2 row walker-box-row"><div id="box-walker-hourly-rate" className="">Hourly Rate</div></div>
+                  </div>
+                </div>
+            </Slide>
+          </div>
+          <div id="walker-right-col">
+            <Slide down>
+              <div className="trak_heading-medium">
+                Dog Walkers
+              </div>
+            </Slide>
+            <div id="loader" className="mb-4"><Loader type="Grid" color="black" height={75} width={75}/></div>
+            <div id="result-table">
+              <table className="table mt-4 text-left">
+                <thead className="walker-table-head trak_heading-small">
+                  <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Hourly Rate</th>
+                    <th scope="col">City</th>
+                  </tr>
+                </thead>
+                <tbody id="walker-grid"></tbody>
+              </table>
             </div>
-          </Slide>
-          <div id="loader" className="mb-4">
-            <Loader
-              type="Grid"
-              // type="MutatingDots"
-              color="black"
-              height={75}
-              width={75}
-              // timeout={3000} //3 secs
-            />
           </div>
-          {/* Render contents of database */}
-          <div id="result-table">
-            <table className="table mt-4 text-left">
-              <thead className="thead-light trak_heading-small">
-                <tr>
-                  <th scope="col">Walker Name</th>
-                  <th scope="col">Phone Number</th>
-                  <th scope="col">Hourly Rate</th>
-                  <th scope="col">City</th>
-                </tr>
-              </thead>
-              <tbody id="walker-grid"></tbody>
-            </table>
-          </div>
-          <div id = "success-message">
-                Form Successfully Submitted 
-          </div>
-        </form>
+
+        </div>
       </div>
     );
   }
