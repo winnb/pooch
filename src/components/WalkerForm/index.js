@@ -11,6 +11,7 @@ import "../AllMeetups/styles.scss";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import "../WalkerForm/styles.scss";
 import Slide from "react-reveal";
+import GenericPic from "./generic-profile.png";
 
 class WalkerForm extends React.Component {
   constructor(props) {
@@ -109,6 +110,16 @@ class WalkerForm extends React.Component {
   render() {
     return (
       <div className="mt-7 ml-5 input-group-prepend">
+        <div id="walker-box" className="collapse.show">
+          <div className="mb-3"><img className="profile-pic" id="database-boarder-pic" src={GenericPic} alt="Profile" onClick={this.toggleCollapse}/></div>
+            <div className="col">
+              <div className="my-2 row"><input id="box-walker-name" type="text" placeholder="Name" maxLength="50"/></div>
+              <div className="my-2 row"><input id="box-walker-phone" type="text" placeholder="Phone Number" min="0" max="9999999999" maxLength="11"/></div>
+              <div className="my-2 row"><input id="box-walker-city" type="text" placeholder="City" maxLength="50"/></div>
+              <div className="my-2 row"><input id="box-walker-hourly-rate" type="text" placeholder="Hourly Rate" min="12" max="1000" maxLength="4"/></div>
+            </div>
+        </div>
+
         <form onSubmit={this.addWalker}>
           <Slide down>
             <div className="trak_heading-medium">
