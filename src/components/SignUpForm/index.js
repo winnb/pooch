@@ -1,25 +1,25 @@
 // React
 import React from "react";
-import { Link }  from  "@reach/router";
-
-// Components
-import Card from "../../components/Card/";
 
 // Firebase
 import fire from "../../config/Fire";
 
+import "./styles.scss";
+
 class SignUpForm extends React.Component {
   constructor(props) {
     super(props);
-
-    this.handleChange = this.handleChange.bind(this);
-    this.signup = this.signup.bind(this);
-
     this.state = {
       email: "",
       password: "",
       confirmPassword: ""
     };
+    this.signup = this.signup.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
   }
 
   signup(e) {
@@ -29,25 +29,29 @@ class SignUpForm extends React.Component {
       .auth()
       .createUserWithEmailAndPassword(this.state.email, this.state.password)
       .catch(error => {
-        console.log(error.message);
         document.querySelector("#error-message-signup").style.display = "block";
-        document.getElementById("error-message-signup").innerHTML =
-          error.message;
+        document.getElementById("error-message-signup").innerHTML = error.message;
       }); 
       // If successful, then login
-      fire
+      setTimeout(() => {
+        fire
       .auth()
       .signInWithEmailAndPassword(this.state.email, this.state.password)
       .catch(error => {
-        console.log(error.message);
         document.querySelector("#error-message-login").style.display = "block";
-        document.getElementById("error-message-login").innerHTML =
-          error.message;
+        document.getElementById("error-message-login").innerHTML = error.message;
       });
-      document.getElementsByClassName("signupForm")[0].innerHTML = null;
+      }, 500);
       setTimeout(() => {
-        window.location.replace("/");  
-      }, 1900);
+        fire.auth().onAuthStateChanged(user => {
+            if (user) {
+                document.getElementById("login-outer").className = "collapse";
+                window.location.replace("/profile"); 
+            } else {
+                console.log("Error: User could not be logged in due to bad credentials");
+            }
+        });
+    }, 500);
     }
     else {
         document.querySelector("#error-message-signup").style.display = "block";
@@ -55,94 +59,34 @@ class SignUpForm extends React.Component {
     }
   }
 
-  handleChange(e) {
-    this.setState({ [e.target.name]: e.target.value });
+  closeSignup() {
+    document.getElementById("signup-outer").className = "collapse"
   }
 
   render() {
     return (
-      <div className="mt-6 mx-6 mt-7 mb-6 signupForm">
-        <Card
-          cardTitle={<div className="trak_heading-xlarge">P O O C H</div>}
-          cardContent={
-            <div>
-              <div className="input-group mb-3">
-                <div className="input-group-prepend">
-                  <span className="input-group-text" id="basic-addon1">
-                    Email
-                  </span>
-                </div>
-                <input
-                  value={this.state.email}
-                  onChange={this.handleChange}
-                  name="email"
-                  type="email"
-                  className="form-control"
-                  placeholder="Email"
-                  aria-label="Email"
-                  aria-describedby="basic-addon1"
-                />
+      <div id="signup-outer" className="collapse">
+          <div className="col profile-box py-4">
+              <div id="signup-form">
+                <span className="trak_body row my-2">
+                    <div className="trak_nav-item">Create an Account</div>
+                </span>
+                <span className="trak_body row my-2">
+                    <input name="email" id="signup-email" type="text" className="form-control" placeholder="Email" value={this.state.email} onChange={this.handleChange}/>
+                </span>
+                <span className="trak_body row my-2">
+                    <input name="password" id="signup-password" type="password" className="form-control" placeholder="Password" maxlength="50" value={this.state.password} onChange={this.handleChange}/>
+                </span>
+                <span className="trak_body row my-2">
+                    <input name="confirmPassword" id="signup-password-confirm" type="password" className="form-control" placeholder="Confirm Password" maxlength="50" value={this.state.confirmPassword} onChange={this.handleChange}/>
+                </span>
               </div>
-
-              <div className="input-group mb-3">
-                <div className="input-group-prepend">
-                  <span className="input-group-text" id="basic-addon1">
-                    Password
-                  </span>
-                </div>
-                <input
-                  value={this.state.password}
-                  onChange={this.handleChange}
-                  name="password"
-                  type="password"
-                  className="form-control"
-                  placeholder="Password"
-                  aria-label="Password"
-                  aria-describedby="basic-addon1"
-                />
-              </div>
-
-              <div className="input-group mb-3">
-                <div className="input-group-prepend">
-                  <span className="input-group-text" id="basic-addon1">
-                    Confirm Password
-                  </span>
-                </div>
-                <input
-                  value={this.state.confirmPassword}
-                  onChange={this.handleChange}
-                  name="confirmPassword"
-                  type="password"
-                  className="form-control"
-                  placeholder="Password"
-                  aria-label="Confirm Password"
-                  aria-describedby="basic-addon1"
-                />
-              </div>
-
-              <div className="trak_body-small mb-3">
-                  <Link className="mr-3" to="/login">Not what you wanted? Go back to login</Link>
-              </div>
-
-              <button
-                type="submit"
-                onClick={this.signup}
-                className="btn btn-secondary mr-4"
-              >
-                Create Account
-              </button>
-
-              <div
-                id="error-message-login"
-                className="trak_body-small mt-4"
-              ></div>
-              <div
-                id="error-message-signup"
-                className="trak_body-small mt-4"
-              ></div>
-            </div>
-          }
-        />
+               <button type="submit" onClick={this.signup} className="btn btn-secondary my-2">Create Account</button>
+               <div className="trak_body-small my-2">
+                  <button id="close-button" className="mx-3" onClick={this.closeSignup}>Not what you wanted? Click here to close</button>
+                  <div id="error-message-signup" className="trak_body-small"></div>
+               </div>
+          </div>
       </div>
     );
   }

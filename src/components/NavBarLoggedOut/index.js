@@ -3,42 +3,30 @@ import React from "react";
 
 // Styles
 import "./styles.scss";
-import Generic from "./generic-profile.png";
 
 class NavBarLoggedOut extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      dropdownOpen: false
-    };
+
+  openSignup() {
+    document.getElementById("login-outer").className = "collapse";
+    document.getElementById("change-password-outer").className = "collapse";
+    document.getElementById("signup-outer").className = "collapse.show";
   }
 
-  toggleCollapse() {
-    if (document.getElementById("profile-dropdown").className === "collapse col") {
-        document.getElementById("profile-dropdown").className = "collapse.show col";
-    }
-    else if (document.getElementById("profile-dropdown").className === "collapse.show col") {
-        document.getElementById("profile-dropdown").className = "collapse col"; 
-    }
-  }
-
-  collapseDropdown() {
-        document.getElementById("profile-dropdown").className = "collapse col";
-  }
-
-  openDropdown() {
-    document.getElementById("profile-dropdown").className = "collapse.show col";
+  openLogin() {
+    document.getElementById("signup-outer").className = "collapse";
+    document.getElementById("change-password-outer").className = "collapse";
+    document.getElementById("login-outer").className = "collapse.show";
   }
 
   render() {
     return (
       <div className="navbar">
+        <div className="collapse fixed-top" id="profile-dropdown">
+            <div className="trak_nav-item mb-3" id="dropdown-row"><button id="dropdown-button" onClick={this.goToProfile}>Profile</button></div>
+            <div className="trak_nav-item mt-3" id="dropdown-row"><button id="dropdown-button" onClick={this.logout}>Logout</button></div>
+        </div>
+        <div className="trak_nav-item fixed-top" id="new-tip">New to Pooch? Start here <b>↗</b></div>
         <nav className="navbar navbar-expand-lg fixed-top py-5">
-          <img className="mx-3 ml-5" id="profile-pic" src={Generic} alt="Profile" onClick={this.toggleCollapse}/>
-          <div className="collapse.show col" id="profile-dropdown">
-            <a className="row pl-2 trak_body-small" id="dropdown-item" href="/login">Login</a>
-            <a className="row pl-2 trak_body-small" id="dropdown-middle" href="/signup" onClick={this.logout}>Sign Up</a>
-          </div>
           <a className="navbar-brand trak_nav-title ml-2" href="/">
             POOCH
           </a>
@@ -86,8 +74,10 @@ class NavBarLoggedOut extends React.Component {
                 </a>
               </li> 
             </ul>
-            <form className="form-inline my-2 my-lg-0">
-            </form>
+            <div className="col trak_nav-item" id="profile-dropdown">
+              <button className="row mb-3" id="dropdown-item" onClick={this.openLogin}>Login</button>
+              <button className="row mt-3" id="dropdown-item" onClick={this.openSignup}>Create Account</button>
+            </div>
           </div>
         </nav>     
       </div>

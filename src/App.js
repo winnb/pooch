@@ -15,8 +15,6 @@ import fire from "./config/Fire";
 import Footer from "./components/Footer";
 
 // Pages
-import Login from "../src/pages/Login/";
-import Signup from "./pages/Signup";
 import ChangePassword from "./pages/ChangePassword";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
@@ -73,8 +71,6 @@ class App extends React.Component {
             <NavBarLoggedOut />
             <Router>
               <Home path="/" />
-              <Login path="/login" />
-              <Signup path="/signup" />
               <ChangePassword path="/change-password" />
               <PageNotFound path="/page-not-found" default />
             </Router>

@@ -48,10 +48,10 @@ class FileUpload extends React.Component{
 
     render(){
         return( 
-            <div className="mt-7">
-                <div className="trak_heading-medium mb-5">
-                    Dog Records
-                </div>
+            <div className="mt-8 mb-8">
+                <div className="trak_nav-item mb-5 ml-3" id="upload-step1"><b>↙</b> First, select the document you want</div>
+                <div className="trak_nav-item" id="upload-step2">Then, click to upload <b>→</b></div>
+                <div className="trak_nav-item" id="upload-step3"><b>↖</b> View your documents here</div>
                 <div className="Upload mb-5 col mx-10">
                     <div className="row my-2">
                         <input type="file" id="file-input" onChange={this.filePreview} />

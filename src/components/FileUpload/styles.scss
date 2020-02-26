@@ -6,8 +6,29 @@
     width: 50px;
     height: 50px;
     transform: scale(1);
+    margin-right: 1%;
 }
 
 #record:hover {
-    transform: scale(1.1);
+    width: 500px;
+    height: 500px;
+    transition-duration: 0.75s;
+}
+
+#upload-step1 {
+    position: absolute;
+    top: 30%;
+    left: 40%;
+}
+
+#upload-step2 {
+    position: absolute;
+    top: 44%;
+    left: 7%;
+}
+
+#upload-step3 {
+    position: absolute;
+    top: 60%;
+    left: 35%;
 }

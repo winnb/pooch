@@ -1,7 +1,6 @@
 import React from "react";
 
 // Components
-import Button from "../Button";
 import Loader from "react-loader-spinner";
 
 //Firebase
@@ -12,6 +11,7 @@ import "../AllMeetups/styles.scss";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import "../WalkerForm/styles.scss";
 import Slide from "react-reveal";
+import GenericPic from "./generic-profile.png";
 
 class WalkerForm extends React.Component {
   constructor(props) {
@@ -110,6 +110,16 @@ class WalkerForm extends React.Component {
   render() {
     return (
       <div className="mt-7 ml-5 input-group-prepend">
+        <div id="walker-box" className="collapse.show">
+          <div className="mb-3"><img className="profile-pic" id="database-boarder-pic" src={GenericPic} alt="Profile" onClick={this.toggleCollapse}/></div>
+            <div className="col">
+              <div className="my-2 row"><input id="box-walker-name" type="text" placeholder="Name" maxLength="50"/></div>
+              <div className="my-2 row"><input id="box-walker-phone" type="text" placeholder="Phone Number" min="0" max="9999999999" maxLength="11"/></div>
+              <div className="my-2 row"><input id="box-walker-city" type="text" placeholder="City" maxLength="50"/></div>
+              <div className="my-2 row"><input id="box-walker-hourly-rate" type="text" placeholder="Hourly Rate" min="12" max="1000" maxLength="4"/></div>
+            </div>
+        </div>
+
         <form onSubmit={this.addWalker}>
           <Slide down>
             <div className="trak_heading-medium">
@@ -143,91 +153,6 @@ class WalkerForm extends React.Component {
           <div id = "success-message">
                 Form Successfully Submitted 
           </div>
-          <div className="trak_heading-medium mt-7 mb-3" id = "space">Get Started as a Verified Dog Walker</div>
-            <div>
-            {/* Name */}
-              <span className="input-group-text" id="inputGroup-sizing-default">
-                Walker Name
-              </span>
-            <input
-              name="name"
-              type="text"
-              title="Walker Name"
-              value={this.state.name}
-              onChange={this.handleChange}
-              required
-              className="form-control"
-              aria-label="Default"
-              aria-describedby="inputGroup-sizing-default"
-              maxlength="32"
-            />
-            </div>
-            <div className="mb-1">
-            {/* Phone */}
-              <span className="input-group-text" id="inputGroup-sizing-default">
-                Phone Number
-              </span>
-            <input
-              name="phone"
-              type="number"
-              maxLength="10"
-              placeholder="i.e. 5551234567"
-              title="Walker Phone"
-              value={this.state.phone}
-              onChange={this.handleChange}
-              required
-              className="form-control"
-              aria-label="Default"
-              aria-describedby="inputGroup-sizing-default"
-            />
-            </div>
-            <div className="mb-1">
-            {/* Hourly Rate */}
-              <span className="input-group-text" id="inputGroup-sizing-default">
-                Hourly Rate
-              </span>
-            <input
-              name="hourlyRate"
-              type="number"
-              placeholder="i.e. 15"
-              title="Walker Rate"
-              value={this.state.hourlyRate}
-              onChange={this.handleChange}
-              required
-              className="form-control"
-              aria-label="Default"
-              aria-describedby="inputGroup-sizing-default"
-              min="7.25"
-              max="100"
-            />
-            </div>
-            <div className="mb-1">
-            {/* City */}
-              <span className="input-group-text" id="inputGroup-sizing-default">
-                City
-              </span>
-            <textarea
-              name="city"
-              type="text"
-              placeholder="i.e. Long Beach"
-              title="Walker City"
-              value={this.state.city}
-              onChange={this.handleChange}
-              className="form-control"
-              aria-label="Default"
-              aria-describedby="inputGroup-sizing-default"
-              maxlength="32"
-            />
-            </div>
-            <div className="mt-2 mb-5">
-            {/* Submit Button */}
-            <Button
-              buttonType="submit"
-              buttonText="Submit"
-              buttonStyle="btn-primary ml-5"
-              buttonTitle="Submit"
-            />
-            </div>
         </form>
       </div>
     );

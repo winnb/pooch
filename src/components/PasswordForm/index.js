@@ -9,6 +9,8 @@ import Fire from "../../config/Fire";
 import Button from "../Button";
 import Card from "../../components/Card/";
 
+import "./styles.scss";
+
 class PasswordForm extends React.Component {
   constructor(props) {
     super(props);
@@ -27,7 +29,7 @@ class PasswordForm extends React.Component {
 
   sendEmail(e) {
     e.preventDefault();
-    let email = document.getElementsByTagName("input")[0].value;
+    let email = document.getElementById("change-password-email").value;
     if (email !== "")
     {
       Fire.auth().sendPasswordResetEmail(email).then(function() {
@@ -41,47 +43,28 @@ class PasswordForm extends React.Component {
     }
   }
 
+  closeChangePassword() {
+    document.getElementById("change-password-outer").className = "collapse"
+  }
+
   render() {
     return (
-      <div className="mt-6 mx-6 mt-7 mb-6">
-        <Card
-          cardTitle={<div className="trak_heading-xlarge">P O O C H</div>}
-          cardContent={
-            <div>
-                <div className="input-group mb-3">
-                <div className="input-group-prepend">
-                  <span className="input-group-text" id="basic-addon1">
-                    Email
-                  </span>
-                </div>
-                <input
-                  value={this.state.email}
-                  onChange={this.handleChange}
-                  name="email"
-                  type="email"
-                  className="form-control"
-                  placeholder="Email"
-                  aria-label="Email"
-                  aria-describedby="basic-addon1"
-                />
+      <div id="change-password-outer" className="collapse">
+          <div className="col profile-box py-4">
+              <div id="change-password-form">
+                <span className="trak_body row my-2">
+                    <div className="trak_nav-item">Recover Password with Email</div>
+                </span>
+                <span className="trak_body row my-2">
+                    <input name="email" id="change-password-email" type="text" className="form-control" placeholder="Email" value={this.state.email} onChange={this.handleChange}/>
+                </span>
               </div>
-                <small id="emailHelp" className="form-text text-muted">
-                Type in your email and click submit to recover your password
-                </small>
-                <div className="trak_body-small mt-2">
-                    <Link className="mt-5" to="/login">Not what you wanted? Go back to Login</Link>
-                </div>
-                <div className="submitButton trak_body-medium mt-3" onClick={this.sendEmail}>
-                    <Button
-                        type="submit"
-                        buttonStyle="btn-primary"
-                        buttonText="Send"
-                        buttonTitle="Send"
-                    ></Button>
-                </div> 
-            </div>
-         }
-        />
+               <button type="submit" onClick={this.sendEmail} className="btn btn-secondary my-2">Send Email</button>
+               <div className="trak_body-small my-2">
+                  <button id="close-button" className="mx-3" onClick={this.closeChangePassword}>Not what you wanted? Click here to close</button>
+                  <div id="error-message-password" className="trak_body-small"></div>
+               </div>
+          </div>
       </div>
     ); 
   }
