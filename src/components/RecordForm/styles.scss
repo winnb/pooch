@@ -1,0 +1,64 @@
+#record-row {
+    margin-left: 15%;
+    margin-right: 15%;
+}
+
+#record {
+    position: relative;
+    max-width: 250px;
+    max-height: 324px;
+    transform: scale(1);
+    margin-right: 5%;
+    margin-bottom: 1%;
+}
+
+#record:hover {
+    transform: scale(3);
+    transition-duration: 0.75s;
+    z-index: 100;
+}
+
+.record-preview {
+    max-width: 250px;
+    max-height: 324px;
+    transform: scale(1);
+}
+
+#upload-box {
+    background-color: rgb(216, 216, 218);
+    padding-top: 1%;
+    padding-bottom: 1%;
+    padding-left: 6%;
+    padding-right: 6%;
+    margin-left: 37%;
+    margin-right: 37%;
+    border-radius: 10px;
+}
+
+#delete-record-popup {
+    position: fixed;
+    top: 30%;
+    padding-top: 1%;
+    padding-left: 1%;
+    padding-right: 1%;
+    padding-bottom: 1%;
+    margin-left: 40%;
+    margin-right: 40%;
+    background-color: rgb(140, 140, 140);
+    border-radius: 10px;
+    font-weight: 600;
+  }
+
+  #error-message {
+    position: fixed;
+    top: 30%;
+    padding-top: 1%;
+    padding-left: 1%;
+    padding-right: 1%;
+    padding-bottom: 1%;
+    margin-left: 43%;
+    margin-right: 43%;
+    background-color: rgb(140, 140, 140);
+    border-radius: 10px;
+    font-weight: 600;
+  }

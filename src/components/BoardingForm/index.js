@@ -84,7 +84,7 @@ class BoardingForm extends React.Component {
       newCol.className = "col";
       newBox.appendChild(newCol);
       var ratingRow = document.createElement("div"); // First row
-      ratingRow.className = "my-2 mx-1 row";
+      ratingRow.className = "my-2";
       newCol.appendChild(ratingRow);
       var rating = document.createElement("div");
       rating.innerText = Math.floor((Math.random()*2))+Math.floor((Math.random()*11))/10+3+" ⭐";

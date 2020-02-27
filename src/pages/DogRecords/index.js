@@ -1,11 +1,11 @@
 import React from "react";
-import FileUpload from "../../components/FileUpload";
+import RecordForm from "../../components/RecordForm";
 
 class DogRecords extends React.Component {
   render(){
     return (
       <div>
-        <FileUpload />
+        <RecordForm />
       </div>
     );
   }
