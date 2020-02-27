@@ -1,18 +1,12 @@
 import React from "react";
-import BoardingForm from "../../components/BoardingForm";
-//import { Link } from "@reach/router";
-
-// Styles
-//import "./styles.scss";
+import BoardingForm from "../../components/BoardingForm"; // Inner Component
+import Fade from "react-reveal"; // Animation
 
 class DogBoarding extends React.Component {
   render() {
     return (
       <div className="mt-5 mx-6">
-        <BoardingForm />
-        <div id="success-message" className="trak_body">
-          <div>Boarding Scheduled!</div>
-        </div>
+        <Fade> <BoardingForm /> </Fade>
       </div>
     );
   }

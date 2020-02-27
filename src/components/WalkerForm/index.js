@@ -70,7 +70,7 @@ class WalkerForm extends React.Component {
     function renderWalkers(doc) {
       // Bubble render
       var newBox = document.createElement("div");
-      newBox.className = "bubble-box";
+      newBox.className = "walker-box";
       var picHolder = document.createElement("div");
       picHolder.className = "mb-3";
       var newPic = document.createElement("img");
@@ -89,14 +89,14 @@ class WalkerForm extends React.Component {
       rating.innerText = Math.floor((Math.random()*2))+Math.floor((Math.random()*11))/10+3+" ⭐";
       ratingRow.appendChild(rating);
       var nameRow = document.createElement("div"); // Second row
-      nameRow.className = "my-2 mx-1 row bubble-box-row";
+      nameRow.className = "my-2 mx-1 row walker-box-row";
       newCol.appendChild(nameRow);
       var name = document.createElement("div");
       name.innerText = doc.data().name;
       name.className = "walker-name";
       nameRow.appendChild(name);
       var phoneRow = document.createElement("div"); // Third row
-      phoneRow.className = "my-2 mx-1 row bubble-box-row";
+      phoneRow.className = "my-2 mx-1 row walker-box-row";
       newCol.appendChild(phoneRow);
       var phone = document.createElement("div");
       phone.innerText = doc.data().phone;
@@ -105,14 +105,14 @@ class WalkerForm extends React.Component {
       phone.className = "walker-phone";
       phoneRow.appendChild(phone);
       var cityRow = document.createElement("div"); // Fourth row
-      cityRow.className = "my-2 mx-1 row bubble-box-row";
+      cityRow.className = "my-2 mx-1 row walker-box-row";
       newCol.appendChild(cityRow);
       var city = document.createElement("div");
       city.innerText = doc.data().city;
       city.className = "walker-city";
       cityRow.appendChild(city);
       var hourlyRateRow = document.createElement("div"); // Fifth row
-      hourlyRateRow.className = "my-2 mx-1 row bubble-box-row";
+      hourlyRateRow.className = "my-2 mx-1 row walker-box-row";
       newCol.appendChild(hourlyRateRow);
       var hourlyRate = document.createElement("div");
       hourlyRate.innerText = doc.data().hourlyRate;
@@ -189,7 +189,7 @@ class WalkerForm extends React.Component {
             <option value="name">Name</option>
           </select>
         </div>
-        <div className="trak_heading-medium">Dog Walkers</div>
+        <div className="trak_heading-medium mb-3">Dog Walkers</div>
         <div id="loader" className="mb-4"><Loader type="ThreeDots" color="black" height={75} width={75}/></div>
         <div id="bubble-home" className="row"></div>
       </div>

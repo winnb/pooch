@@ -1,35 +1,22 @@
-@import "../../scss/main.scss";
-
-#success-message {
-  color: theme-color("light");
-  display: none;
-  border-radius: 30px;
-  background: theme-color("primary");
-  padding: 10px;
-}
-
-#space{
-  margin-top: 15px;
-}
-
-#boarder-box {
+.boarder-box {
   background-color: rgb(216, 216, 218);
   padding-top: 3%;
   padding-bottom: 1%;
-  padding-left: 2%;
-  padding-right: 2%;
   margin-top: 1%;
   margin-left: 1%;
   margin-right: 1%;
   margin-bottom: 1%;
-  border-radius: 10px;
+  border-radius: 25px;
+  width: 14.65%;
+  height: 550px;
 }
 
 .boarder-box-row {
   background-color: white;
-  padding-left: 5%;
-  padding-right: 5%;
+  padding-left: 1%;
+  padding-right: 1%;
   border-radius: 5px;
+  width: 100%;
 }
 
 #boarder-search {
@@ -43,47 +30,4 @@
   height: 75%;
   margin-left: 2%;
   margin-right: 20%;
-}
-
-#boarder-row { 
-  margin-left: 10%;
-  margin-right: 10%;
-}
-
-#result-table {
-  border-radius: 100px;
-}
-
-#boarder-left-col { 
-  width: 25%;
-  margin-right: 5%;
-}
-
-#boarder-right-col { 
-  width: 65%;
-  margin-left: 5%;
-}
-
-.boarder-table-head {
-  background-color: rgb(145, 145, 145);
-  border-bottom-style: solid;
-  border-bottom-width: 3px;
-  border-bottom-color: white;
-}
-
-.boarder-table-row {
-  background-color: rgb(216, 216, 218);
-  border-bottom-style: solid;
-  border-bottom-width: 3px;
-  border-top-style: solid;
-  border-top-width: 3px;
-  border-color: white;
-}
-
-.boarder-table-row:hover {
-  transform: scale(1.04);
-  transition-duration: 0.5s;
-  background-color: rgb(201, 201, 203);
-  border-bottom-width: 5px;
-  border-top-width: 5px;
 }
