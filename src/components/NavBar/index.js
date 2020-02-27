@@ -106,24 +106,13 @@ class NavBar extends React.Component {
             <div className="trak_nav-item mt-3" id="dropdown-row"><button id="dropdown-button" onClick={this.logout}>Logout</button></div>
         </div>
         <nav className="navbar navbar-expand-lg fixed-top py-5" >
-          <img className="ml-2" id="profile-pic" src={GenericProfile} alt="Profile" onClick={this.toggleCollapse} onMouseEnter={this.openDropdown}/>
+          <img className="ml-2" id="profile-pic" src={GenericProfile} alt="Profile" onClick={this.goToProfile} onMouseEnter={this.openDropdown}/>
           
           <div id="brand">
             <a className="navbar-brand trak_nav-title"  href="/">
             POOCH
             </a>
           </div>
-          {/* <button
-            className="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon">Menu</span>
-          </button> */}
           <div> 
             <div className="row trak_nav-item" id="nav-pages">
               <div className="nav-item">

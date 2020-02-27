@@ -1,18 +1,10 @@
-// React
 import React from "react";
-
-//Firebase
-import Fire from "../../config/Fire.js";
-
-// Styles
-import "./styles.scss";
-
+import Fire from "../../config/Fire.js"; // Firebase
+import "./styles.scss"; // Styles
 //Animation and Images
-import Slide from "react-reveal";
 import GenericPic from "./generic-profile.png";
 import Fade from "react-reveal";
 import Loader from "react-loader-spinner";
-import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 class ProfileForm extends React.Component {
   constructor(props) {
@@ -31,7 +23,7 @@ class ProfileForm extends React.Component {
   }
 
   componentDidMount() {
-
+    document.getElementById("profile-loader").style.display = "block";
     const db = Fire.firestore();
     console.log("component mounted");
     setTimeout(() => { // Determine user type
@@ -53,8 +45,10 @@ class ProfileForm extends React.Component {
         });
       });
     }, 1000);
-    // Wait 2 second, then check if no profile visible, so do first time setup
-    setTimeout(() => {
+    setTimeout(() => { // Wait 1.5 seconds, then hide loader
+          document.getElementById("profile-loader").style.display = "none";
+      }, 1500);
+    setTimeout(() => { // Wait 2.25 seconds, then check if no profile visible, so do first time setup
     if (document.getElementById("parent-profile").className === "react-reveal collapse" && 
         document.getElementById("walker-profile").className === "react-reveal collapse" &&
         document.getElementById("boarder-profile").className === "react-reveal collapse") {
@@ -388,10 +382,8 @@ deleteProfile() {
   render() {
     return (
       <div className="mt-7 mx-6 mb-4">
-        
+        <div id="profile-loader"><Loader type="TailSpin" color="black" height={150} width={150}/></div>
         <Fade>
-          <div id="loader" className="mb-4"><Loader type="Grid" color="black" height={75} width={75}/></div>
-          <div id="loading-block"></div>
           <div className="trak_nav-item mb-3" id="username"></div>
 
           <div id="profile-page1" className="collapse">

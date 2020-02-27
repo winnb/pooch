@@ -3,7 +3,6 @@ import Fire from "../../config/Fire.js"; // Firebase
 import "./styles.scss"; // Styles
 // Animation
 import Loader from "react-loader-spinner";
-import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import "../WalkerForm/styles.scss";
 
 class WalkerForm extends React.Component {

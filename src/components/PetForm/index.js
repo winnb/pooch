@@ -1,7 +1,7 @@
 import React from "react";
 import Fire from "../../config/Fire.js"; // Firebase
 import "./styles.scss"; // Styles
-
+import Loader from "react-loader-spinner"; // Animation
 // Graphics
 import DogBust from "./dog-bust.png";
 import Gray1 from "./graydog1.png";
@@ -11,6 +11,7 @@ import Gray3 from "./graydog3.png";
 class PetForm extends React.Component {
 
   componentDidMount() {
+    document.getElementById("pet-loader").style.display = "block";
     const db = Fire.firestore();
     setTimeout(() => { // Check if user has dog profiles
       db.collection("pets")
@@ -34,11 +35,8 @@ class PetForm extends React.Component {
           document.getElementById("dog-icon-row").appendChild(nextPic);
         });
       });
-    }, 1000);
-    setTimeout(() => {
-      if (document.getElementById("database-dog-name").value === null)
-        document.getElementById("database-profile").className += " collapse";
-    }, 500);
+      document.getElementById("pet-loader").style.display = "none";
+    }, 750);
 
     function viewProfile(dogName) {
       const db = Fire.firestore();
@@ -234,6 +232,7 @@ deleteProfile() {
           <img className="dog-icon gray" alt="dog-icon" src={Gray1}/>
           <img className="dog-icon gray" alt="dog-icon" src={Gray2}/>
           <img className="dog-icon gray" alt="dog-icon" src={Gray3}/>
+          <div className="mt-2" id="pet-loader"><Loader type="TailSpin" color="black" height={75} width={75}/></div>
         </div>
         <div className="dog-icon" id="add-dog-button" onClick={this.toggleNewProfile}>+</div>
         <div className="trak_nav-item" id="pet-welcome-arrow">Add your dogs <b>⤣</b></div>

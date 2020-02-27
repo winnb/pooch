@@ -3,7 +3,6 @@ import Fire from "../../config/Fire.js"; // Firebase
 import "./styles.scss"; // Styles
 // Animation
 import Loader from "react-loader-spinner";
-import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import "../BoardingForm/styles.scss";
 
 class BoardingForm extends React.Component {
@@ -179,7 +178,7 @@ class BoardingForm extends React.Component {
           </select>
         </div>
         <div className="trak_heading-medium mb-3">Dog Boarders</div>
-        <div id="loader" className="mb-4"><Loader type="TailSpin" color="black" height={75} width={75}/></div>
+        <div id="loader" className="mb-4"><Loader type="ThreeDots" color="black" height={75} width={75}/></div>
         <div id="bubble-home" className="row"></div>
       </div>
     );

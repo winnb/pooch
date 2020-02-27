@@ -93,10 +93,10 @@ class RecordForm extends React.Component{
                     <input className="my-2" type="file" id="file-input" onChange={this.filePreview} />
                     <div className="my-2"><img className="record-preview" id="preview"/></div>
                     <button className="my-2" id="file-upload-button" onClick={this.fileUpload}>Upload Dog Record</button>
-                    <div id="upload-loader" className="mt-4"><Loader type="TailSpin" color="black" height={75} width={75}/></div>
+                    <div id="upload-loader" className="mt-4"><Loader type="Oval" color="black" height={75} width={75}/></div>
                 </div>
                 <div className="trak_nav-item mt-4 ml-7" id="upload-step2"><b>↖</b> Then, click upload</div>
-                <div id="loader" className="mt-4"><Loader type="Audio" color="black" height={75} width={75}/></div>
+                <div id="loader" className="mt-4"><Loader type="Oval" color="black" height={75} width={75}/></div>
                 <div className="mt-3" id="record-row"></div>
 
                 <div id="delete-record-popup" className="fixed-top collapse">

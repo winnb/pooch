@@ -1,13 +1,9 @@
 import React from "react";
-
+import Fire from "../../config/Fire.js"; // Firebase
 // Components
 import Button from "../Button";
 import Loader from "react-loader-spinner";
 
-//Firebase
-import Fire from "../../config/Fire.js";
-
-import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 class MedicalForm extends React.Component {
   constructor(props) {

@@ -1,16 +1,10 @@
 import React from "react";
-
-// Components
-import Button from "../Button";
+import Fire from "../../config/Fire.js"; // Firebase
+import "../AllMeetups/styles.scss"; // Styles
+import "../MeetupForm/styles.scss"; // Styles
+import Button from "../Button"; // Component
+// Animation
 import Loader from "react-loader-spinner";
-
-//Firebase
-import Fire from "../../config/Fire.js";
-
-//styles
-import "../AllMeetups/styles.scss";
-import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
-import "../MeetupForm/styles.scss";
 import Slide from "react-reveal";
 
 class MeetupForm extends React.Component {
