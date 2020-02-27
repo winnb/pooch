@@ -353,6 +353,7 @@ previewDatabaseBoarderPic(event) {
   };
   reader.readAsDataURL(input.files[0]); // Show preview of image
 }
+
 openDeletePopup() {document.getElementById("delete-popup").className="fixed-top collapse.show";}
 
 closeDeletePopup() {document.getElementById("delete-popup").className="fixed-top collapse";}
