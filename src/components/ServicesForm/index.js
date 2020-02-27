@@ -123,6 +123,8 @@ class ServicesForm extends React.Component {
   request(options, function (error, response) { 
     if (error) throw new Error(error);
     console.log(response.body);
+    document.getElementById("results-box").innerHTML = response.body;
+    var results = response.body;
     //this.setState({results:response});
   });
 }
@@ -146,7 +148,7 @@ class ServicesForm extends React.Component {
         <div className="contact-box my-3 mx-5 px-3 py-5">{this.state.results}</div>
         <div className="contact-box my-3 mx-5 px-3 py-5"><cards dog_wash={this.state.results}/> </div>
         <div className="trak_heading-small section mt-3 mb-3">Local Dog Grooming Services:</div>
-        <div className="contact-box my-3 mx-5 px-3 py-5"></div>
+        <div id="results-box" className="contact-box my-3 mx-5 px-3 py-5"></div>
         <div className="contact-box my-3 mx-5 px-3 py-5"></div>
         <div className="contact-box my-3 mx-5 px-3 py-5"></div>
         <div className="contact-box my-3 mx-5 px-3 py-5"></div>

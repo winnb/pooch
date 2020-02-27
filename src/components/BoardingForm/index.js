@@ -1,16 +1,12 @@
 import React from "react";
-
-// Components
+import Fire from "../../config/Fire.js"; // Firebase
+import "./styles.scss"; // Styles
+// Animation
 import Loader from "react-loader-spinner";
-
-//Firebase
-import Fire from "../../config/Fire.js";
-
-//styles
-import "../AllMeetups/styles.scss";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
-import "../BoardingForm/styles.scss";
+import "./styles.scss";
 import Slide from "react-reveal";
+import GenericPic from "./generic-profile.png";
 
 class BoardingForm extends React.Component {
   constructor(props) {
@@ -20,15 +16,19 @@ class BoardingForm extends React.Component {
       phone: "",
       dailyRate: "",
       address: "",
-      city: ""
+      city: "",
+      search: ""
     };
-
     this.handleChange = this.handleChange.bind(this);
-    this.addBoarder = this.addBoarder.bind(this);
+    this.updateSearch = this.updateSearch.bind(this);
   }
 
   handleChange(e) {
     this.setState({ [e.target.name]: e.target.value });
+  }
+
+  updateSearch(e) {
+    this.setState({search: e.target.value.substr(0,50) });
   }
 
   componentDidMount() {
@@ -38,121 +38,158 @@ class BoardingForm extends React.Component {
     setTimeout(() => {
       document.getElementById("loader").style.display = "none";
       document.getElementById("result-table").style.display = "block";
-    }, 2000);
+    }, 1750);
+  }
+
+  componentDidUpdate() {
+    document.getElementById("boarder-grid").innerHTML = null; // Clear old data before updating
     const db = Fire.firestore();
+    // Order results based on search criteria
+    if (document.getElementById("boarder-search-category").value === "city") {
+      db.collection("boarders").orderBy("city").get()
+          .then(snapshot => {
+              snapshot.docs.forEach(doc => {
+                renderBoarders(doc);
+              });
+            });
+    }
+    else if (document.getElementById("boarder-search-category").value === "dailyRate") {
+      db.collection("boarders").orderBy("dailyRate").get()
+          .then(snapshot => {
+              snapshot.docs.forEach(doc => {
+                renderBoarders(doc);
+              });
+            });
+    }
+    else if (document.getElementById("boarder-search-category").value === "name") {
+      db.collection("boarders").orderBy("name").get()
+          .then(snapshot => {
+              snapshot.docs.forEach(doc => {
+                renderBoarders(doc);
+              });
+            });
+    }
 
-    // Get boarders from Firebase
-    db.collection("boarders")
-      .orderBy("city")
-      .get()
-      .then(snapshot => {
-        snapshot.docs.forEach(doc => {
-          renderBoarders(doc);
-        });
-      });
-
-      // Create a grid to store meetup data
-    const grid = document.querySelector("#boarder-grid");
+    const grid = document.querySelector("#boarder-grid"); // Set grid to the empty one in render
     function renderBoarders(doc) {
-      // create a list to style the data
-      let li = document.createElement("tr");
+      let li = document.createElement("tr"); // create a new table row to store the data   
       let name = document.createElement("td");
-      let phone = document.createElement("td");
       let dailyRate = document.createElement("td");
       let address = document.createElement("td");
       let city = document.createElement("td");
-
-      li.setAttribute("data-id", doc.id);
-
+      li.setAttribute("data-id", doc.id); // Know the doc id without having to do another Firebase call
       // Update local state to database contents
       name.textContent = doc.data().name;
-      phone.textContent = doc.data().phone;
       dailyRate.textContent = doc.data().dailyRate;
       address.textContent = doc.data().address;
       city.textContent = doc.data().city;
+      li.pic = doc.data().pic;
+      li.phone = doc.data().phone;
+      li.className = "boarder-table-row my-5";
 
       // Add all contents to the list
       li.appendChild(name);
-      li.appendChild(phone);
       li.appendChild(dailyRate);
       li.appendChild(address);
       li.appendChild(city);
+      li.addEventListener("click", ()=>{viewProfile(doc.data().email)});
 
-      // Add list to grid
-      grid.appendChild(li);
+      // Search functionality
+      var matchSearch = true;
+      // Loop through each letter in search bar
+      for (var i=0; i<document.getElementById("boarder-search").value.length; i++) {
+        if (document.getElementById("boarder-search-category").value === "city") // Searching by city
+          if (document.getElementById("boarder-search").value[i].toLowerCase() !== city.innerText[i].toLowerCase())
+            matchSearch = false;
+        else if (document.getElementById("boarder-search-category").value === "dailyRate") // Searching by hourly rate
+          if (document.getElementById("boarder-search").value[i].toLowerCase() !== dailyRate.innerText[i].toLowerCase())
+              matchSearch = false;
+        else if (document.getElementById("boarder-search-category").value === "name") // Searching by name
+          if (document.getElementById("boarder-search").value[i].toLowerCase() !== name.innerText[i].toLowerCase())
+                matchSearch = false;
+      }
+      // Only add current row to grid if it matches search
+      if (matchSearch === true) {
+        grid.appendChild(li);
+        console.log("Match found!");
+      }
+        
     }
+
+    function viewProfile(email) {
+      const db = Fire.firestore();
+        db.collection("boarders")
+        .where("email", "==", email)
+        .get()
+        .then(snapshot => {
+          snapshot.docs.forEach(doc => {
+            document.getElementById("database-boarder-pic").src = doc.data().pic;
+            document.getElementById("box-boarder-name").textContent = doc.data().name;
+            document.getElementById("box-boarder-phone").textContent = doc.data().phone;
+            document.getElementById("box-boarder-address").textContent = doc.data().address;
+            document.getElementById("box-boarder-city").textContent = doc.data().city;
+            document.getElementById("box-boarder-daily-rate").textContent = doc.data().dailyRate;
+          });
+        });
+        document.getElementById("boarder-box").className = "react-reveal collapse";
+        setTimeout(() => {
+          document.getElementById("boarder-box").className = "react-reveal collapse.show";
+        }, 250);
+    }
+
   }
 
-  addBoarder = e => {
-    e.preventDefault();
-    const db = Fire.firestore();
-    db.settings({
-      timestampsInSnapshots: true
-    });
-    db.collection("boarders").add({
-      name: this.state.name,
-      phone: this.state.phone,
-      dailyRate: this.state.dailyRate,
-      address: this.state.address,
-      city: this.state.city,
-      timestamp: new Date()
-    });
-
-    // Reset state
-    this.setState({
-      name: "",
-      phone: "",
-      dailyRate: "",
-      address: "",
-      city: ""
-    });
-
-    //Boarder Recorded Pop-up
-    document.getElementById("success-message").style.display = "block";
-    setTimeout(() => {
-      document.getElementById("success-message").style.display = "none";
-    }, 2000);
-  };
 
   render() {
     return (
-      <div className="mt-7 ml-5 input-group-prepend">
-        <form onSubmit={this.addBoarder}>
-          <Slide down>
-            <div className="trak_heading-medium">
-            Local Dog Boarders
+      <div className="mt-7 mb-8 ml-5">
+        <div className="row">
+          <input id="boarder-search" placeholder="Search..." maxLength="50" onChange={this.updateSearch} value={this.state.search}></input>
+          <select id="boarder-search-category" onChange={this.handleChange}>
+            <option value="city">City</option>
+            <option value="dailyRate">Daily Rate</option>
+            <option value="name">Name</option>
+          </select>
+        </div>
+        <div className="row" id="boarder-row">
+          <div id="boarder-left-col">
+            <Slide left>
+              <div id="boarder-box" className="collapse.show">
+                <div className="mb-3"><img className="profile-pic" id="database-boarder-pic" src={GenericPic} alt="Profile" onClick={this.toggleCollapse}/></div>
+                  <div className="col">
+                  <div className="my-2 mx-5 row"><div id="box-boarder-rating">5.0 ⭐</div></div>
+                    <div className="my-2 row boarder-box-row"><div id="box-boarder-name">Name</div></div>
+                    <div className="my-2 row boarder-box-row"><div id="box-boarder-phone" className="">Phone</div></div>
+                    <div className="my-2 row boarder-box-row"><div id="box-boarder-address" className="">Address</div></div>
+                    <div className="my-2 row boarder-box-row"><div id="box-boarder-city" className="">City</div></div>
+                    <div className="my-2 row boarder-box-row"><div id="box-boarder-daily-rate" className="">Daily Rate</div></div>
+                  </div>
+                </div>
+            </Slide>
+          </div>
+          <div id="boarder-right-col">
+            <Slide down>
+              <div className="trak_heading-medium">
+                Dog Boarders
+              </div>
+            </Slide>
+            <div id="loader" className="mb-4"><Loader type="Grid" color="black" height={75} width={75}/></div>
+            <div id="result-table">
+              <table className="table mt-4 text-left">
+                <thead className="boarder-table-head trak_heading-small">
+                  <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Daily Rate ($)</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">City</th>
+                  </tr>
+                </thead>
+                <tbody id="boarder-grid"></tbody>
+              </table>
             </div>
-          </Slide>
-          <div id="loader" className="mb-4">
-            <Loader
-              type="Grid"
-              // type="MutatingDots"
-              color="black"
-              height={75}
-              width={75}
-              // timeout={3000} //3 secs
-            />
           </div>
-          {/* Render contents of database */}
-          <div id="result-table">
-            <table className="table mt-4 text-left trak_body">
-              <thead className="thead-light trak_heading-small">
-                {/* change color */}
-                <tr>
-                  <th scope="col">Boarding Name</th>
-                  <th scope="col">Phone Number</th>
-                  <th scope="col">Daily Rate</th>
-                  <th scope="col">Address</th>
-                  <th scope="col">City</th>
-                </tr>
-              </thead>
-              <tbody id="boarder-grid"></tbody>
-            </table>
-          </div>
-          <div id = "success-message">
-                Form Successfully Submitted 
-          </div>
-        </form>
+
+        </div>
       </div>
     );
   }

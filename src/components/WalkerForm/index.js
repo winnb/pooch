@@ -1,13 +1,8 @@
 import React from "react";
-
-// Components
+import Fire from "../../config/Fire.js"; // Firebase
+import "./styles.scss"; // Styles
+// Animation
 import Loader from "react-loader-spinner";
-
-//Firebase
-import Fire from "../../config/Fire.js";
-
-//styles
-import "../AllMeetups/styles.scss";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import "../WalkerForm/styles.scss";
 import Slide from "react-reveal";
@@ -124,7 +119,6 @@ class WalkerForm extends React.Component {
         .get()
         .then(snapshot => {
           snapshot.docs.forEach(doc => {
-            document.getElementById("walker-box").className = "react-reveal collapse";
             document.getElementById("database-boarder-pic").src = doc.data().pic;
             document.getElementById("box-walker-name").textContent = doc.data().name;
             document.getElementById("box-walker-phone").textContent = doc.data().phone;
@@ -132,9 +126,10 @@ class WalkerForm extends React.Component {
             document.getElementById("box-walker-hourly-rate").textContent = doc.data().hourlyRate;
           });
         });
+        document.getElementById("walker-box").className = "react-reveal collapse";
         setTimeout(() => {
           document.getElementById("walker-box").className = "react-reveal collapse.show";
-        }, 500);
+        }, 250);
     }
 
   }
@@ -143,9 +138,11 @@ class WalkerForm extends React.Component {
   render() {
     return (
       <div className="mt-7 mb-8 ml-5">
+        <div id="walker-arrow1">← Click to view profile</div>
+        
         <div className="row">
           <input id="walker-search" placeholder="Search..." maxLength="50" onChange={this.updateSearch} value={this.state.search}></input>
-          <select id="walker-search-category">
+          <select id="walker-search-category" onChange={this.handleChange}>
             <option value="city">City</option>
             <option value="hourlyRate">Hourly Rate</option>
             <option value="name">Name</option>
@@ -157,7 +154,8 @@ class WalkerForm extends React.Component {
               <div id="walker-box" className="collapse.show">
                 <div className="mb-3"><img className="profile-pic" id="database-boarder-pic" src={GenericPic} alt="Profile" onClick={this.toggleCollapse}/></div>
                   <div className="col">
-                    <div className="my-2 row walker-box-row"><div id="box-walker-name" text="blob">Name</div></div>
+                  <div className="my-2 mx-5 row"><div id="box-walker-rating"><b>5.0</b> ⭐</div></div>
+                    <div className="my-2 row walker-box-row"><div id="box-walker-name">Name</div></div>
                     <div className="my-2 row walker-box-row"><div id="box-walker-phone" className="">Phone</div></div>
                     <div className="my-2 row walker-box-row"><div id="box-walker-city" className="">City</div></div>
                     <div className="my-2 row walker-box-row"><div id="box-walker-hourly-rate" className="">Hourly Rate</div></div>
@@ -177,7 +175,7 @@ class WalkerForm extends React.Component {
                 <thead className="walker-table-head trak_heading-small">
                   <tr>
                     <th scope="col">Name</th>
-                    <th scope="col">Hourly Rate</th>
+                    <th scope="col">Hourly Rate ($)</th>
                     <th scope="col">City</th>
                   </tr>
                 </thead>

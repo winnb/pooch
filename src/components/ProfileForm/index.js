@@ -10,6 +10,9 @@ import "./styles.scss";
 //Animation and Images
 import Slide from "react-reveal";
 import GenericPic from "./generic-profile.png";
+import Fade from "react-reveal";
+import Loader from "react-loader-spinner";
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 class ProfileForm extends React.Component {
   constructor(props) {
@@ -28,6 +31,7 @@ class ProfileForm extends React.Component {
   }
 
   componentDidMount() {
+
     const db = Fire.firestore();
     console.log("component mounted");
     setTimeout(() => { // Determine user type
@@ -296,12 +300,34 @@ previewParentPic(event) {
   reader.readAsDataURL(input.files[0]); // Show preview of image
 }
 
+previewDatabaseParentPic(event) {
+  var input = event.target; // Get image that changed state of input element
+  var reader = new FileReader();
+  reader.onload = function() {
+  var dataURL = reader.result;
+  var output = document.getElementById('database-parent-pic');
+  output.src = dataURL;
+  };
+  reader.readAsDataURL(input.files[0]); // Show preview of image
+}
+
 previewWalkerPic(event) {
   var input = event.target; // Get image that changed state of input element
   var reader = new FileReader();
   reader.onload = function() {
   var dataURL = reader.result;
   var output = document.getElementById('walker-pic');
+  output.src = dataURL;
+  };
+  reader.readAsDataURL(input.files[0]); // Show preview of image
+}
+
+previewDatabaseWalkerPic(event) {
+  var input = event.target; // Get image that changed state of input element
+  var reader = new FileReader();
+  reader.onload = function() {
+  var dataURL = reader.result;
+  var output = document.getElementById('database-walker-pic');
   output.src = dataURL;
   };
   reader.readAsDataURL(input.files[0]); // Show preview of image
@@ -318,6 +344,15 @@ previewBoarderPic(event) {
   reader.readAsDataURL(input.files[0]); // Show preview of image
 }
 
+previewDatabaseBoarderPic(event) {
+  var input = event.target; // Get image that changed state of input element
+  var reader = new FileReader();
+  reader.onload = function() {
+  var dataURL = reader.result;
+  document.getElementById('database-boarder-pic').src = dataURL;
+  };
+  reader.readAsDataURL(input.files[0]); // Show preview of image
+}
 openDeletePopup() {document.getElementById("delete-popup").className="fixed-top collapse.show";}
 
 closeDeletePopup() {document.getElementById("delete-popup").className="fixed-top collapse";}
@@ -352,7 +387,10 @@ deleteProfile() {
   render() {
     return (
       <div className="mt-7 mx-6 mb-4">
-        <Slide up>
+        
+        <Fade>
+          <div id="loader" className="mb-4"><Loader type="Grid" color="black" height={75} width={75}/></div>
+          <div id="loading-block"></div>
           <div className="trak_nav-item mb-3" id="username"></div>
 
           <div id="profile-page1" className="collapse">
@@ -421,6 +459,7 @@ deleteProfile() {
 
           <div id="parent-profile" className="collapse">
             <div className="mb-3"><img className="profile-pic" id="database-parent-pic" src={GenericPic} alt="Profile" onClick={this.toggleCollapse}/></div>
+            <input type="file" id="database-parent-input" onChange={this.previewDatabaseParentPic}/>
               <div className="col">
                 <div className="my-4 row"><input id="database-parent-name" type="text" placeholder="Name" maxLength="50"/></div>
                 <div className="my-4 row"><input id="database-parent-phone" type="text" placeholder="Phone Number" min="0" max="9999999999" maxLength="11"/></div>
@@ -431,6 +470,7 @@ deleteProfile() {
 
           <div id="walker-profile" className="collapse">
             <div className="mb-3"><img className="profile-pic" id="database-walker-pic" src={GenericPic} alt="Profile" onClick={this.toggleCollapse}/></div>
+            <input type="file" id="database-walker-input" onChange={this.previewDatabaseWalkerPic}/>
               <div className="col">
                 <div className="my-4 row"><input id="database-walker-name" type="text" placeholder="Name" maxLength="50"/></div>
                 <div className="my-4 row"><input id="database-walker-phone" type="text" placeholder="Phone Number" min="0" max="9999999999" maxLength="11"/></div>
@@ -441,7 +481,9 @@ deleteProfile() {
           </div>
 
           <div id="boarder-profile" className="collapse">
+            <input type="file"></input>
             <div className="mb-3"><img className="profile-pic" id="database-boarder-pic" src={GenericPic} alt="Profile" onClick={this.toggleCollapse}/></div>
+            <input type="file" id="database-boarder-input" onChange={this.previewDatabaseBoarderPic}/>
               <div className="col">
                 <div className="my-4 row"><input id="database-boarder-name" type="text" placeholder="Name" maxLength="50"/></div>
                 <div className="my-4 row"><input id="database-boarder-phone" type="text" placeholder="Phone Number" min="0" max="9999999999" maxLength="11"/></div>
@@ -459,7 +501,7 @@ deleteProfile() {
           </div>
           <div id="delete-button-row" className="collapse"><button type="submit" className="btn btn-danger mt-8" onClick={this.openDeletePopup}>Delete Profile</button></div>
           <div id="profile-error" className="collapse">Picture can be at most 400x400 pixels</div>
-          </Slide>
+          </Fade>
       </div>
     ); 
   }
