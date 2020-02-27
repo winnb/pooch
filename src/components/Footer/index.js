@@ -8,8 +8,8 @@ class Footer extends React.Component {
 
 componentDidMount() {
   setTimeout(() => {
-    document.getElementsByClassName("page-footer").className = "page-footer font-small trak_body_small text-left pt-4 px-3 py-3";
-  }, 1000);
+    document.getElementsByTagName("footer")[0].className = "page-footer font-small trak_body_small text-left pt-4 px-3 py-3 collapse.show";
+  }, 2000);
 }
 
 render() {

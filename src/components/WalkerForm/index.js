@@ -5,8 +5,6 @@ import "./styles.scss"; // Styles
 import Loader from "react-loader-spinner";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import "../WalkerForm/styles.scss";
-import Slide from "react-reveal";
-import GenericPic from "./generic-profile.png";
 
 class WalkerForm extends React.Component {
   constructor(props) {
@@ -33,15 +31,16 @@ class WalkerForm extends React.Component {
   componentDidMount() {
     // Show loading icon for 2 seconds while grid loads
     document.getElementById("loader").style.display = "block";
-    document.getElementById("result-table").style.display = "none";
+    //document.getElementById("result-table").style.display = "none";
     setTimeout(() => {
       document.getElementById("loader").style.display = "none";
-      document.getElementById("result-table").style.display = "block";
+      //document.getElementById("result-table").style.display = "block";
     }, 1750);
   }
 
   componentDidUpdate() {
-    document.getElementById("walker-grid").innerHTML = null; // Clear old data before updating
+    document.getElementById("loader").style.display = "block";
+    document.getElementById("bubble-home").innerHTML = null; // Clear old data before updating
     const db = Fire.firestore();
     // Order results based on search criteria
     if (document.getElementById("walker-search-category").value === "city") {
@@ -68,48 +67,92 @@ class WalkerForm extends React.Component {
               });
             });
     }
-
-    const grid = document.querySelector("#walker-grid"); // Set grid to the empty one in render
     function renderWalkers(doc) {
-      let li = document.createElement("tr"); // create a new table row to store the data   
-      let name = document.createElement("td");
-      let hourlyRate = document.createElement("td");
-      let city = document.createElement("td");
-      li.setAttribute("data-id", doc.id); // Know the doc id without having to do another Firebase call
-      // Update local state to database contents
-      name.textContent = doc.data().name;
-      hourlyRate.textContent = doc.data().hourlyRate;
-      city.textContent = doc.data().city;
-      li.pic = doc.data().pic;
-      li.phone = doc.data().phone;
-      li.className = "walker-table-row my-5";
-
-      // Add all contents to the list
-      li.appendChild(name);
-      li.appendChild(hourlyRate);
-      li.appendChild(city);
-      li.addEventListener("click", ()=>{viewProfile(doc.data().email)});
+      // Bubble render
+      var newBox = document.createElement("div");
+      newBox.className = "bubble-box";
+      var picHolder = document.createElement("div");
+      picHolder.className = "mb-3";
+      var newPic = document.createElement("img");
+      newPic.className = "profile-pic";
+      newPic.src = doc.data().pic;
+      newPic.alt = "Profile Picture";
+      picHolder.appendChild(newPic);
+      newBox.appendChild(picHolder);
+      var newCol = document.createElement("div");
+      newCol.className = "col";
+      newBox.appendChild(newCol);
+      var ratingRow = document.createElement("div"); // First row
+      ratingRow.className = "my-2 mx-1 row";
+      newCol.appendChild(ratingRow);
+      var rating = document.createElement("div");
+      rating.innerText = Math.floor((Math.random()*2))+Math.floor((Math.random()*11))/10+3+" ⭐";
+      ratingRow.appendChild(rating);
+      var nameRow = document.createElement("div"); // Second row
+      nameRow.className = "my-2 mx-1 row bubble-box-row";
+      newCol.appendChild(nameRow);
+      var name = document.createElement("div");
+      name.innerText = doc.data().name;
+      name.className = "walker-name";
+      nameRow.appendChild(name);
+      var phoneRow = document.createElement("div"); // Third row
+      phoneRow.className = "my-2 mx-1 row bubble-box-row";
+      newCol.appendChild(phoneRow);
+      var phone = document.createElement("div");
+      phone.innerText = doc.data().phone;
+      if (phone.innerText.length === 10)
+        phone.innerText = phone.innerText[0]+phone.innerText[1]+phone.innerText[2]+"-"+phone.innerText[3]+phone.innerText[4]+phone.innerText[5]+"-"+phone.innerText[6]+phone.innerText[7]+phone.innerText[8]+phone.innerText[9];
+      phone.className = "walker-phone";
+      phoneRow.appendChild(phone);
+      var cityRow = document.createElement("div"); // Fourth row
+      cityRow.className = "my-2 mx-1 row bubble-box-row";
+      newCol.appendChild(cityRow);
+      var city = document.createElement("div");
+      city.innerText = doc.data().city;
+      city.className = "walker-city";
+      cityRow.appendChild(city);
+      var hourlyRateRow = document.createElement("div"); // Fifth row
+      hourlyRateRow.className = "my-2 mx-1 row bubble-box-row";
+      newCol.appendChild(hourlyRateRow);
+      var hourlyRate = document.createElement("div");
+      hourlyRate.innerText = doc.data().hourlyRate;
+      hourlyRate.className = "walker-hourly-rate";
+      hourlyRateRow.appendChild(hourlyRate);
 
       // Search functionality
       var matchSearch = true;
-      // Loop through each letter in search bar
-      for (var i=0; i<document.getElementById("walker-search").value.length; i++) {
-        if (document.getElementById("walker-search-category").value === "city") // Searching by city
-          if (document.getElementById("walker-search").value[i].toLowerCase() !== city.innerText[i].toLowerCase())
-            matchSearch = false;
-        else if (document.getElementById("walker-search-category").value === "hourlyRate") // Searching by hourly rate
-          if (document.getElementById("walker-search").value[i].toLowerCase() !== hourlyRate.innerText[i].toLowerCase())
+      // Searching by city
+      if (document.getElementById("walker-search-category").value === "city") { 
+        if (document.getElementById("walker-search").value.length > city.innerText.length) // Check if search bar is longer than city
+          matchSearch = false;
+        else
+          for (var j=0; j<document.getElementById("walker-search").value.length; j++) // Loop through each letter in search bar
+            if (document.getElementById("walker-search").value[j].toLowerCase() !== city.innerText[j].toLowerCase())
               matchSearch = false;
-        else if (document.getElementById("walker-search-category").value === "name") // Searching by name
-          if (document.getElementById("walker-search").value[i].toLowerCase() !== name.innerText[i].toLowerCase())
-                matchSearch = false;
       }
-      // Only add current row to grid if it matches search
-      if (matchSearch === true) {
-        grid.appendChild(li);
-        console.log("Match found!");
+      // Searching by hourly rate
+      if (document.getElementById("walker-search-category").value === "hourlyRate") { 
+        if (document.getElementById("walker-search").value.length > hourlyRate.innerText.length) // Check if search bar is longer than hourly rate
+          matchSearch = false;
+        else
+          for (var j=0; j<document.getElementById("walker-search").value.length; j++) // Loop through each letter in search bar
+            if (document.getElementById("walker-search").value[j].toLowerCase() !== hourlyRate.innerText[j].toLowerCase())
+              matchSearch = false;
       }
-        
+      // Searching by name
+      if (document.getElementById("walker-search-category").value === "name") { 
+        if (document.getElementById("walker-search").value.length > name.innerText.length) // Check if search bar is longer than hourly rate
+          matchSearch = false;
+        else
+          for (var j=0; j<document.getElementById("walker-search").value.length; j++) // Loop through each letter in search bar
+            if (document.getElementById("walker-search").value[j].toLowerCase() !== name.innerText[j].toLowerCase())
+              matchSearch = false;
+      }
+      // Only add bubble if it matches search
+      console.log(city.innerText+" "+matchSearch);
+      if (matchSearch === true)
+        document.getElementById("bubble-home").appendChild(newBox);
+      document.getElementById("loader").style.display = "none";  
     }
 
     function viewProfile(email) {
@@ -131,15 +174,13 @@ class WalkerForm extends React.Component {
           document.getElementById("walker-box").className = "react-reveal collapse.show";
         }, 250);
     }
-
+    
   }
 
 
   render() {
     return (
-      <div className="mt-7 mb-8 ml-5">
-        <div id="walker-arrow1">← Click to view profile</div>
-        
+      <div className="mt-7 mb-8">
         <div className="row">
           <input id="walker-search" placeholder="Search..." maxLength="50" onChange={this.updateSearch} value={this.state.search}></input>
           <select id="walker-search-category" onChange={this.handleChange}>
@@ -148,43 +189,9 @@ class WalkerForm extends React.Component {
             <option value="name">Name</option>
           </select>
         </div>
-        <div className="row" id="walker-row">
-          <div id="walker-left-col">
-            <Slide left>
-              <div id="walker-box" className="collapse.show">
-                <div className="mb-3"><img className="profile-pic" id="database-boarder-pic" src={GenericPic} alt="Profile" onClick={this.toggleCollapse}/></div>
-                  <div className="col">
-                  <div className="my-2 mx-5 row"><div id="box-walker-rating"><b>5.0</b> ⭐</div></div>
-                    <div className="my-2 row walker-box-row"><div id="box-walker-name">Name</div></div>
-                    <div className="my-2 row walker-box-row"><div id="box-walker-phone" className="">Phone</div></div>
-                    <div className="my-2 row walker-box-row"><div id="box-walker-city" className="">City</div></div>
-                    <div className="my-2 row walker-box-row"><div id="box-walker-hourly-rate" className="">Hourly Rate</div></div>
-                  </div>
-                </div>
-            </Slide>
-          </div>
-          <div id="walker-right-col">
-            <Slide down>
-              <div className="trak_heading-medium">
-                Dog Walkers
-              </div>
-            </Slide>
-            <div id="loader" className="mb-4"><Loader type="Grid" color="black" height={75} width={75}/></div>
-            <div id="result-table">
-              <table className="table mt-4 text-left">
-                <thead className="walker-table-head trak_heading-small">
-                  <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Hourly Rate ($)</th>
-                    <th scope="col">City</th>
-                  </tr>
-                </thead>
-                <tbody id="walker-grid"></tbody>
-              </table>
-            </div>
-          </div>
-
-        </div>
+        <div className="trak_heading-medium">Dog Walkers</div>
+        <div id="loader" className="mb-4"><Loader type="ThreeDots" color="black" height={75} width={75}/></div>
+        <div id="bubble-home" className="row"></div>
       </div>
     );
   }
