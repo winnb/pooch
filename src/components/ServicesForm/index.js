@@ -18,6 +18,7 @@ class ServicesForm extends React.Component {
       apikey:"",
     };
     this.trackLocation=this.trackLocation.bind(this);
+    this.getUpdates=this.getUpdates.bind(this);
   }
 
   updatePostion(position) {
@@ -114,22 +115,25 @@ class ServicesForm extends React.Component {
  }*/
  getUpdates(){
   var request = require('request');
+  var outcome;
   var options = {
     'method': 'GET',
     'url': 'https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/textsearch/json?query=restaurants+in+LongBeach&key=AIzaSyAr-Fd30VXDDoStitEIztHwyyYLVvjBIl4',
     'headers': {
     }
   };
-  request(options, function (error, response) { 
+  request(options, function (error, response,body) { 
     if (error) throw new Error(error);
-    console.log(response.body);
-    document.getElementById("results-box").innerHTML = response.body;
-    var results = response.body;
-    //this.setState({results:response});
+    //console.log(response.body);
+    //document.getElementById("results-box").innerHTML = response.body;
+    outcome = JSON.parse(body).results;
+    //console.log(outcome);
   });
+  this.setState({results:outcome});
+  console.log(this.state.results);
 }
 
-
+//const listItems = this.state.results.map((res) => <div key={res.name}>{res.name}</div>);
  
   render() {
     return (
@@ -145,8 +149,8 @@ class ServicesForm extends React.Component {
         <div className="trak_heading-small section mt-3 mb-3">Local Dog Supply Stores:</div>
         <div className="contact-box my-3 mx-5 px-3 py-5">{this.state.latitude}</div>
         <div className="contact-box my-3 mx-5 px-3 py-5">{this.state.longitude}</div>
-        <div className="contact-box my-3 mx-5 px-3 py-5">{this.state.results}</div>
-        <div className="contact-box my-3 mx-5 px-3 py-5"><cards dog_wash={this.state.results}/> </div>
+    <div className="contact-box my-3 mx-5 px-3 py-5"></div>
+        <div className="contact-box my-3 mx-5 px-3 py-5"><cards dog_wash={this.getUpdates.outcome}/> </div>
         <div className="trak_heading-small section mt-3 mb-3">Local Dog Grooming Services:</div>
         <div id="results-box" className="contact-box my-3 mx-5 px-3 py-5"></div>
         <div className="contact-box my-3 mx-5 px-3 py-5"></div>
