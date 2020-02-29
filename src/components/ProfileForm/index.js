@@ -474,7 +474,6 @@ deleteProfile() {
           </div>
 
           <div id="boarder-profile" className="collapse">
-            <input type="file"></input>
             <div className="mb-3"><img className="profile-pic" id="database-boarder-pic" src={GenericPic} alt="Profile" onClick={this.toggleCollapse}/></div>
             <input type="file" id="database-boarder-input" onChange={this.previewDatabaseBoarderPic}/>
               <div className="col">
