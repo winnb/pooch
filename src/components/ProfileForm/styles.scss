@@ -147,10 +147,13 @@
     position: fixed;
     top: 30%;
     padding-top: 1%;
+    padding-left: 3%;
+    padding-right: 3%;
     padding-bottom: 1%;
     margin-left: 40%;
     margin-right: 40%;
     background-color: rgb(140, 140, 140);
+    color: black;
     border-radius: 10px;
     font-weight: 600;
 }
@@ -161,4 +164,14 @@
 
 #loader {
     display: block;
+}
+
+.profile-input {
+    padding-top: 1%;
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-bottom: 1%;
+    border-radius: 10px;
+    border-style: hidden;
+    background-color: white;
 }

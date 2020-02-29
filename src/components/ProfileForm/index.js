@@ -454,9 +454,9 @@ deleteProfile() {
             <div className="mb-3"><img className="profile-pic" id="database-parent-pic" src={GenericPic} alt="Profile" onClick={this.toggleCollapse}/></div>
             <input type="file" id="database-parent-input" onChange={this.previewDatabaseParentPic}/>
               <div className="col">
-                <div className="my-4 row"><input id="database-parent-name" type="text" placeholder="Name" maxLength="50"/></div>
-                <div className="my-4 row"><input id="database-parent-phone" type="text" placeholder="Phone Number" min="0" max="9999999999" maxLength="11"/></div>
-                <div className="my-4 row"><input id="database-parent-city" type="text" placeholder="City" maxLength="50"/></div> 
+                <div className="my-4 row profile-input"><input id="database-parent-name" type="text" placeholder="Name" maxLength="50"/></div>
+                <div className="my-4 row profile-input"><input id="database-parent-phone" type="text" placeholder="Phone Number" min="0" max="9999999999" maxLength="11"/></div>
+                <div className="my-4 row profile-input"><input id="database-parent-city" type="text" placeholder="City" maxLength="50"/></div> 
               </div>
               <button type="submit" className="btn btn-primary" onClick={this.updateParent}>Edit Profile</button>
           </div>
@@ -465,10 +465,10 @@ deleteProfile() {
             <div className="mb-3"><img className="profile-pic" id="database-walker-pic" src={GenericPic} alt="Profile" onClick={this.toggleCollapse}/></div>
             <input type="file" id="database-walker-input" onChange={this.previewDatabaseWalkerPic}/>
               <div className="col">
-                <div className="my-4 row"><input id="database-walker-name" type="text" placeholder="Name" maxLength="50"/></div>
-                <div className="my-4 row"><input id="database-walker-phone" type="text" placeholder="Phone Number" min="0" max="9999999999" maxLength="11"/></div>
-                <div className="my-4 row"><input id="database-walker-city" type="text" placeholder="City" maxLength="50"/></div>
-                <div className="my-4 row"><input id="database-walker-hourly-rate" type="text" placeholder="Hourly Rate" min="12" max="100" maxLength="3"/></div>
+                <div className="my-4 row"><input className="profile-input" id="database-walker-name" type="text" placeholder="Name" maxLength="50"/></div>
+                <div className="my-4 row"><input className="profile-input" id="database-walker-phone" type="text" placeholder="Phone Number" min="0" max="9999999999" maxLength="11"/></div>
+                <div className="my-4 row"><input className="profile-input" id="database-walker-city" type="text" placeholder="City" maxLength="50"/></div>
+                <div className="my-4 row"><input className="profile-input" id="database-walker-hourly-rate" type="text" placeholder="Hourly Rate" min="12" max="100" maxLength="3"/></div>
               </div>
               <button type="submit" className="btn btn-primary" onClick={this.updateWalker}>Edit Profile</button>
           </div>
@@ -477,11 +477,11 @@ deleteProfile() {
             <div className="mb-3"><img className="profile-pic" id="database-boarder-pic" src={GenericPic} alt="Profile" onClick={this.toggleCollapse}/></div>
             <input type="file" id="database-boarder-input" onChange={this.previewDatabaseBoarderPic}/>
               <div className="col">
-                <div className="my-4 row"><input id="database-boarder-name" type="text" placeholder="Name" maxLength="50"/></div>
-                <div className="my-4 row"><input id="database-boarder-phone" type="text" placeholder="Phone Number" min="0" max="9999999999" maxLength="11"/></div>
-                <div className="my-4 row"><input id="database-boarder-address" type="text" placeholder="Address" maxLength="50"/></div>
-                <div className="my-4 row"><input id="database-boarder-city" type="text" placeholder="City" maxLength="50"/></div>
-                <div className="my-4 row"><input id="database-boarder-daily-rate" type="text" placeholder="Daily Rate" min="12" max="1000" maxLength="4"/></div>
+                <div className="my-4 row"><input className="profile-input" id="database-boarder-name" type="text" placeholder="Name" maxLength="50"/></div>
+                <div className="my-4 row"><input className="profile-input" id="database-boarder-phone" type="text" placeholder="Phone Number" min="0" max="9999999999" maxLength="11"/></div>
+                <div className="my-4 row"><input className="profile-input" id="database-boarder-address" type="text" placeholder="Address" maxLength="50"/></div>
+                <div className="my-4 row"><input className="profile-input" id="database-boarder-city" type="text" placeholder="City" maxLength="50"/></div>
+                <div className="my-4 row"><input className="profile-input" id="database-boarder-daily-rate" type="text" placeholder="Daily Rate" min="12" max="1000" maxLength="4"/></div>
               </div>
               <button type="submit" className="btn btn-primary" onClick={this.updateBoarder}>Edit Profile</button>
           </div>

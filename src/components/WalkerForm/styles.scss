@@ -8,14 +8,21 @@
   margin-bottom: 1%;
   border-radius: 25px;
   width: 14.65%;
-  height: 475px;
+  height: 50%;
+}
+
+.walker-box:hover {
+  transform: scale(1.15);
+  transition-duration: 0.5s;
 }
 
 .walker-box-row {
   background-color: white;
-  padding-left: 1%;
-  padding-right: 1%;
-  border-radius: 5px;
+  padding-top: 1%;
+  padding-left: 3%;
+  padding-right: 3%;
+  padding-bottom: 1%;
+  border-radius: 10px;
   width: 100%;
 }
 

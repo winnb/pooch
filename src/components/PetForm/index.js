@@ -243,17 +243,17 @@ deleteProfile() {
               <input type="file" id="dog-input" onChange={this.previewDogPic}/>
               <div className="col">
               <div className="my-4 row">
-                <input id="dog-name" type="text" placeholder="Name" maxLength="50"/>
+                <input className="profile-input" id="dog-name" type="text" placeholder="Name" maxLength="50"/>
               </div>
               <div className="my-4 row">
-                  <select id="dog-gender">
+                  <select className="profile-input" id="dog-gender">
                       <option value="">Gender</option>
                       <option value="Male">Male</option>
                       <option value="Female">Female</option>
                     </select>
                 </div>
                 <div className="my-4 row collapse.show" id="dog-breed-simple-row">
-                  <select id="dog-breed-simple" name="Dog Breed:">
+                  <select className="profile-input" id="dog-breed-simple" name="Dog Breed:">
                       <option value="">Dog Breed</option>
                       <option value="Mixed">Mixed</option>
                       <option value="Australian Shepard">Australian Shepard</option>
@@ -287,7 +287,7 @@ deleteProfile() {
                   </select>
                 </div>
                 <div className="my-4 row collapse" id="dog-breed-row">
-                  <select id="dog-breed">
+                  <select className="profile-input" id="dog-breed">
                       <option value="">Dog Breed (all)</option>
                       <option value="Affenpinscher">Affenpinscher</option>
                       <option value="Afghan Hound">Afghan Hound</option>
@@ -538,7 +538,7 @@ deleteProfile() {
                   </select>
                 </div>
                 <div className="my-4 row">
-                  <select id="dog-color">
+                  <select className="profile-input" id="dog-color">
                       <option value="">Select color</option>
                       <option value="Black">Black</option>
                       <option value="Grey">Grey</option>
@@ -551,7 +551,7 @@ deleteProfile() {
                    </select>
                 </div> 
                 <div className="my-4 row">
-                  <input id="dog-age" type="number" placeholder="Age" min="0" max="30"/>
+                  <input className="profile-input" id="dog-age" type="number" placeholder="Age" min="0" max="30"/>
                 </div>
                 <div className="my-4 row trak_body-small">
                   <input type="checkbox" id="breed-checkbox" className="mr-4 my-2" onChange={this.swapBreedList} defaultChecked></input>Show only common dog breeds
@@ -565,17 +565,17 @@ deleteProfile() {
               <input type="file" id="database-dog-input" onChange={this.previewDatabaseDogPic}/>
               <div className="col">
               <div className="my-4 row">
-                <input id="database-dog-name" type="text" placeholder="Name" maxLength="50"/>
+                <input className="profile-input" id="database-dog-name" type="text" placeholder="Name" maxLength="50"/>
               </div>
               <div className="my-4 row">
-                  <select id="database-dog-gender">
+                  <select className="profile-input" id="database-dog-gender">
                       <option value="">Gender</option>
                       <option value="Male">Male</option>
                       <option value="Female">Female</option>
                     </select>
                 </div>
                 <div className="my-4 row collapse.show" id="database-dog-breed-simple-row">
-                  <select id="database-dog-breed-simple" name="Dog Breed:">
+                  <select className="profile-input" id="database-dog-breed-simple" name="Dog Breed:">
                       <option value="">Dog Breed</option>
                       <option value="Mixed">Mixed</option>
                       <option value="Australian Shepard">Australian Shepard</option>
@@ -609,7 +609,7 @@ deleteProfile() {
                   </select>
                 </div>
                 <div className="my-4 row collapse" id="database-dog-breed-row">
-                  <select id="database-dog-breed">
+                  <select className="profile-input" id="database-dog-breed">
                       <option value="">Dog Breed (all)</option>
                       <option value="Affenpinscher">Affenpinscher</option>
                       <option value="Afghan Hound">Afghan Hound</option>
@@ -860,7 +860,7 @@ deleteProfile() {
                   </select>
                 </div>
                 <div className="my-4 row">
-                  <select id="database-dog-color">
+                  <select className="profile-input" id="database-dog-color">
                       <option value="">Select color</option>
                       <option value="Black">Black</option>
                       <option value="Grey">Grey</option>
@@ -873,7 +873,7 @@ deleteProfile() {
                    </select>
                 </div> 
                 <div className="my-4 row">
-                  <input id="database-dog-age" type="number" placeholder="Age" min="0" max="30"/>
+                  <input className="profile-input" id="database-dog-age" type="number" placeholder="Age" min="0" max="30"/>
                 </div>
                 <div className="my-4 row trak_body-small">
                   <input type="checkbox" id="database-breed-checkbox" className="mr-4 my-2" onChange={this.swapBreedList} defaultChecked></input>Show only common dog breeds

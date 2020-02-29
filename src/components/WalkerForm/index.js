@@ -81,21 +81,24 @@ class WalkerForm extends React.Component {
       var newCol = document.createElement("div");
       newCol.className = "col";
       newBox.appendChild(newCol);
+
       var ratingRow = document.createElement("div"); // First row
       ratingRow.className = "my-2";
       newCol.appendChild(ratingRow);
       var rating = document.createElement("div");
       rating.innerText = Math.floor((Math.random()*2))+Math.floor((Math.random()*11))/10+3+" ⭐";
       ratingRow.appendChild(rating);
+
       var nameRow = document.createElement("div"); // Second row
-      nameRow.className = "my-2 mx-1 row walker-box-row";
+      nameRow.className = "my-2 walker-box-row";
       newCol.appendChild(nameRow);
       var name = document.createElement("div");
       name.innerText = doc.data().name;
       name.className = "walker-name";
       nameRow.appendChild(name);
+
       var phoneRow = document.createElement("div"); // Third row
-      phoneRow.className = "my-2 mx-1 row walker-box-row";
+      phoneRow.className = "my-2 walker-box-row";
       newCol.appendChild(phoneRow);
       var phone = document.createElement("div");
       phone.innerText = doc.data().phone;
@@ -103,18 +106,20 @@ class WalkerForm extends React.Component {
         phone.innerText = phone.innerText[0]+phone.innerText[1]+phone.innerText[2]+"-"+phone.innerText[3]+phone.innerText[4]+phone.innerText[5]+"-"+phone.innerText[6]+phone.innerText[7]+phone.innerText[8]+phone.innerText[9];
       phone.className = "walker-phone";
       phoneRow.appendChild(phone);
+
       var cityRow = document.createElement("div"); // Fourth row
-      cityRow.className = "my-2 mx-1 row walker-box-row";
+      cityRow.className = "my-2 walker-box-row";
       newCol.appendChild(cityRow);
       var city = document.createElement("div");
       city.innerText = doc.data().city;
       city.className = "walker-city";
       cityRow.appendChild(city);
+
       var hourlyRateRow = document.createElement("div"); // Fifth row
-      hourlyRateRow.className = "my-2 mx-1 row walker-box-row";
+      hourlyRateRow.className = "my-2 walker-box-row";
       newCol.appendChild(hourlyRateRow);
       var hourlyRate = document.createElement("div");
-      hourlyRate.innerText = doc.data().hourlyRate;
+      hourlyRate.innerText = "$"+doc.data().hourlyRate+"/hour";
       hourlyRate.className = "walker-hourly-rate";
       hourlyRateRow.appendChild(hourlyRate);
 
