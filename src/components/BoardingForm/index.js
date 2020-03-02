@@ -5,6 +5,11 @@ import "./styles.scss"; // Styles
 import Loader from "react-loader-spinner";
 import "../BoardingForm/styles.scss";
 
+import Pic1 from "./1.png";
+import Pic2 from "./2.jpg";
+import Pic3 from "./3.png";
+import Pic4 from "./4.png";
+
 class BoardingForm extends React.Component {
   constructor(props) {
     super(props);
@@ -71,6 +76,7 @@ class BoardingForm extends React.Component {
       // Bubble render
       var newBox = document.createElement("div");
       newBox.className = "boarder-box";
+      newBox.addEventListener("click", ()=>{viewProfile(doc.data().email)});
       var picHolder = document.createElement("div");
       picHolder.className = "mb-3";
       var newPic = document.createElement("img");
@@ -163,8 +169,36 @@ class BoardingForm extends React.Component {
       document.getElementById("loader").style.display = "none";  
     }
     
+    function viewProfile(email) {
+      document.getElementById("boarder-popup").className = "fixed-top row collapse";
+      const db = Fire.firestore();
+        db.collection("boarders")
+        .where("email", "==", email)
+        .get()
+        .then(snapshot => {
+          snapshot.docs.forEach(doc => {
+            document.getElementById("popup-boarder-pic").src = doc.data().pic;
+            document.getElementById("popup-boarder-name").textContent = doc.data().name;
+            if (doc.data().phone.length == 10)
+              document.getElementById("popup-boarder-phone").textContent = doc.data().phone[0]+doc.data().phone[1]+doc.data().phone[2]+"-"+doc.data().phone[3]+doc.data().phone[4]+doc.data().phone[5]+"-"+doc.data().phone[6]+doc.data().phone[7]+doc.data().phone[8]+doc.data().phone[9];
+            else
+              document.getElementById("popup-boarder-phone").textContent = doc.data().phone;
+            document.getElementById("popup-boarder-address").textContent = doc.data().address;
+            document.getElementById("popup-boarder-city").textContent = doc.data().city;
+            document.getElementById("popup-boarder-daily-rate").textContent = "$"+doc.data().dailyRate+"/day";
+            document.getElementById("popup-boarder-feature1-pic").src = doc.data().feature1;
+            document.getElementById("popup-boarder-feature2-pic").src = doc.data().feature2;
+            document.getElementById("popup-boarder-feature3-pic").src = doc.data().feature3;
+            document.getElementById("popup-boarder-feature4-pic").src = doc.data().feature4;
+          });
+        });
+        setTimeout(() => {
+          document.getElementById("boarder-popup").className = "fixed-top row collapse.show";
+        }, 250);
+    }
   }
 
+  closeProfile() { document.getElementById("boarder-popup").className = "fixed-top row collapse"; }
 
   render() {
     return (
@@ -180,6 +214,30 @@ class BoardingForm extends React.Component {
         <div className="trak_heading-medium mb-3">Dog Boarders</div>
         <div id="loader" className="mb-4"><Loader type="ThreeDots" color="black" height={75} width={75}/></div>
         <div id="bubble-home" className="row"></div>
+
+        <div id="boarder-popup" className="top row collapse" onMouseDown={this.dragPopup}>
+          <div className="col">
+              <div className="my-3"><img className="profile-pic" id="popup-boarder-pic" src="" alt="Profile Picture"/></div>
+              <div className="my-3 row"><div className="popup-input" id="popup-boarder-name"/></div>
+              <div className="my-3 row"><div className="popup-input" id="popup-boarder-phone"/></div>
+              <div className="my-3 row"><div className="popup-input" id="popup-boarder-address"/></div>
+              <div className="my-3 row"><div className="popup-input" id="popup-boarder-city"/></div>
+              <div className="my-3 row"><div className="popup-input" id="popup-boarder-daily-rate"/></div>
+              <button type="submit" className="btn btn-primary" onClick="">Send Message ✉</button>
+          </div>
+          <div className="col" id="boarder-block-col">
+            <div className="popup-pic-row row">
+              <div className="col"><img className="boarder-feature" id="popup-boarder-feature1-pic" src={Pic1} alt="Featured Picture"/></div>
+              <div className="col"><img className="boarder-feature" id="popup-boarder-feature2-pic" src={Pic2} alt="Featured Picture"/></div>
+            </div>
+            <div className="popup-pic-row row">
+              <div className="col"><img className="boarder-feature" id="popup-boarder-feature3-pic" src={Pic3} alt="Featured Picture"/></div>
+              <div className="col"><img className="boarder-feature" id="popup-boarder-feature4-pic" src={Pic4} alt="Featured Picture"/></div>
+            </div>
+            <button type="submit" className="btn btn-danger" id="close-popup-button" onClick={this.closeProfile}>X</button>
+          </div>
+        </div>
+
       </div>
     );
   }
