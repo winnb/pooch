@@ -23,6 +23,8 @@ class ProfileForm extends React.Component {
   }
 
   componentDidMount() {
+    document.getElementById("error-message").style.display = "none";
+    document.getElementById("upload-loader").style.display = "none";
     document.getElementById("profile-loader").style.display = "block";
     const db = Fire.firestore();
     console.log("component mounted");
@@ -149,19 +151,24 @@ class ProfileForm extends React.Component {
 
   newParent() {
     const db = Fire.firestore();
-      db.collection("parents").add({
+    db.collection("parents").add({
       email: Fire.auth().currentUser.email,
       name: document.getElementById("parent-name").value,
       phone: document.getElementById("parent-phone").value,
       city: document.getElementById("parent-city").value,
       pic: document.getElementById("parent-pic").src
+    })
+    .catch(error => {
+      document.getElementById("error-message").style.display = "block";
     });
-    db.collection("profile-types").add({
-      email: Fire.auth().currentUser.email,
-      type: "parent"
-    });
-    setTimeout(() => {
-      window.location.reload();
+    setTimeout(() => { // Only reload page if no error
+      if (document.getElementById("error-message").style.display === "none") {
+        db.collection("profile-types").add({
+          email: Fire.auth().currentUser.email,
+          type: "parent"
+        });
+      setTimeout(() => { window.location.reload(); }, 1000);
+      }
     }, 1000);
   }
 
@@ -183,32 +190,39 @@ class ProfileForm extends React.Component {
       phone: document.getElementById("database-parent-phone").value,
       city: document.getElementById("database-parent-city").value,
       pic: document.getElementById("database-parent-pic").src
-    });
+      }).catch(error => {
+        document.getElementById("error-message").style.display = "block";
+      });
+      setTimeout(() => { // Only reload page if no error
+        document.getElementById("upload-loader").style.display = "none";
+        if (document.getElementById("error-message").style.display === "none")
+            window.location.reload();
+      }, 2000);
     }, 1000);
-    setTimeout(() => {
-      window.location.reload();
-    }, 2000);
   }
 
   newWalker() {
     const db = Fire.firestore();
-    setTimeout(() => {
-      db.collection("walkers").add({
+    db.collection("walkers").add({
       email: Fire.auth().currentUser.email,
       name: document.getElementById("walker-name").value,
       phone: document.getElementById("walker-phone").value,
       city: document.getElementById("walker-city").value,
       hourlyRate: document.getElementById("walker-hourly-rate").value,
       pic: document.getElementById("walker-pic").src
+    })
+    .catch(error => {
+      document.getElementById("error-message").style.display = "block";
     });
-    db.collection("profile-types").add({
-      email: Fire.auth().currentUser.email,
-      type: "walker"
-    });
-  }, 1000);
-    setTimeout(() => {
-      window.location.reload();
-    }, 1750);
+    setTimeout(() => { // Only reload page if no error
+      if (document.getElementById("error-message").style.display === "none") {
+        db.collection("profile-types").add({
+          email: Fire.auth().currentUser.email,
+          type: "walker"
+        });
+      setTimeout(() => { window.location.reload(); }, 1000);
+      }
+    }, 1000);
   }
 
   updateWalker() {
@@ -227,42 +241,46 @@ class ProfileForm extends React.Component {
       city: document.getElementById("database-walker-city").value,
       hourlyRate: document.getElementById("database-walker-hourly-rate").value,
       pic: document.getElementById("database-walker-pic").src
+    }).catch(error => {
+      document.getElementById("error-message").style.display = "block";
     });
-    }, 1000);
-    setTimeout(() => {
-      window.location.reload();
+    setTimeout(() => { // Only reload page if no error
+      document.getElementById("upload-loader").style.display = "none";
+      if (document.getElementById("error-message").style.display === "none")
+          window.location.reload();
     }, 2000);
+  }, 1000);
   }
 
   newBoarder() {
-    if (document.getElementById("boarder-pic").src.length < 582795) {
-      const db = Fire.firestore();
-        db.collection("boarders").add({
-        email: Fire.auth().currentUser.email,
-        name: document.getElementById("boarder-name").value,
-        phone: document.getElementById("boarder-phone").value,
-        address: document.getElementById("boarder-address").value,
-        city: document.getElementById("boarder-city").value,
-        dailyRate: document.getElementById("boarder-daily-rate").value,
-        pic: document.getElementById("boarder-pic").src
-      });
-      db.collection("profile-types").add({
-        email: Fire.auth().currentUser.email,
-        type: "boarder"
-      });
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
-    }
-    else {
-      document.getElementById("profile-error").className = "collapse.show";
-    }
+    const db = Fire.firestore();
+    db.collection("boarders").add({
+      email: Fire.auth().currentUser.email,
+      name: document.getElementById("boarder-name").value,
+      phone: document.getElementById("boarder-phone").value,
+      address: document.getElementById("boarder-address").value,
+      city: document.getElementById("boarder-city").value,
+      dailyRate: document.getElementById("boarder-daily-rate").value,
+      pic: document.getElementById("boarder-pic").src
+    })
+    .catch(error => {
+      document.getElementById("error-message").style.display = "block";
+    });
+    setTimeout(() => { // Only reload page if no error
+      if (document.getElementById("error-message").style.display === "none") {
+        db.collection("profile-types").add({
+          email: Fire.auth().currentUser.email,
+          type: "boarder"
+        });
+      setTimeout(() => { window.location.reload(); }, 1000);
+      }
+    }, 1000);
   }
 
   updateBoarder() {
     const db = Fire.firestore();
-    var query = db.collection("boarders").where('email', '==', Fire.auth().currentUser.email);
-    query.get().then(function(querySnapshot) {
+    db.collection("boarders").where('email', '==', Fire.auth().currentUser.email)
+    .get().then(function(querySnapshot) {
       querySnapshot.forEach(function(doc) {
         doc.ref.delete();
       });
@@ -275,16 +293,16 @@ class ProfileForm extends React.Component {
       address: document.getElementById("database-boarder-address").value,
       city: document.getElementById("database-boarder-city").value,
       dailyRate: document.getElementById("database-boarder-daily-rate").value,
-      pic: document.getElementById("database-boarder-pic").src,
-      feature1: document.getElementById("database-boarder-feature1-pic").src,
-      feature2: document.getElementById("database-boarder-feature2-pic").src,
-      feature3: document.getElementById("database-boarder-feature3-pic").src,
-      feature4: document.getElementById("database-boarder-feature4-pic").src
+      pic: document.getElementById("database-boarder-pic").src
+    }).catch(error => {
+      document.getElementById("error-message").style.display = "block";
     });
-    }, 1000);
-    setTimeout(() => {
-      window.location.reload();
-    }, 3000);
+    setTimeout(() => { // Only reload page if no error
+      document.getElementById("upload-loader").style.display = "none";
+      if (document.getElementById("error-message").style.display === "none")
+          window.location.reload();
+    }, 2000);
+  }, 1000);
   }
 
 previewPic(event) {
@@ -338,6 +356,8 @@ deleteProfile() {
       window.location.reload();
     }, 1000);
 }
+
+closeError() { document.getElementById("error-message").style.display = "none"; }
 
   render() {
     return (
@@ -484,13 +504,18 @@ deleteProfile() {
             <button type="submit" className="btn btn-primary mt-4" onClick={this.updateBoarder}>Edit Profile</button>
           </div>
 
+          <div id="upload-loader" className="mt-4"><Loader type="Oval" color="black" height={75} width={75}/></div>
+          
           <div id="delete-popup" className="fixed-top collapse">
               <div className="trak_nav-item">Are you sure you want to delete your profile? This will allow you to change account type</div>
               <div><button className="my-2 mr-4 btn-danger popup-button" onClick={this.deleteProfile}>Yes</button><button className="my-2 ml-4 btn-primary popup-button" onClick={this.closeDeletePopup}>No</button></div>
               <div className="trak_body">WARNING: This is irreversable!</div>
           </div>
           <div id="delete-button-row" className="collapse"><button type="submit" className="btn btn-danger mt-8" onClick={this.openDeletePopup}>Delete Profile</button></div>
-          <div id="profile-error" className="collapse">Picture can be at most 400x400 pixels</div>
+          <div className="fixed-top" id="error-message">
+                    <div>Image size too large</div>
+                    <button className="my-2 mr-4 btn-danger popup-button" onClick={this.closeError}>Close</button>
+                </div>
           </Fade>
       </div>
     ); 

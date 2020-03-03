@@ -77,13 +77,9 @@ class RecordForm extends React.Component{
         }, 1000);
     }
 
-    closePopup() {
-        document.getElementById("delete-record-popup").className = "fixed-top collapse";
-    }
+    closePopup() { document.getElementById("delete-record-popup").className = "fixed-top collapse"; }
 
-    closeError() {
-        document.getElementById("error-message").style.display = "none";
-    }
+    closeError() { document.getElementById("error-message").style.display = "none"; }
 
     render(){
         return( 
