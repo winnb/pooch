@@ -178,6 +178,7 @@ class BoardingForm extends React.Component {
         .then(snapshot => {
           snapshot.docs.forEach(doc => {
             document.getElementById("popup-boarder-pic").src = doc.data().pic;
+            document.getElementById("popup-boarder-email").textContent = doc.data().email;
             document.getElementById("popup-boarder-name").textContent = doc.data().name;
             if (doc.data().phone.length == 10)
               document.getElementById("popup-boarder-phone").textContent = doc.data().phone[0]+doc.data().phone[1]+doc.data().phone[2]+"-"+doc.data().phone[3]+doc.data().phone[4]+doc.data().phone[5]+"-"+doc.data().phone[6]+doc.data().phone[7]+doc.data().phone[8]+doc.data().phone[9];
@@ -200,6 +201,32 @@ class BoardingForm extends React.Component {
 
   closeProfile() { document.getElementById("boarder-popup").className = "fixed-top row collapse"; }
 
+  fillStar(event) {
+    for (var i=0; i<5; i++) {
+      if(i < parseInt(event.target.id.split("star")[1]) ) {
+        document.getElementById("star"+(i+1)).className = "full-stars";
+        document.getElementById("star"+(i+1)).textContent = "⭐";
+      }
+      else {
+        document.getElementById("star"+(i+1)).className = "empty-stars";
+        document.getElementById("star"+(i+1)).textContent = "☆";
+      }
+    }
+  }
+
+  // setRating(event) {
+  //   const db = Fire.firestore();
+  //       db.collection("boarders")
+  //       .where("email", "==", document.getElementById("popup-boarder-email").textContent)
+  //       .get()
+  //       .then(snapshot => {
+  //         snapshot.docs.forEach(doc => {
+  //           doc.data().rating += parseInt(event.target.id.split("star")[1]);
+  //           doc.data().reviewCount++;
+  //         });
+  //       });
+  // }
+
   render() {
     return (
       <div className="mt-7 mb-8">
@@ -217,13 +244,27 @@ class BoardingForm extends React.Component {
 
         <div id="boarder-popup" className="top row collapse" onMouseDown={this.dragPopup}>
           <div className="col">
-              <div className="my-3"><img className="profile-pic" id="popup-boarder-pic" src="" alt="Profile Picture"/></div>
+              <div className="my-3 row">
+                <img className="profile-pic mr-5" id="popup-boarder-pic" src="" alt="Profile Picture"/>
+                <div className="col">
+                  <div className="row my-3">
+                    <div className="empty-stars" id="star1" onMouseEnter={this.fillStar} onMouseLeave={this.emptyStar} onClick={this.setRating}>☆</div>
+                    <div className="empty-stars" id="star2" onMouseEnter={this.fillStar} onMouseLeave={this.emptyStar} onClick={this.setRating}>☆</div>
+                    <div className="empty-stars" id="star3" onMouseEnter={this.fillStar} onMouseLeave={this.emptyStar} onClick={this.setRating}>☆</div>
+                    <div className="empty-stars" id="star4" onMouseEnter={this.fillStar} onMouseLeave={this.emptyStar} onClick={this.setRating}>☆</div>
+                    <div className="empty-stars" id="star5" onMouseEnter={this.fillStar} onMouseLeave={this.emptyStar} onClick={this.setRating}>☆</div>
+                  </div>
+                  <div className="row my-3">
+                    <button type="submit" className="btn btn-primary" onClick="">Send Message ✉</button>
+                  </div>        
+                </div>
+              </div>
+              <div className="my-3 row"><div className="popup-input" id="popup-boarder-email"/></div>
               <div className="my-3 row"><div className="popup-input" id="popup-boarder-name"/></div>
               <div className="my-3 row"><div className="popup-input" id="popup-boarder-phone"/></div>
               <div className="my-3 row"><div className="popup-input" id="popup-boarder-address"/></div>
               <div className="my-3 row"><div className="popup-input" id="popup-boarder-city"/></div>
               <div className="my-3 row"><div className="popup-input" id="popup-boarder-daily-rate"/></div>
-              <button type="submit" className="btn btn-primary" onClick="">Send Message ✉</button>
           </div>
           <div className="col" id="boarder-block-col">
             <div className="popup-pic-row row">

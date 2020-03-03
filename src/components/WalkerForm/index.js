@@ -166,7 +166,7 @@ class WalkerForm extends React.Component {
     }
 
     function viewProfile(email) {
-      document.getElementById("walker-popup").className = "fixed-top row collapse";
+      document.getElementById("walker-popup").className = "row collapse";
       const db = Fire.firestore();
         db.collection("walkers")
         .where("email", "==", email)
@@ -188,13 +188,26 @@ class WalkerForm extends React.Component {
           });
         });
         setTimeout(() => {
-          document.getElementById("walker-popup").className = "fixed-top row collapse.show";
+          document.getElementById("walker-popup").className = "row collapse.show";
         }, 250);
     }
     
   }
 
-  closeProfile() { document.getElementById("walker-popup").className = "fixed-top row collapse"; }
+  closeProfile() { document.getElementById("walker-popup").className = "row collapse"; }
+
+  fillStar(event) {
+    for (var i=0; i<5; i++) {
+      if(i < parseInt(event.target.id.split("star")[1]) ) {
+        document.getElementById("star"+(i+1)).className = "full-stars";
+        document.getElementById("star"+(i+1)).textContent = "⭐";
+      }
+      else {
+        document.getElementById("star"+(i+1)).className = "empty-stars";
+        document.getElementById("star"+(i+1)).textContent = "☆";
+      }
+    }
+  }
 
   render() {
     return (
@@ -212,14 +225,27 @@ class WalkerForm extends React.Component {
         <div id="loader" className="mb-4"><Loader type="ThreeDots" color="black" height={75} width={75}/></div>
         <div id="bubble-home" className="row"></div>
 
-        <div id="walker-popup" className="top row collapse" onMouseDown={this.dragPopup}>
+        <div id="walker-popup" className="row collapse" onMouseDown={this.dragPopup}>
           <div className="col">
-              <div className="my-3"><img className="profile-pic" id="popup-walker-pic" src="" alt="Profile Picture"/></div>
+          <div className="my-3 row">
+                <img className="profile-pic mr-5" id="popup-walker-pic" src="" alt="Profile Picture"/>
+                <div className="col">
+                  <div className="row my-3">
+                    <div className="empty-stars" id="star1" onMouseEnter={this.fillStar} onMouseLeave={this.emptyStar} onClick={this.setRating}>☆</div>
+                    <div className="empty-stars" id="star2" onMouseEnter={this.fillStar} onMouseLeave={this.emptyStar} onClick={this.setRating}>☆</div>
+                    <div className="empty-stars" id="star3" onMouseEnter={this.fillStar} onMouseLeave={this.emptyStar} onClick={this.setRating}>☆</div>
+                    <div className="empty-stars" id="star4" onMouseEnter={this.fillStar} onMouseLeave={this.emptyStar} onClick={this.setRating}>☆</div>
+                    <div className="empty-stars" id="star5" onMouseEnter={this.fillStar} onMouseLeave={this.emptyStar} onClick={this.setRating}>☆</div>
+                  </div>
+                  <div className="row my-3">
+                    <button type="submit" className="btn btn-primary" onClick="">Send Message ✉</button>
+                  </div>        
+                </div>
+              </div>
               <div className="my-3 row"><div className="popup-input" id="popup-walker-name"/></div>
               <div className="my-3 row"><div className="popup-input" id="popup-walker-phone"/></div>
               <div className="my-3 row"><div className="popup-input" id="popup-walker-city"/></div>
               <div className="my-3 row"><div className="popup-input" id="popup-walker-hourly-rate"/></div>
-              <button type="submit" className="btn btn-primary" onClick="">Send Message ✉</button>
           </div>
           <div className="col" id="walker-block-col">
             <div className="popup-pic-row row">
