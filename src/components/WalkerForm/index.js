@@ -230,14 +230,16 @@ class WalkerForm extends React.Component {
           <div className="my-3 row">
                 <img className="profile-pic mr-5" id="popup-walker-pic" src="" alt="Profile Picture"/>
                 <div className="col">
-                  <div className="row my-3">
-                    <div className="empty-stars" id="star1" onMouseEnter={this.fillStar} onMouseLeave={this.emptyStar} onClick={this.setRating}>☆</div>
-                    <div className="empty-stars" id="star2" onMouseEnter={this.fillStar} onMouseLeave={this.emptyStar} onClick={this.setRating}>☆</div>
-                    <div className="empty-stars" id="star3" onMouseEnter={this.fillStar} onMouseLeave={this.emptyStar} onClick={this.setRating}>☆</div>
-                    <div className="empty-stars" id="star4" onMouseEnter={this.fillStar} onMouseLeave={this.emptyStar} onClick={this.setRating}>☆</div>
-                    <div className="empty-stars" id="star5" onMouseEnter={this.fillStar} onMouseLeave={this.emptyStar} onClick={this.setRating}>☆</div>
+                  <div className="my-3">
+                    <div className="">
+                      <div className="empty-stars" id="star1" onClick={this.fillStar} onMouseLeave={this.emptyStar}>☆</div>
+                      <div className="empty-stars" id="star2" onClick={this.fillStar} onMouseLeave={this.emptyStar}>☆</div>
+                      <div className="empty-stars" id="star3" onClick={this.fillStar} onMouseLeave={this.emptyStar}>☆</div>
+                      <div className="empty-stars" id="star4" onClick={this.fillStar} onMouseLeave={this.emptyStar}>☆</div>
+                      <div className="empty-stars" id="star5" onClick={this.fillStar} onMouseLeave={this.emptyStar}>☆</div>
+                    </div>
                   </div>
-                  <div className="row my-3">
+                  <div className="my-3 star-row">
                     <button type="submit" className="btn btn-primary" onClick="">Send Message ✉</button>
                   </div>        
                 </div>

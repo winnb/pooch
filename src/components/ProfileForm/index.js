@@ -148,161 +148,186 @@ class ProfileForm extends React.Component {
     document.getElementById("new-walker-profile").className="collapse";
   }
 
-
-  newParent() {
-    const db = Fire.firestore();
-    db.collection("parents").add({
-      email: Fire.auth().currentUser.email,
-      name: document.getElementById("parent-name").value,
-      phone: document.getElementById("parent-phone").value,
-      city: document.getElementById("parent-city").value,
-      pic: document.getElementById("parent-pic").src
-    })
-    .catch(error => {
-      document.getElementById("error-message").style.display = "block";
-    });
-    setTimeout(() => { // Only reload page if no error
-      if (document.getElementById("error-message").style.display === "none") {
-        db.collection("profile-types").add({
-          email: Fire.auth().currentUser.email,
-          type: "parent"
-        });
-      setTimeout(() => { window.location.reload(); }, 1000);
-      }
-    }, 1000);
-  }
-
   updateParent() {
     const db = Fire.firestore();
-    // Takes too long to delete old before updating new
-    // Delete old data, wait 1 seconds, then update
-    // Wait 1 more second, reload page
-    db.collection("parents").where('email', '==', Fire.auth().currentUser.email)
-    .get().then(function(querySnapshot) {
-      querySnapshot.forEach(function(doc) {
-          doc.ref.delete();
+    db.collection("parents")
+      .where('email', '==', Fire.auth().currentUser.email) // Check if parent exists
+      .get()
+      .then(snapshot => {
+        if (snapshot.empty) { // Create new parent
+          db.collection("parents").add({
+            email: Fire.auth().currentUser.email,
+            name: document.getElementById("parent-name").value,
+            phone: document.getElementById("parent-phone").value,
+            city: document.getElementById("parent-city").value,
+            pic: document.getElementById("parent-pic").src
+          })
+          .catch(error => {
+            document.getElementById("error-message").style.display = "block";
+          });
+          setTimeout(() => { // Only reload page if no error
+            if (document.getElementById("error-message").style.display === "none") {
+              db.collection("profile-types").add({
+                email: Fire.auth().currentUser.email,
+                type: "parent"
+              });
+            setTimeout(() => { window.location.reload(); }, 500);
+            }
+          }, 2000);
+        }
+        else { // Already exists, so update
+          var oldPic;
+          snapshot.forEach(doc => {
+            oldPic = doc.data().pic; // Save old profile picture in case new one is too large
+            doc.ref.delete(); // Delete old entries
+            })
+            db.collection("parents").add({
+              email: Fire.auth().currentUser.email,
+              name: document.getElementById("database-parent-name").value,
+              phone: document.getElementById("database-parent-phone").value,
+              pic: document.getElementById("database-parent-pic").src
+            })
+            .catch(error => {
+              document.getElementById("error-message").style.display = "block";
+              db.collection("parents").add({ // Try adding without the picture
+                email: Fire.auth().currentUser.email,
+                name: document.getElementById("database-parent-name").value,
+                phone: document.getElementById("database-parent-phone").value,
+                pic: oldPic
+              })
+            });
+            setTimeout(() => { // Only reload page if no error
+              if (document.getElementById("error-message").style.display === "none")
+                window.location.reload();
+            }, 2000);
+        }
       });
-    });
-    setTimeout(() => {
-      db.collection("parents").add({
-      email: Fire.auth().currentUser.email,
-      name: document.getElementById("database-parent-name").value,
-      phone: document.getElementById("database-parent-phone").value,
-      city: document.getElementById("database-parent-city").value,
-      pic: document.getElementById("database-parent-pic").src
-      }).catch(error => {
-        document.getElementById("error-message").style.display = "block";
-      });
-      setTimeout(() => { // Only reload page if no error
-        document.getElementById("upload-loader").style.display = "none";
-        if (document.getElementById("error-message").style.display === "none")
-            window.location.reload();
-      }, 2000);
-    }, 1000);
-  }
-
-  newWalker() {
-    const db = Fire.firestore();
-    db.collection("walkers").add({
-      email: Fire.auth().currentUser.email,
-      name: document.getElementById("walker-name").value,
-      phone: document.getElementById("walker-phone").value,
-      city: document.getElementById("walker-city").value,
-      hourlyRate: document.getElementById("walker-hourly-rate").value,
-      pic: document.getElementById("walker-pic").src
-    })
-    .catch(error => {
-      document.getElementById("error-message").style.display = "block";
-    });
-    setTimeout(() => { // Only reload page if no error
-      if (document.getElementById("error-message").style.display === "none") {
-        db.collection("profile-types").add({
-          email: Fire.auth().currentUser.email,
-          type: "walker"
-        });
-      setTimeout(() => { window.location.reload(); }, 1000);
-      }
-    }, 1000);
   }
 
   updateWalker() {
     const db = Fire.firestore();
-    db.collection("walkers").where('email', '==', Fire.auth().currentUser.email)
-    .get().then(function(querySnapshot) {
-      querySnapshot.forEach(function(doc) {
-        doc.ref.delete();
+    db.collection("walkers")
+      .where('email', '==', Fire.auth().currentUser.email) // Check if walker exists
+      .get()
+      .then(snapshot => {
+        if (snapshot.empty) { // Create new walker
+          db.collection("walkers").add({
+            email: Fire.auth().currentUser.email,
+            name: document.getElementById("walker-name").value,
+            phone: document.getElementById("walker-phone").value,
+            city: document.getElementById("walker-city").value,
+            houryRate: document.getElementById("walker-hourly-rate").value,
+            pic: document.getElementById("walker-pic").src
+          })
+          .catch(error => {
+            document.getElementById("error-message").style.display = "block";
+          });
+          setTimeout(() => { // Only reload page if no error
+            if (document.getElementById("error-message").style.display === "none") {
+              db.collection("profile-types").add({
+                email: Fire.auth().currentUser.email,
+                type: "walker"
+              });
+            setTimeout(() => { window.location.reload(); }, 500);
+            }
+          }, 2000);
+        }
+        else { // Already exists, so update
+          var oldPic;
+          snapshot.forEach(doc => {
+            oldPic = doc.data().pic; // Save old profile picture in case new one is too large
+            doc.ref.delete(); // Delete old entries
+            })
+            db.collection("walkers").add({
+              email: Fire.auth().currentUser.email,
+              name: document.getElementById("database-walker-name").value,
+              phone: document.getElementById("database-walker-phone").value,
+              city: document.getElementById("database-walker-city").value,
+              houryRate: document.getElementById("database-walker-houry-rate").value,
+              pic: document.getElementById("database-walker-pic").src
+            })
+            .catch(error => {
+              document.getElementById("error-message").style.display = "block";
+              db.collection("walkers").add({ // Try adding without the picture
+                email: Fire.auth().currentUser.email,
+                name: document.getElementById("database-walker-name").value,
+                phone: document.getElementById("database-walker-phone").value,
+                address: document.getElementById("database-walker-address").value,
+                city: document.getElementById("database-walker-city").value,
+                dailyRate: document.getElementById("database-walker-daily-rate").value,
+                pic: oldPic
+              })
+            });
+            setTimeout(() => { // Only reload page if no error
+              if (document.getElementById("error-message").style.display === "none")
+                window.location.reload();
+            }, 2000);
+        }
       });
-    });
-    setTimeout(() => {
-      db.collection("walkers").add({
-      email: Fire.auth().currentUser.email,
-      name: document.getElementById("database-walker-name").value,
-      phone: document.getElementById("database-walker-phone").value,
-      city: document.getElementById("database-walker-city").value,
-      hourlyRate: document.getElementById("database-walker-hourly-rate").value,
-      pic: document.getElementById("database-walker-pic").src
-    }).catch(error => {
-      document.getElementById("error-message").style.display = "block";
-    });
-    setTimeout(() => { // Only reload page if no error
-      document.getElementById("upload-loader").style.display = "none";
-      if (document.getElementById("error-message").style.display === "none")
-          window.location.reload();
-    }, 2000);
-  }, 1000);
-  }
-
-  newBoarder() {
-    const db = Fire.firestore();
-    db.collection("boarders").add({
-      email: Fire.auth().currentUser.email,
-      name: document.getElementById("boarder-name").value,
-      phone: document.getElementById("boarder-phone").value,
-      address: document.getElementById("boarder-address").value,
-      city: document.getElementById("boarder-city").value,
-      dailyRate: document.getElementById("boarder-daily-rate").value,
-      pic: document.getElementById("boarder-pic").src
-    })
-    .catch(error => {
-      document.getElementById("error-message").style.display = "block";
-    });
-    setTimeout(() => { // Only reload page if no error
-      if (document.getElementById("error-message").style.display === "none") {
-        db.collection("profile-types").add({
-          email: Fire.auth().currentUser.email,
-          type: "boarder"
-        });
-      setTimeout(() => { window.location.reload(); }, 1000);
-      }
-    }, 1000);
   }
 
   updateBoarder() {
     const db = Fire.firestore();
-    db.collection("boarders").where('email', '==', Fire.auth().currentUser.email)
-    .get().then(function(querySnapshot) {
-      querySnapshot.forEach(function(doc) {
-        doc.ref.delete();
+    db.collection("boarders")
+      .where('email', '==', Fire.auth().currentUser.email) // Check if boarder exists
+      .get()
+      .then(snapshot => {
+        if (snapshot.empty) { // Create new boarder
+          db.collection("boarders").add({
+            email: Fire.auth().currentUser.email,
+            name: document.getElementById("boarder-name").value,
+            phone: document.getElementById("boarder-phone").value,
+            address: document.getElementById("boarder-address").value,
+            city: document.getElementById("boarder-city").value,
+            dailyRate: document.getElementById("boarder-daily-rate").value,
+            pic: document.getElementById("boarder-pic").src
+          })
+          .catch(error => {
+            document.getElementById("error-message").style.display = "block";
+          });
+          setTimeout(() => { // Only reload page if no error
+            if (document.getElementById("error-message").style.display === "none") {
+              db.collection("profile-types").add({
+                email: Fire.auth().currentUser.email,
+                type: "boarder"
+              });
+            setTimeout(() => { window.location.reload(); }, 500);
+            }
+          }, 2000);
+        }
+        else { // Already exists, so update
+          var oldPic;
+          snapshot.forEach(doc => {
+            oldPic = doc.data().pic; // Save old profile picture in case new one is too large
+            doc.ref.delete(); // Delete old entries
+            })
+            db.collection("boarders").add({
+              email: Fire.auth().currentUser.email,
+              name: document.getElementById("database-boarder-name").value,
+              phone: document.getElementById("database-boarder-phone").value,
+              address: document.getElementById("database-boarder-address").value,
+              city: document.getElementById("database-boarder-city").value,
+              dailyRate: document.getElementById("database-boarder-daily-rate").value,
+              pic: document.getElementById("database-boarder-pic").src
+            })
+            .catch(error => {
+              document.getElementById("error-message").style.display = "block";
+              db.collection("boarders").add({ // Try adding without the picture
+                email: Fire.auth().currentUser.email,
+                name: document.getElementById("database-boarder-name").value,
+                phone: document.getElementById("database-boarder-phone").value,
+                address: document.getElementById("database-boarder-address").value,
+                city: document.getElementById("database-boarder-city").value,
+                dailyRate: document.getElementById("database-boarder-daily-rate").value,
+                pic: oldPic
+              })
+            });
+            setTimeout(() => { // Only reload page if no error
+              if (document.getElementById("error-message").style.display === "none")
+                window.location.reload();
+            }, 2000);
+        }
       });
-    });
-    setTimeout(() => {
-      db.collection("boarders").add({
-      email: Fire.auth().currentUser.email,
-      name: document.getElementById("database-boarder-name").value,
-      phone: document.getElementById("database-boarder-phone").value,
-      address: document.getElementById("database-boarder-address").value,
-      city: document.getElementById("database-boarder-city").value,
-      dailyRate: document.getElementById("database-boarder-daily-rate").value,
-      pic: document.getElementById("database-boarder-pic").src
-    }).catch(error => {
-      document.getElementById("error-message").style.display = "block";
-    });
-    setTimeout(() => { // Only reload page if no error
-      document.getElementById("upload-loader").style.display = "none";
-      if (document.getElementById("error-message").style.display === "none")
-          window.location.reload();
-    }, 2000);
-  }, 1000);
   }
 
 previewPic(event) {
@@ -352,6 +377,13 @@ deleteProfile() {
         doc.ref.delete();
       });
     });
+  Fire.firestore().collection("profile-types")
+  .where('email', '==', Fire.auth().currentUser.email)
+  .get().then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc) {
+        doc.ref.delete();
+      });
+    });
     setTimeout(() => {
       window.location.reload();
     }, 1000);
@@ -389,7 +421,7 @@ closeError() { document.getElementById("error-message").style.display = "none"; 
                 <div className="my-4 row"><input className="profile-input" id="parent-phone" type="text" placeholder="Phone Number" min="0" max="9999999999" maxLength="11"/></div>
                 <div className="my-4 row"><input className="profile-input" id="parent-city" type="text" placeholder="City" maxLength="50"/></div> 
               </div>
-              <button type="submit" className="btn btn-primary" onClick={this.newParent}>Create Parent Profile</button>
+              <button type="submit" className="btn btn-primary" onClick={this.updateParent}>Create Parent Profile</button>
           </div>
 
           <div id="walker-or-boarder" className="collapse">
@@ -414,7 +446,7 @@ closeError() { document.getElementById("error-message").style.display = "none"; 
                 <div className="my-4 row"><input className="profile-input" id="walker-city" type="text" placeholder="City" maxLength="50"/></div>
                 <div className="my-4 row"><input className="profile-input" id="walker-hourly-rate" type="text" placeholder="Hourly Rate" min="12" max="100" maxLength="3"/></div>
               </div>
-              <button type="submit" className="btn btn-primary" onClick={this.newWalker}>Create Dog Walking Profile</button>
+              <button type="submit" className="btn btn-primary" onClick={this.updateWalker}>Create Dog Walking Profile</button>
           </div>
 
           <div id="new-boarder-profile" className="collapse">
@@ -427,7 +459,7 @@ closeError() { document.getElementById("error-message").style.display = "none"; 
                 <div className="my-4 row"><input className="profile-input" id="boarder-city" type="text" placeholder="City" maxLength="50"/></div>
                 <div className="my-4 row"><input className="profile-input" id="boarder-daily-rate" type="text" placeholder="Daily Rate" min="12" max="1000" maxLength="4"/></div>
               </div>
-              <button type="submit" className="btn btn-primary" onClick={this.newBoarder}>Create Dog Boarding Profile</button>
+              <button type="submit" className="btn btn-primary" onClick={this.updateBoarder}>Create Dog Boarding Profile</button>
           </div>
 
           <div id="parent-profile" className="collapse">

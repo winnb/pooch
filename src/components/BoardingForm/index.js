@@ -202,30 +202,30 @@ class BoardingForm extends React.Component {
   closeProfile() { document.getElementById("boarder-popup").className = "fixed-top row collapse"; }
 
   fillStar(event) {
+    var rating = 0;
     for (var i=0; i<5; i++) {
       if(i < parseInt(event.target.id.split("star")[1]) ) {
         document.getElementById("star"+(i+1)).className = "full-stars";
         document.getElementById("star"+(i+1)).textContent = "⭐";
+        rating++;
       }
       else {
         document.getElementById("star"+(i+1)).className = "empty-stars";
         document.getElementById("star"+(i+1)).textContent = "☆";
       }
     }
+    const db = Fire.firestore();
+    db.collection("ratings")
+      .where('by', '==', Fire.auth().currentUser.email)
+      .where("for", "==", document.getElementById("popup-boarder-email").textContent)
+      .get()
+      .then(snapshot => {
+        if (snapshot.empty)
+          console.log("Nothing");
+        else
+          console.log("I exist!");
+      });
   }
-
-  // setRating(event) {
-  //   const db = Fire.firestore();
-  //       db.collection("boarders")
-  //       .where("email", "==", document.getElementById("popup-boarder-email").textContent)
-  //       .get()
-  //       .then(snapshot => {
-  //         snapshot.docs.forEach(doc => {
-  //           doc.data().rating += parseInt(event.target.id.split("star")[1]);
-  //           doc.data().reviewCount++;
-  //         });
-  //       });
-  // }
 
   render() {
     return (
@@ -247,19 +247,22 @@ class BoardingForm extends React.Component {
               <div className="my-3 row">
                 <img className="profile-pic mr-5" id="popup-boarder-pic" src="" alt="Profile Picture"/>
                 <div className="col">
-                  <div className="row my-3">
-                    <div className="empty-stars" id="star1" onMouseEnter={this.fillStar} onMouseLeave={this.emptyStar} onClick={this.setRating}>☆</div>
-                    <div className="empty-stars" id="star2" onMouseEnter={this.fillStar} onMouseLeave={this.emptyStar} onClick={this.setRating}>☆</div>
-                    <div className="empty-stars" id="star3" onMouseEnter={this.fillStar} onMouseLeave={this.emptyStar} onClick={this.setRating}>☆</div>
-                    <div className="empty-stars" id="star4" onMouseEnter={this.fillStar} onMouseLeave={this.emptyStar} onClick={this.setRating}>☆</div>
-                    <div className="empty-stars" id="star5" onMouseEnter={this.fillStar} onMouseLeave={this.emptyStar} onClick={this.setRating}>☆</div>
+                  <div className="my-2">
+                    <div id="popup-boarder-rating">4.5 ⭐</div>
                   </div>
-                  <div className="row my-3">
+                  <div className="row justify-content-center my-2">
+                      <div className="empty-stars" id="star1" onClick={this.fillStar}>☆</div>
+                      <div className="empty-stars" id="star2" onClick={this.fillStar}>☆</div>
+                      <div className="empty-stars" id="star3" onClick={this.fillStar}>☆</div>
+                      <div className="empty-stars" id="star4" onClick={this.fillStar}>☆</div>
+                      <div className="empty-stars" id="star5" onClick={this.fillStar}>☆</div>
+                  </div>
+                  <div className="my-2">
                     <button type="submit" className="btn btn-primary" onClick="">Send Message ✉</button>
                   </div>        
                 </div>
               </div>
-              <div className="my-3 row"><div className="popup-input" id="popup-boarder-email"/></div>
+              <div className="my-3 row"><div className="popup-input collapse" id="popup-boarder-email"/></div>
               <div className="my-3 row"><div className="popup-input" id="popup-boarder-name"/></div>
               <div className="my-3 row"><div className="popup-input" id="popup-boarder-phone"/></div>
               <div className="my-3 row"><div className="popup-input" id="popup-boarder-address"/></div>
