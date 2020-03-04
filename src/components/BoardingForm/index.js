@@ -19,10 +19,12 @@ class BoardingForm extends React.Component {
       dailyRate: "",
       address: "",
       city: "",
-      search: ""
+      search: "",
+      reset: false
     };
     this.handleChange = this.handleChange.bind(this);
     this.updateSearch = this.updateSearch.bind(this);
+    this.fillStar = this.fillStar.bind(this);
   }
 
   handleChange(e) {
@@ -88,12 +90,28 @@ class BoardingForm extends React.Component {
       var newCol = document.createElement("div");
       newCol.className = "col";
       newBox.appendChild(newCol);
+
       var ratingRow = document.createElement("div"); // First row
       ratingRow.className = "my-2";
       newCol.appendChild(ratingRow);
       var rating = document.createElement("div");
-      rating.innerText = Math.floor((Math.random()*2))+Math.floor((Math.random()*11))/10+3+" ⭐";
+      var ratingSum = 0;
+      var ratingCount = 0;
+      db.collection("ratings")
+      .where("for", "==", doc.data().email)
+      .get()
+      .then(snapshot => {
+        snapshot.docs.forEach(doc => {
+          ratingSum += doc.data().stars;
+          ratingCount++;
+        });
+        if (ratingCount > 0)
+          rating.textContent = (ratingSum/ratingCount).toFixed(1)+" ⭐";
+        else
+          rating.textContent = "No Ratings ⭐";
+      });
       ratingRow.appendChild(rating);
+
       var nameRow = document.createElement("div"); // Second row
       nameRow.className = "my-2 mx-1 boarder-box-row";
       newCol.appendChild(nameRow);
@@ -101,6 +119,7 @@ class BoardingForm extends React.Component {
       name.innerText = doc.data().name;
       name.className = "boarder-name";
       nameRow.appendChild(name);
+
       var phoneRow = document.createElement("div"); // Third row
       phoneRow.className = "my-2 mx-1 boarder-box-row";
       newCol.appendChild(phoneRow);
@@ -112,6 +131,7 @@ class BoardingForm extends React.Component {
         phone.innerText = phone.innerText[0]+phone.innerText[1]+phone.innerText[2]+"-"+phone.innerText[3]+phone.innerText[4]+phone.innerText[5]+phone.innerText[6];
       phone.className = "boarder-phone";
       phoneRow.appendChild(phone);
+
       var addressRow = document.createElement("div"); // Fourth row
       addressRow.className = "my-2 mx-1 boarder-box-row";
       newCol.appendChild(addressRow);
@@ -119,6 +139,7 @@ class BoardingForm extends React.Component {
       address.innerText = doc.data().address;
       address.className = "boarderer-address";
       addressRow.appendChild(address);
+
       var cityRow = document.createElement("div"); // Fifth row
       cityRow.className = "my-2 mx-1 boarder-box-row";
       newCol.appendChild(cityRow);
@@ -126,6 +147,7 @@ class BoardingForm extends React.Component {
       city.innerText = doc.data().city;
       city.className = "boarder-city";
       cityRow.appendChild(city);
+
       var dailyRateRow = document.createElement("div"); // Sixth row
       dailyRateRow.className = "my-2 mx-1 boarder-box-row";
       newCol.appendChild(dailyRateRow);
@@ -133,6 +155,25 @@ class BoardingForm extends React.Component {
       dailyRate.innerText = "$"+doc.data().dailyRate+"/day";
       dailyRate.className = "boarder-daily-rate";
       dailyRateRow.appendChild(dailyRate);
+
+      // Update popup rating
+      if (document.getElementById("popup-boarder-email").textContent === doc.data().email) {
+        ratingSum = 0;
+        ratingCount = 0;
+        db.collection("ratings")
+        .where("for", "==", document.getElementById("popup-boarder-email").textContent)
+        .get()
+        .then(snapshot => {
+          snapshot.docs.forEach(doc => {
+            ratingSum += doc.data().stars;
+            ratingCount++;
+          });
+          if (ratingCount > 0)
+            document.getElementById("popup-boarder-rating").textContent = (ratingSum/ratingCount).toFixed(1)+" ⭐";
+          else
+            document.getElementById("popup-boarder-rating").textContent = "No Ratings ⭐";
+        });
+      }
 
       // Search functionality
       var matchSearch = true;
@@ -168,7 +209,7 @@ class BoardingForm extends React.Component {
         document.getElementById("bubble-home").appendChild(newBox);
       document.getElementById("loader").style.display = "none";  
     }
-    
+
     function viewProfile(email) {
       document.getElementById("boarder-popup").className = "fixed-top row collapse";
       const db = Fire.firestore();
@@ -193,9 +234,41 @@ class BoardingForm extends React.Component {
             document.getElementById("popup-boarder-feature4-pic").src = doc.data().feature4;
           });
         });
+        var ratingSum = 0;
+        var ratingCount = 0;
+        db.collection("ratings")
+        .where("for", "==", email)
+        .get()
+        .then(snapshot => {
+          snapshot.docs.forEach(doc => {
+            ratingSum += doc.data().stars;
+            ratingCount++;
+          });
+          if (ratingCount > 0) {
+            document.getElementById("popup-boarder-rating").textContent = (ratingSum/ratingCount).toFixed(1)+" ⭐";
+            for (var i=0; i<5; i++)
+            {
+              if (i<Math.floor(ratingSum/ratingCount)) {
+              document.getElementById("star"+(i+1)).className = "full-stars";
+              document.getElementById("star"+(i+1)).textContent = "⭐";
+              }
+              else {
+                document.getElementById("star"+(i+1)).className = "empty-stars";
+                document.getElementById("star"+(i+1)).textContent = "☆";
+              }
+            }
+          }
+          else {
+            document.getElementById("popup-boarder-rating").textContent = "No Ratings ⭐";
+            for (var i=0; i<5; i++) {
+              document.getElementById("star"+(i+1)).className = "empty-stars";
+              document.getElementById("star"+(i+1)).textContent = "☆";
+            }
+          }
+        });
         setTimeout(() => {
           document.getElementById("boarder-popup").className = "fixed-top row collapse.show";
-        }, 250);
+        }, 500);
     }
   }
 
@@ -220,10 +293,33 @@ class BoardingForm extends React.Component {
       .where("for", "==", document.getElementById("popup-boarder-email").textContent)
       .get()
       .then(snapshot => {
-        if (snapshot.empty)
-          console.log("Nothing");
+        if (snapshot.empty) {
+          // Creating new review
+          db.collection("ratings").add({
+            by: Fire.auth().currentUser.email,
+            for: document.getElementById("popup-boarder-email").textContent,
+            stars: rating
+          });
+        }
         else
-          console.log("I exist!");
+          // Replacing old review
+          db.collection("ratings")
+          .where('by', '==', Fire.auth().currentUser.email)
+          .where("for", "==", document.getElementById("popup-boarder-email").textContent)
+          .get()
+          .then(snapshot => {
+            snapshot.docs.forEach(doc => {
+              doc.ref.delete();
+            });
+          });
+          setTimeout(() => {
+            db.collection("ratings").add({
+            by: Fire.auth().currentUser.email,
+            for: document.getElementById("popup-boarder-email").textContent,
+            stars: rating
+          });
+          this.setState({rest: !this.state.reset});
+          }, 250);      
       });
   }
 
@@ -248,7 +344,7 @@ class BoardingForm extends React.Component {
                 <img className="profile-pic mr-5" id="popup-boarder-pic" src="" alt="Profile Picture"/>
                 <div className="col">
                   <div className="my-2">
-                    <div id="popup-boarder-rating">4.5 ⭐</div>
+                    <div id="popup-boarder-rating"></div>
                   </div>
                   <div className="row justify-content-center my-2">
                       <div className="empty-stars" id="star1" onClick={this.fillStar}>☆</div>

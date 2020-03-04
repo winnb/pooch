@@ -18,10 +18,12 @@ class WalkerForm extends React.Component {
       phone: "",
       hourlyRate: "",
       city: "",
-      search: ""
+      search: "",
+      reset: false
     };
     this.handleChange = this.handleChange.bind(this);
     this.updateSearch = this.updateSearch.bind(this);
+    this.fillStar = this.fillStar.bind(this);
   }
 
   handleChange(e) {
@@ -92,7 +94,21 @@ class WalkerForm extends React.Component {
       ratingRow.className = "my-2";
       newCol.appendChild(ratingRow);
       var rating = document.createElement("div");
-      rating.innerText = Math.floor((Math.random()*2))+Math.floor((Math.random()*11))/10+3+" ⭐";
+      var ratingSum = 0;
+      var ratingCount = 0;
+      db.collection("ratings")
+      .where("for", "==", doc.data().email)
+      .get()
+      .then(snapshot => {
+        snapshot.docs.forEach(doc => {
+          ratingSum += doc.data().stars;
+          ratingCount++;
+        });
+        if (ratingCount > 0)
+          rating.textContent = (ratingSum/ratingCount).toFixed(1)+" ⭐";
+        else
+          rating.textContent = "No Ratings ⭐";
+      });
       ratingRow.appendChild(rating);
 
       var nameRow = document.createElement("div"); // Second row
@@ -128,6 +144,25 @@ class WalkerForm extends React.Component {
       hourlyRate.innerText = "$"+doc.data().hourlyRate+"/hour";
       hourlyRate.className = "walker-hourly-rate";
       hourlyRateRow.appendChild(hourlyRate);
+
+      // Update popup rating
+      if (document.getElementById("popup-walker-email").textContent === doc.data().email) {
+        ratingSum = 0;
+        ratingCount = 0;
+        db.collection("ratings")
+        .where("for", "==", document.getElementById("popup-walker-email").textContent)
+        .get()
+        .then(snapshot => {
+          snapshot.docs.forEach(doc => {
+            ratingSum += doc.data().stars;
+            ratingCount++;
+          });
+          if (ratingCount > 0)
+            document.getElementById("popup-walker-rating").textContent = (ratingSum/ratingCount).toFixed(1)+" ⭐";
+          else
+            document.getElementById("popup-walker-rating").textContent = "No Ratings ⭐";
+        });
+      }
 
       // Search functionality
       var matchSearch = true;
@@ -174,6 +209,7 @@ class WalkerForm extends React.Component {
         .then(snapshot => {
           snapshot.docs.forEach(doc => {
             document.getElementById("popup-walker-pic").src = doc.data().pic;
+            document.getElementById("popup-walker-email").textContent = doc.data().email;
             document.getElementById("popup-walker-name").textContent = doc.data().name;
             if (doc.data().phone.length == 10)
             document.getElementById("popup-walker-phone").textContent = doc.data().phone[0]+doc.data().phone[1]+doc.data().phone[2]+"-"+doc.data().phone[3]+doc.data().phone[4]+doc.data().phone[5]+"-"+doc.data().phone[6]+doc.data().phone[7]+doc.data().phone[8]+doc.data().phone[9];
@@ -187,26 +223,93 @@ class WalkerForm extends React.Component {
             document.getElementById("popup-walker-feature4-pic").src = doc.data().feature4;
           });
         });
+        var ratingSum = 0;
+        var ratingCount = 0;
+        db.collection("ratings")
+        .where("for", "==", email)
+        .get()
+        .then(snapshot => {
+          snapshot.docs.forEach(doc => {
+            ratingSum += doc.data().stars;
+            ratingCount++;
+          });
+          if (ratingCount > 0) {
+            document.getElementById("popup-walker-rating").textContent = (ratingSum/ratingCount).toFixed(1)+" ⭐";
+            for (var i=0; i<5; i++)
+            {
+              if (i<Math.floor(ratingSum/ratingCount)) {
+              document.getElementById("star"+(i+1)).className = "full-stars";
+              document.getElementById("star"+(i+1)).textContent = "⭐";
+              }
+              else {
+                document.getElementById("star"+(i+1)).className = "empty-stars";
+                document.getElementById("star"+(i+1)).textContent = "☆";
+              }
+            }
+          }
+          else {
+            document.getElementById("popup-walker-rating").textContent = "No Ratings ⭐";
+            for (var i=0; i<5; i++) {
+              document.getElementById("star"+(i+1)).className = "empty-stars";
+              document.getElementById("star"+(i+1)).textContent = "☆";
+            }
+          }
+        });
         setTimeout(() => {
-          document.getElementById("walker-popup").className = "row collapse.show";
-        }, 250);
+          document.getElementById("walker-popup").className = "fixed-top row collapse.show";
+        }, 500);
     }
-    
   }
 
   closeProfile() { document.getElementById("walker-popup").className = "row collapse"; }
 
   fillStar(event) {
+    var rating = 0;
     for (var i=0; i<5; i++) {
       if(i < parseInt(event.target.id.split("star")[1]) ) {
         document.getElementById("star"+(i+1)).className = "full-stars";
         document.getElementById("star"+(i+1)).textContent = "⭐";
+        rating++;
       }
       else {
         document.getElementById("star"+(i+1)).className = "empty-stars";
         document.getElementById("star"+(i+1)).textContent = "☆";
       }
     }
+    const db = Fire.firestore();
+    db.collection("ratings")
+      .where('by', '==', Fire.auth().currentUser.email)
+      .where("for", "==", document.getElementById("popup-walker-email").textContent)
+      .get()
+      .then(snapshot => {
+        if (snapshot.empty) {
+          // Creating new review
+          db.collection("ratings").add({
+            by: Fire.auth().currentUser.email,
+            for: document.getElementById("popup-walker-email").textContent,
+            stars: rating
+          });
+        }
+        else
+          // Replacing old review
+          db.collection("ratings")
+          .where('by', '==', Fire.auth().currentUser.email)
+          .where("for", "==", document.getElementById("popup-walker-email").textContent)
+          .get()
+          .then(snapshot => {
+            snapshot.docs.forEach(doc => {
+              doc.ref.delete();
+            });
+          });
+          setTimeout(() => {
+            db.collection("ratings").add({
+            by: Fire.auth().currentUser.email,
+            for: document.getElementById("popup-walker-email").textContent,
+            stars: rating
+          });
+          this.setState({rest: !this.state.reset});
+          }, 250);      
+      });
   }
 
   render() {
@@ -230,20 +333,22 @@ class WalkerForm extends React.Component {
           <div className="my-3 row">
                 <img className="profile-pic mr-5" id="popup-walker-pic" src="" alt="Profile Picture"/>
                 <div className="col">
-                  <div className="my-3">
-                    <div className="">
-                      <div className="empty-stars" id="star1" onClick={this.fillStar} onMouseLeave={this.emptyStar}>☆</div>
-                      <div className="empty-stars" id="star2" onClick={this.fillStar} onMouseLeave={this.emptyStar}>☆</div>
-                      <div className="empty-stars" id="star3" onClick={this.fillStar} onMouseLeave={this.emptyStar}>☆</div>
-                      <div className="empty-stars" id="star4" onClick={this.fillStar} onMouseLeave={this.emptyStar}>☆</div>
-                      <div className="empty-stars" id="star5" onClick={this.fillStar} onMouseLeave={this.emptyStar}>☆</div>
-                    </div>
+                  <div className="my-2">
+                    <div id="popup-walker-rating"></div>
                   </div>
-                  <div className="my-3 star-row">
+                  <div className="row justify-content-center my-2">
+                      <div className="empty-stars" id="star1" onClick={this.fillStar}>☆</div>
+                      <div className="empty-stars" id="star2" onClick={this.fillStar}>☆</div>
+                      <div className="empty-stars" id="star3" onClick={this.fillStar}>☆</div>
+                      <div className="empty-stars" id="star4" onClick={this.fillStar}>☆</div>
+                      <div className="empty-stars" id="star5" onClick={this.fillStar}>☆</div>
+                  </div>
+                  <div className="my-2">
                     <button type="submit" className="btn btn-primary" onClick="">Send Message ✉</button>
                   </div>        
                 </div>
               </div>
+              <div className="my-3 row"><div className="popup-input collapse.show" id="popup-walker-email"/></div>
               <div className="my-3 row"><div className="popup-input" id="popup-walker-name"/></div>
               <div className="my-3 row"><div className="popup-input" id="popup-walker-phone"/></div>
               <div className="my-3 row"><div className="popup-input" id="popup-walker-city"/></div>
