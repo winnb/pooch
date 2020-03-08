@@ -1,12 +1,8 @@
-// React
 import React from "react";
-
-// Firebase
-import Fire from "../../config/Fire";
-
-// Styles
-import "./styles.scss";
+import Fire from "../../config/Fire"; // Firebase
+import "./styles.scss"; // Styles
 import GenericProfile from "./generic-profile.png";
+import MessageTab from "../MessageTab";
 
 class NavBar extends React.Component {
   constructor(props) {
@@ -98,9 +94,17 @@ class NavBar extends React.Component {
     document.getElementById("profile-dropdown").className = "collapse.show fixed-top";
   }
 
+  openMessages() {
+    if (document.getElementById("message-tab").className === "pl-5 collapse")
+      document.getElementById("message-tab").className = "pl-5 collapse.show";
+    else
+      document.getElementById("message-tab").className = "pl-5 collapse";
+  }
+
   render() {
     return (
       <div>
+        <MessageTab/>
         <div className="collapse fixed-top" id="profile-dropdown" onMouseLeave={this.collapseDropdown}>
             <div className="trak_nav-item mb-3" id="dropdown-row"><button id="dropdown-button" onClick={this.goToProfile}>Profile</button></div>
             <div className="trak_nav-item mb-3" id="dropdown-row"><button id="dropdown-button" onClick={this.openMessages}>Messages</button></div>

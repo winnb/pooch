@@ -71,7 +71,6 @@ class App extends React.Component {
             <NavBarLoggedOut />
             <Router>
               <Home path="/" />
-              <ChangePassword path="/change-password" />
               <PageNotFound path="/page-not-found" default />
             </Router>
           </div>

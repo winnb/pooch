@@ -198,7 +198,7 @@ class MedicalForm extends React.Component {
               title="Meetup State"
               value={this.state.sta}
               onChange={this.handleChange}
-              className="form-control"
+              //className="form-control"
               aria-label="Default"
               aria-describedby="inputGroup-sizing-default"
             />

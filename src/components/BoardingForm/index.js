@@ -36,12 +36,9 @@ class BoardingForm extends React.Component {
   }
 
   componentDidMount() {
-    // Show loading icon for 2 seconds while grid loads
     document.getElementById("loader").style.display = "block";
-    //document.getElementById("result-table").style.display = "none";
     setTimeout(() => {
       document.getElementById("loader").style.display = "none";
-      //document.getElementById("result-table").style.display = "block";
     }, 1750);
   }
 
@@ -50,30 +47,14 @@ class BoardingForm extends React.Component {
     document.getElementById("bubble-home").innerHTML = null; // Clear old data before updating
     const db = Fire.firestore();
     // Order results based on search criteria
-    if (document.getElementById("boarder-search-category").value === "city") {
-      db.collection("boarders").orderBy("city").get()
-          .then(snapshot => {
-              snapshot.docs.forEach(doc => {
-                renderBoarders(doc);
-              });
-            });
-    }
-    else if (document.getElementById("boarder-search-category").value === "dailyRate") {
-      db.collection("boarders").orderBy("dailyRate").get()
-          .then(snapshot => {
-              snapshot.docs.forEach(doc => {
-                renderBoarders(doc);
-              });
-            });
-    }
-    else if (document.getElementById("boarder-search-category").value === "name") {
-      db.collection("boarders").orderBy("name").get()
-          .then(snapshot => {
-              snapshot.docs.forEach(doc => {
-                renderBoarders(doc);
-              });
-            });
-    }
+    db.collection("boarders")
+    .orderBy(document.getElementById("boarder-search-category").value).get()
+    .then(snapshot => {
+      snapshot.docs.forEach(doc => {
+        renderBoarders(doc);
+      });
+    });
+
     function renderBoarders(doc) {
       // Bubble render
       var newBox = document.createElement("div");
@@ -106,7 +87,7 @@ class BoardingForm extends React.Component {
           ratingCount++;
         });
         if (ratingCount > 0)
-          rating.textContent = (ratingSum/ratingCount).toFixed(1)+" ⭐";
+          rating.textContent = (ratingSum/ratingCount).toFixed(1)+" ⭐ ("+ratingCount+")";
         else
           rating.textContent = "No Ratings ⭐";
       });
@@ -156,20 +137,21 @@ class BoardingForm extends React.Component {
       dailyRate.className = "boarder-daily-rate";
       dailyRateRow.appendChild(dailyRate);
 
+
       // Update popup rating
       if (document.getElementById("popup-boarder-email").textContent === doc.data().email) {
-        ratingSum = 0;
-        ratingCount = 0;
         db.collection("ratings")
         .where("for", "==", document.getElementById("popup-boarder-email").textContent)
         .get()
         .then(snapshot => {
+          var ratingSum = 0;
+        var ratingCount = 0;
           snapshot.docs.forEach(doc => {
             ratingSum += doc.data().stars;
             ratingCount++;
           });
           if (ratingCount > 0)
-            document.getElementById("popup-boarder-rating").textContent = (ratingSum/ratingCount).toFixed(1)+" ⭐";
+            document.getElementById("popup-boarder-rating").textContent = (ratingSum/ratingCount).toFixed(1)+" ⭐ ("+ratingCount+")";
           else
             document.getElementById("popup-boarder-rating").textContent = "No Ratings ⭐";
         });
@@ -186,9 +168,9 @@ class BoardingForm extends React.Component {
             if (document.getElementById("boarder-search").value[j].toLowerCase() !== city.innerText[j].toLowerCase())
               matchSearch = false;
       }
-      // Searching by hourly rate
+      // Searching by daily rate
       if (document.getElementById("boarder-search-category").value === "dailyRate") { 
-        if (document.getElementById("boarder-search").value.length > dailyRate.innerText.length) // Check if search bar is longer than hourly rate
+        if (document.getElementById("boarder-search").value.length > dailyRate.innerText.length) // Check if search bar is longer than daily rate
           matchSearch = false;
         else
           for (var j=0; j<document.getElementById("boarder-search").value.length; j++) // Loop through each letter in search bar
@@ -211,7 +193,7 @@ class BoardingForm extends React.Component {
     }
 
     function viewProfile(email) {
-      document.getElementById("boarder-popup").className = "fixed-top row collapse";
+      document.getElementById("boarder-popup").className = "row collapse";
       const db = Fire.firestore();
         db.collection("boarders")
         .where("email", "==", email)
@@ -222,49 +204,53 @@ class BoardingForm extends React.Component {
             document.getElementById("popup-boarder-email").textContent = doc.data().email;
             document.getElementById("popup-boarder-name").textContent = doc.data().name;
             if (doc.data().phone.length == 10)
-              document.getElementById("popup-boarder-phone").textContent = doc.data().phone[0]+doc.data().phone[1]+doc.data().phone[2]+"-"+doc.data().phone[3]+doc.data().phone[4]+doc.data().phone[5]+"-"+doc.data().phone[6]+doc.data().phone[7]+doc.data().phone[8]+doc.data().phone[9];
+            document.getElementById("popup-boarder-phone").textContent = doc.data().phone[0]+doc.data().phone[1]+doc.data().phone[2]+"-"+doc.data().phone[3]+doc.data().phone[4]+doc.data().phone[5]+"-"+doc.data().phone[6]+doc.data().phone[7]+doc.data().phone[8]+doc.data().phone[9];
             else
               document.getElementById("popup-boarder-phone").textContent = doc.data().phone;
-            document.getElementById("popup-boarder-address").textContent = doc.data().address;
             document.getElementById("popup-boarder-city").textContent = doc.data().city;
             document.getElementById("popup-boarder-daily-rate").textContent = "$"+doc.data().dailyRate+"/day";
             document.getElementById("popup-boarder-feature1-pic").src = doc.data().feature1;
             document.getElementById("popup-boarder-feature2-pic").src = doc.data().feature2;
             document.getElementById("popup-boarder-feature3-pic").src = doc.data().feature3;
             document.getElementById("popup-boarder-feature4-pic").src = doc.data().feature4;
+          
+        // Update popup average rating
+        if (document.getElementById("popup-boarder-email").textContent === doc.data().email) {
+          db.collection("ratings")
+          .where("for", "==", document.getElementById("popup-boarder-email").textContent)
+          .get()
+          .then(snapshot => {
+            var ratingSum = 0;
+          var ratingCount = 0;
+            snapshot.docs.forEach(doc => {
+              ratingSum += doc.data().stars;
+              ratingCount++;
+            });
+            if (ratingCount > 0)
+              document.getElementById("popup-boarder-rating").textContent = (ratingSum/ratingCount).toFixed(1)+" ⭐ ("+ratingCount+")";
+            else
+              document.getElementById("popup-boarder-rating").textContent = "No Ratings ⭐";
           });
-        });
-        var ratingSum = 0;
-        var ratingCount = 0;
+        }
+
+        // Update popup user rating
         db.collection("ratings")
-        .where("for", "==", email)
-        .get()
+        .where("by", "==", Fire.auth().currentUser.email).get()
         .then(snapshot => {
           snapshot.docs.forEach(doc => {
-            ratingSum += doc.data().stars;
-            ratingCount++;
-          });
-          if (ratingCount > 0) {
-            document.getElementById("popup-boarder-rating").textContent = (ratingSum/ratingCount).toFixed(1)+" ⭐";
-            for (var i=0; i<5; i++)
-            {
-              if (i<Math.floor(ratingSum/ratingCount)) {
-              document.getElementById("star"+(i+1)).className = "full-stars";
-              document.getElementById("star"+(i+1)).textContent = "⭐";
+            for (var i=0; i<5; i++) {
+              if (i < doc.data().stars) {
+                document.getElementById("star"+(i+1)).className = "full-stars";
+                document.getElementById("star"+(i+1)).textContent = "⭐";
               }
               else {
                 document.getElementById("star"+(i+1)).className = "empty-stars";
                 document.getElementById("star"+(i+1)).textContent = "☆";
               }
             }
-          }
-          else {
-            document.getElementById("popup-boarder-rating").textContent = "No Ratings ⭐";
-            for (var i=0; i<5; i++) {
-              document.getElementById("star"+(i+1)).className = "empty-stars";
-              document.getElementById("star"+(i+1)).textContent = "☆";
-            }
-          }
+          })
+        })
+        });
         });
         setTimeout(() => {
           document.getElementById("boarder-popup").className = "fixed-top row collapse.show";
@@ -338,44 +324,63 @@ class BoardingForm extends React.Component {
         <div id="loader" className="mb-4"><Loader type="ThreeDots" color="black" height={75} width={75}/></div>
         <div id="bubble-home" className="row"></div>
 
-        <div id="boarder-popup" className="top row collapse" onMouseDown={this.dragPopup}>
-          <div className="col">
-              <div className="my-3 row">
+        <div id="boarder-popup" className="row collapse">
+          
+          <div className="col" id="popup-boarder-left">
+          <div className="my-3 row">
                 <img className="profile-pic mr-5" id="popup-boarder-pic" src="" alt="Profile Picture"/>
                 <div className="col">
-                  <div className="my-2">
-                    <div id="popup-boarder-rating"></div>
-                  </div>
-                  <div className="row justify-content-center my-2">
-                      <div className="empty-stars" id="star1" onClick={this.fillStar}>☆</div>
-                      <div className="empty-stars" id="star2" onClick={this.fillStar}>☆</div>
-                      <div className="empty-stars" id="star3" onClick={this.fillStar}>☆</div>
-                      <div className="empty-stars" id="star4" onClick={this.fillStar}>☆</div>
-                      <div className="empty-stars" id="star5" onClick={this.fillStar}>☆</div>
-                  </div>
-                  <div className="my-2">
-                    <button type="submit" className="btn btn-primary" onClick="">Send Message ✉</button>
-                  </div>        
+                    <div id="popup-boarder-rating"></div> 
                 </div>
               </div>
-              <div className="my-3 row"><div className="popup-input collapse" id="popup-boarder-email"/></div>
+              <div className="my-3 row"><div className="popup-input collapse.show" id="popup-boarder-email"/></div>
               <div className="my-3 row"><div className="popup-input" id="popup-boarder-name"/></div>
               <div className="my-3 row"><div className="popup-input" id="popup-boarder-phone"/></div>
-              <div className="my-3 row"><div className="popup-input" id="popup-boarder-address"/></div>
               <div className="my-3 row"><div className="popup-input" id="popup-boarder-city"/></div>
               <div className="my-3 row"><div className="popup-input" id="popup-boarder-daily-rate"/></div>
+              <div className="col" id="popup-boarder-images">
+                <img className="popup-feature row collapse" id="popup-boarder-feature1-pic" src={Pic1} alt="Featured Picture"/>
+                <img className="popup-feature row collapse" id="popup-boarder-feature2-pic" src={Pic2} alt="Featured Picture"/>
+                <img className="popup-feature row collapse" id="popup-boarder-feature3-pic" src={Pic3} alt="Featured Picture"/>
+                <img className="popup-feature row collapse" id="popup-boarder-feature4-pic" src={Pic4} alt="Featured Picture"/>
+              </div>
           </div>
-          <div className="col" id="boarder-block-col">
-            <div className="popup-pic-row row">
-              <div className="col"><img className="boarder-feature" id="popup-boarder-feature1-pic" src={Pic1} alt="Featured Picture"/></div>
-              <div className="col"><img className="boarder-feature" id="popup-boarder-feature2-pic" src={Pic2} alt="Featured Picture"/></div>
-            </div>
-            <div className="popup-pic-row row">
-              <div className="col"><img className="boarder-feature" id="popup-boarder-feature3-pic" src={Pic3} alt="Featured Picture"/></div>
-              <div className="col"><img className="boarder-feature" id="popup-boarder-feature4-pic" src={Pic4} alt="Featured Picture"/></div>
-            </div>
+
+          <div className="col my-4">
+            {/* <button id="review-swapper" type="submit" className="btn" onClick={this.swapReviewsAndPictures}>See Reviews ✉️</button> */}
             <button type="submit" className="btn btn-danger" id="close-popup-button" onClick={this.closeProfile}>X</button>
+
+            <div className="col" id="popup-boarder-reviews">
+              <div className="row justify-content-center my-2">
+                <div className="empty-stars" id="star1" onClick={this.fillStar}>☆</div>
+                <div className="empty-stars" id="star2" onClick={this.fillStar}>☆</div>
+                <div className="empty-stars" id="star3" onClick={this.fillStar}>☆</div>
+                <div className="empty-stars" id="star4" onClick={this.fillStar}>☆</div>
+                <div className="empty-stars" id="star5" onClick={this.fillStar}>☆</div>
+              </div>
+              <textarea className="mt-2 mb-1" id="new-review" placeholder="Write a review..."></textarea>
+              <button id="submit-review" className="btn">Submit Review</button>
+              <div className="user-review my-3">
+                <div className="row">
+                  George Boarder ⭐⭐
+                </div>
+                <div className="review-body">Hello, this is my review. Hello, this is my review. Hello, this is my review. Hello, this is my review. Hello, this is my review. </div>
+              </div>
+              <div className="user-review my-3">
+                <div className="row">
+                  George Boarder ⭐⭐⭐⭐⭐
+                </div>
+                <div className="review-body">Hello, this is my review. Hello, this is my review. Hello, this is my review. Hello, this is my review. Hello, this is my review. </div>
+              </div>
+              <div className="user-review my-3">
+                <div className="row">
+                  George Boarder ⭐⭐⭐⭐
+                </div>
+                <div className="review-body">Hello, this is my review. Hello, this is my review. Hello, this is my review. Hello, this is my review. Hello, this is my review. </div>
+              </div>
+            </div>
           </div>
+          
         </div>
 
       </div>
