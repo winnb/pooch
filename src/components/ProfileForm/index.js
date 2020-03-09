@@ -26,11 +26,11 @@ class ProfileForm extends React.Component {
     document.getElementById("error-message").style.display = "none";
     document.getElementById("upload-loader").style.display = "none";
     document.getElementById("profile-loader").style.display = "block";
-    const db = Fire.firestore();
+    
     console.log("component mounted");
     setTimeout(() => { // Determine user type
       //document.getElementById("username").innerHTML = "Welcome, "+Fire.auth().currentUser.email;
-      db.collection("profile-types")
+      Fire.firestore().collection("profile-types")
       .where("email", "==", Fire.auth().currentUser.email)
       .get()
       .then(snapshot => {
@@ -61,7 +61,7 @@ class ProfileForm extends React.Component {
 
         function renderParentProfile(doc) {
           console.log("user is a parent!");
-          db.collection("parents")
+          Fire.firestore().collection("parents")
           .where("email", "==", Fire.auth().currentUser.email)
           .get()
           .then(snapshot => {
@@ -78,7 +78,7 @@ class ProfileForm extends React.Component {
       
         function renderWalkerProfile(doc) {
           console.log("user is a walker!");
-          db.collection("walkers")
+          Fire.firestore().collection("walkers")
           .where("email", "==", Fire.auth().currentUser.email)
           .get()
           .then(snapshot => {
@@ -96,7 +96,7 @@ class ProfileForm extends React.Component {
       
         function renderBoarderProfile(doc) {
           console.log("user is a boarder!");
-          db.collection("boarders")
+          Fire.firestore().collection("boarders")
           .where("email", "==", Fire.auth().currentUser.email)
           .get()
           .then(snapshot => {
@@ -149,13 +149,13 @@ class ProfileForm extends React.Component {
   }
 
   updateParent() {
-    const db = Fire.firestore();
-    db.collection("parents")
+    
+    Fire.firestore().collection("parents")
       .where('email', '==', Fire.auth().currentUser.email) // Check if parent exists
       .get()
       .then(snapshot => {
         if (snapshot.empty) { // Create new parent
-          db.collection("parents").add({
+          Fire.firestore().collection("parents").add({
             email: Fire.auth().currentUser.email,
             name: document.getElementById("parent-name").value,
             phone: document.getElementById("parent-phone").value,
@@ -167,7 +167,7 @@ class ProfileForm extends React.Component {
           });
           setTimeout(() => { // Only reload page if no error
             if (document.getElementById("error-message").style.display === "none") {
-              db.collection("profile-types").add({
+              Fire.firestore().collection("profile-types").add({
                 email: Fire.auth().currentUser.email,
                 type: "parent"
               });
@@ -181,7 +181,7 @@ class ProfileForm extends React.Component {
             oldPic = doc.data().pic; // Save old profile picture in case new one is too large
             doc.ref.delete(); // Delete old entries
             })
-            db.collection("parents").add({
+            Fire.firestore().collection("parents").add({
               email: Fire.auth().currentUser.email,
               name: document.getElementById("database-parent-name").value,
               phone: document.getElementById("database-parent-phone").value,
@@ -189,7 +189,7 @@ class ProfileForm extends React.Component {
             })
             .catch(error => {
               document.getElementById("error-message").style.display = "block";
-              db.collection("parents").add({ // Try adding without the picture
+              Fire.firestore().collection("parents").add({ // Try adding without the picture
                 email: Fire.auth().currentUser.email,
                 name: document.getElementById("database-parent-name").value,
                 phone: document.getElementById("database-parent-phone").value,
@@ -205,13 +205,13 @@ class ProfileForm extends React.Component {
   }
 
   updateWalker() {
-    const db = Fire.firestore();
-    db.collection("walkers")
+    
+    Fire.firestore().collection("walkers")
       .where('email', '==', Fire.auth().currentUser.email) // Check if walker exists
       .get()
       .then(snapshot => {
         if (snapshot.empty) { // Create new walker
-          db.collection("walkers").add({
+          Fire.firestore().collection("walkers").add({
             email: Fire.auth().currentUser.email,
             name: document.getElementById("walker-name").value,
             phone: document.getElementById("walker-phone").value,
@@ -224,7 +224,7 @@ class ProfileForm extends React.Component {
           });
           setTimeout(() => { // Only reload page if no error
             if (document.getElementById("error-message").style.display === "none") {
-              db.collection("profile-types").add({
+              Fire.firestore().collection("profile-types").add({
                 email: Fire.auth().currentUser.email,
                 type: "walker"
               });
@@ -238,7 +238,7 @@ class ProfileForm extends React.Component {
             oldPic = doc.data().pic; // Save old profile picture in case new one is too large
             doc.ref.delete(); // Delete old entries
             })
-            db.collection("walkers").add({
+            Fire.firestore().collection("walkers").add({
               email: Fire.auth().currentUser.email,
               name: document.getElementById("database-walker-name").value,
               phone: document.getElementById("database-walker-phone").value,
@@ -248,7 +248,7 @@ class ProfileForm extends React.Component {
             })
             .catch(error => {
               document.getElementById("error-message").style.display = "block";
-              db.collection("walkers").add({ // Try adding without the picture
+              Fire.firestore().collection("walkers").add({ // Try adding without the picture
                 email: Fire.auth().currentUser.email,
                 name: document.getElementById("database-walker-name").value,
                 phone: document.getElementById("database-walker-phone").value,
@@ -267,13 +267,13 @@ class ProfileForm extends React.Component {
   }
 
   updateBoarder() {
-    const db = Fire.firestore();
-    db.collection("boarders")
+    
+    Fire.firestore().collection("boarders")
       .where('email', '==', Fire.auth().currentUser.email) // Check if boarder exists
       .get()
       .then(snapshot => {
         if (snapshot.empty) { // Create new boarder
-          db.collection("boarders").add({
+          Fire.firestore().collection("boarders").add({
             email: Fire.auth().currentUser.email,
             name: document.getElementById("boarder-name").value,
             phone: document.getElementById("boarder-phone").value,
@@ -287,7 +287,7 @@ class ProfileForm extends React.Component {
           });
           setTimeout(() => { // Only reload page if no error
             if (document.getElementById("error-message").style.display === "none") {
-              db.collection("profile-types").add({
+              Fire.firestore().collection("profile-types").add({
                 email: Fire.auth().currentUser.email,
                 type: "boarder"
               });
@@ -301,7 +301,7 @@ class ProfileForm extends React.Component {
             oldPic = doc.data().pic; // Save old profile picture in case new one is too large
             doc.ref.delete(); // Delete old entries
             })
-            db.collection("boarders").add({
+            Fire.firestore().collection("boarders").add({
               email: Fire.auth().currentUser.email,
               name: document.getElementById("database-boarder-name").value,
               phone: document.getElementById("database-boarder-phone").value,
@@ -312,7 +312,7 @@ class ProfileForm extends React.Component {
             })
             .catch(error => {
               document.getElementById("error-message").style.display = "block";
-              db.collection("boarders").add({ // Try adding without the picture
+              Fire.firestore().collection("boarders").add({ // Try adding without the picture
                 email: Fire.auth().currentUser.email,
                 name: document.getElementById("database-boarder-name").value,
                 phone: document.getElementById("database-boarder-phone").value,

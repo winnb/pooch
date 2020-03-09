@@ -12,9 +12,9 @@ class PetForm extends React.Component {
 
   componentDidMount() {
     document.getElementById("pet-loader").style.display = "block";
-    const db = Fire.firestore();
+    
     setTimeout(() => { // Check if user has dog profiles
-      db.collection("pets")
+      Fire.firestore().collection("pets")
       .where("email", "==", Fire.auth().currentUser.email)
       .get()
       .then(snapshot => {
@@ -39,8 +39,8 @@ class PetForm extends React.Component {
     }, 750);
 
     function viewProfile(dogName) {
-      const db = Fire.firestore();
-        db.collection("pets")
+      
+        Fire.firestore().collection("pets")
         .where("email", "==", Fire.auth().currentUser.email).where("name", "==", dogName)
         .get()
         .then(snapshot => {
@@ -77,8 +77,8 @@ class PetForm extends React.Component {
   }
 
 newDog() {
-  const db = Fire.firestore();
-  db.collection("pets").where('email', '==', Fire.auth().currentUser.email)
+  
+  Fire.firestore().collection("pets").where('email', '==', Fire.auth().currentUser.email)
   .where("name", "==", document.getElementById("dog-name").value)
   .get().then(function(querySnapshot) {
     querySnapshot.forEach(function(doc) {
@@ -88,7 +88,7 @@ newDog() {
   setTimeout(() => {
   if (document.getElementById("breed-checkbox").checked === true) {
     console.log("adding from simple dog breeds");
-    db.collection("pets").add({
+    Fire.firestore().collection("pets").add({
       email: Fire.auth().currentUser.email,
       name: document.getElementById("dog-name").value,
       gender: document.getElementById("dog-gender").value,
@@ -100,7 +100,7 @@ newDog() {
   }
   else if (document.getElementById("breed-checkbox").checked === false) {
     console.log("adding from all dog breeds");
-    db.collection("pets").add({
+    Fire.firestore().collection("pets").add({
       email: Fire.auth().currentUser.email,
       name: document.getElementById("dog-name").value,
       gender: document.getElementById("dog-gender").value,
@@ -117,8 +117,8 @@ newDog() {
 }
 
 updateDog() {
-  const db = Fire.firestore();
-  var query = db.collection("pets").where('email', '==', Fire.auth().currentUser.email)
+  
+  var query = Fire.firestore().collection("pets").where('email', '==', Fire.auth().currentUser.email)
   .where("name", "==", document.getElementById("database-dog-name").value);
   query.get().then(function(querySnapshot) {
     querySnapshot.forEach(function(doc) {
@@ -128,7 +128,7 @@ updateDog() {
   setTimeout(() => {
   if (document.getElementById("breed-checkbox").checked === true) {
     console.log("adding from simple dog breeds");
-    db.collection("pets").add({
+    Fire.firestore().collection("pets").add({
       email: Fire.auth().currentUser.email,
       name: document.getElementById("database-dog-name").value,
       gender: document.getElementById("database-dog-gender").value,
@@ -140,7 +140,7 @@ updateDog() {
   }
   else if (document.getElementById("breed-checkbox").checked === false) {
     console.log("adding from all dog breeds");
-    db.collection("pets").add({
+    Fire.firestore().collection("pets").add({
       email: Fire.auth().currentUser.email,
       name: document.getElementById("database-dog-name").value,
       gender: document.getElementById("database-dog-gender").value,

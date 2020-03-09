@@ -33,10 +33,10 @@ class MedicalForm extends React.Component {
       document.getElementById("loader").style.display = "none";
       document.getElementById("result-table").style.display = "block";
     }, 2000);
-    const db = Fire.firestore();
+    
 
     // Get meetups from Firebase
-    db.collection("meetups")
+    Fire.firestore().collection("meetups")
       .orderBy("zipcode")
       //.limit(3)
       .get()
@@ -84,7 +84,7 @@ class MedicalForm extends React.Component {
         e.stopPropagation();
         e.preventDefault();
         let id = e.target.parentElement.getAttribute("data-id");
-        db.collection("meetups")
+        Fire.firestore().collection("meetups")
           .doc(id)
           .delete();
       });
@@ -96,11 +96,11 @@ class MedicalForm extends React.Component {
 
   addMeetup = e => {
     e.preventDefault();
-    const db = Fire.firestore();
-    db.settings({
+    
+    Fire.firestore().settings({
       timestampsInSnapshots: true
     });
-    db.collection("meetups").add({
+    Fire.firestore().collection("meetups").add({
       timestamp: this.state.timestamp,
       address: this.state.address,
       city: this.state.city,

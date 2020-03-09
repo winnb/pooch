@@ -44,9 +44,9 @@ class WalkerForm extends React.Component {
   componentDidUpdate() {
     document.getElementById("loader").style.display = "block";
     document.getElementById("bubble-home").innerHTML = null; // Clear old data before updating
-    const db = Fire.firestore();
+    
     // Order results based on search criteria
-    db.collection("walkers")
+    Fire.firestore().collection("walkers")
     .orderBy(document.getElementById("walker-search-category").value).get()
     .then(snapshot => {
       snapshot.docs.forEach(doc => {
@@ -77,7 +77,7 @@ class WalkerForm extends React.Component {
       var rating = document.createElement("div");
       var ratingSum = 0;
       var ratingCount = 0;
-      db.collection("ratings")
+      Fire.firestore().collection("ratings")
       .where("for", "==", doc.data().email)
       .get()
       .then(snapshot => {
@@ -128,7 +128,7 @@ class WalkerForm extends React.Component {
 
       // Update popup rating
       if (document.getElementById("popup-walker-email").textContent === doc.data().email) {
-        db.collection("ratings")
+        Fire.firestore().collection("ratings")
         .where("for", "==", document.getElementById("popup-walker-email").textContent)
         .get()
         .then(snapshot => {
@@ -182,8 +182,7 @@ class WalkerForm extends React.Component {
 
     function viewProfile(email) {
       document.getElementById("walker-popup").className = "row collapse";
-      const db = Fire.firestore();
-        db.collection("walkers")
+        Fire.firestore().collection("walkers")
         .where("email", "==", email)
         .get()
         .then(snapshot => {
@@ -202,9 +201,9 @@ class WalkerForm extends React.Component {
             document.getElementById("popup-walker-feature3-pic").src = doc.data().feature3;
             document.getElementById("popup-walker-feature4-pic").src = doc.data().feature4;
           
-        // Update popup rating
+        // Update popup average rating
         if (document.getElementById("popup-walker-email").textContent === doc.data().email) {
-          db.collection("ratings")
+          Fire.firestore().collection("ratings")
           .where("for", "==", document.getElementById("popup-walker-email").textContent)
           .get()
           .then(snapshot => {
@@ -220,8 +219,48 @@ class WalkerForm extends React.Component {
               document.getElementById("popup-walker-rating").textContent = "No Ratings ⭐";
           });
         }
-      });
+
+        // Update popup user rating
+        for (var i=0; i<5; i++) {
+          document.getElementById("star"+(i+1)).className = "empty-stars";
+          document.getElementById("star"+(i+1)).textContent = "☆";
+        }
+        Fire.firestore().collection("ratings")
+        .where("by", "==", Fire.auth().currentUser.email)
+        .where("for", "==", document.getElementById("popup-walker-email").textContent)
+        .get()
+        .then(snapshot => {
+          snapshot.docs.forEach(doc => {
+            for (var i=0; i<5; i++) {
+              if (i < doc.data().stars) {
+                document.getElementById("star"+(i+1)).className = "full-stars";
+                document.getElementById("star"+(i+1)).textContent = "⭐";
+              }
+              else {
+                document.getElementById("star"+(i+1)).className = "empty-stars";
+                document.getElementById("star"+(i+1)).textContent = "☆";
+              }
+            }
+          })
         });
+
+        // Get popup user review
+        document.getElementById("new-review").value = "";
+        document.getElementById("submit-review").textContent = "Submit Review";
+        Fire.firestore().collection("reviews")
+        .where("by", "==", Fire.auth().currentUser.email)
+        .where("for", "==", document.getElementById("popup-walker-email").textContent)
+        .get()
+        .then(snapshot => {
+          snapshot.docs.forEach(doc => {
+                document.getElementById("new-review").value = doc.data().body;
+                document.getElementById("submit-review").textContent = "Update Review";
+          })
+        });
+
+        });
+        });
+
         setTimeout(() => {
           document.getElementById("walker-popup").className = "fixed-top row collapse.show";
         }, 500);
@@ -243,23 +282,18 @@ class WalkerForm extends React.Component {
         document.getElementById("star"+(i+1)).textContent = "☆";
       }
     }
-    const db = Fire.firestore();
-    db.collection("ratings")
-      .where('by', '==', Fire.auth().currentUser.email)
-      .where("for", "==", document.getElementById("popup-walker-email").textContent)
-      .get()
-      .then(snapshot => {
-        if (snapshot.empty) {
-          // Creating new review
-          db.collection("ratings").add({
-            by: Fire.auth().currentUser.email,
-            for: document.getElementById("popup-walker-email").textContent,
-            stars: rating
-          });
-        }
-        else
-          // Replacing old review
-          db.collection("ratings")
+  }
+
+  submitReview() {
+    // Check if user selected a rating
+    var rating = 0;
+    for (var i=1; i<6; i++)
+      if(document.getElementById("star"+i).className === "full-stars" )
+        rating++;
+    if (rating > 0) {
+      if (document.getElementById("new-review").value.length > 0) {
+        // Delete existing rating
+        Fire.firestore().collection("ratings")
           .where('by', '==', Fire.auth().currentUser.email)
           .where("for", "==", document.getElementById("popup-walker-email").textContent)
           .get()
@@ -268,16 +302,43 @@ class WalkerForm extends React.Component {
               doc.ref.delete();
             });
           });
-          setTimeout(() => {
-            db.collection("ratings").add({
+        // Delete existing review
+        Fire.firestore().collection("reviews")
+        .where('by', '==', Fire.auth().currentUser.email)
+        .where("for", "==", document.getElementById("popup-walker-email").textContent)
+        .get().then(snapshot => {
+          snapshot.docs.forEach(doc => {
+            doc.ref.delete();
+          });
+        });
+        // Wait 1 second
+        setTimeout(() => {
+          // Add new rating
+          Fire.firestore().collection("ratings").add({
             by: Fire.auth().currentUser.email,
             for: document.getElementById("popup-walker-email").textContent,
             stars: rating
           });
-          this.setState({rest: !this.state.reset});
-          }, 250);      
-      });
+          // Add new review
+          Fire.firestore().collection("reviews").add({
+            by: Fire.auth().currentUser.email,
+            for: document.getElementById("popup-walker-email").textContent,
+            body: document.getElementById("new-review").value
+          });
+          //this.setState({reset: !this.state.reset});
+          window.location.reload();
+        }, 1000);
+      }
+      else
+        document.getElementById("no-review-error").className = "popup-error collapse.show";
+    }
+    else
+      document.getElementById("no-rating-error").className = "popup-error collapse.show";
   }
+
+  closeNoRatingError() { document.getElementById("no-rating-error").className="popup-error collapse"; }
+
+  closeNoReviewError() { document.getElementById("no-review-error").className="popup-error collapse"; }
 
   // swapReviewsAndPictures() {
   //   if (document.getElementById("review-swapper").textContent === "Show Images 📷") {
@@ -311,11 +372,9 @@ class WalkerForm extends React.Component {
         <div id="walker-popup" className="row collapse">
 
           <div className="col" id="popup-walker-left">
-          <div className="my-3 row">
-                <img className="profile-pic mr-5" id="popup-walker-pic" src="" alt="Profile Picture"/>
-                <div className="col">
-                    <div id="popup-walker-rating"></div> 
-                </div>
+              <div className="my-3 row">
+                <div className="col"><img className="profile-pic mr-5" id="popup-walker-pic" src="" alt="Profile Picture"/></div>
+                <div className="col"><div id="popup-walker-rating"/></div>
               </div>
               <div className="my-3 row"><div className="popup-input collapse.show" id="popup-walker-email"/></div>
               <div className="my-3 row"><div className="popup-input" id="popup-walker-name"/></div>
@@ -342,8 +401,8 @@ class WalkerForm extends React.Component {
                 <div className="empty-stars" id="star4" onClick={this.fillStar}>☆</div>
                 <div className="empty-stars" id="star5" onClick={this.fillStar}>☆</div>
               </div>
-              <textarea className="mt-2 mb-1" id="new-review" placeholder="Write a review..."></textarea>
-              <button id="submit-review" className="btn">Submit Review</button>
+              <textarea className="mt-2 mb-1" id="new-review" placeholder="Write a review..."  maxLength="256"></textarea>
+              <button id="submit-review" className="btn" onClick={this.submitReview}>Submit Review</button>
               <div className="user-review my-3">
                 <div className="row">
                   George Walker ⭐⭐⭐⭐
@@ -367,6 +426,14 @@ class WalkerForm extends React.Component {
           
         </div>
           
+        <div className="popup-error collapse" id="no-rating-error">
+          Select a rating
+          <div className="my-2"><button className="error-button btn-danger" onClick={this.closeNoRatingError}>Dismiss</button></div>
+        </div>
+        <div className="popup-error collapse" id="no-review-error">
+          Review can't be empty
+          <div className="my-2"><button className="error-button btn-danger" onClick={this.closeNoReviewError}>Dismiss</button></div>
+        </div>
       </div>
     );
   }

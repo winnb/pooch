@@ -14,10 +14,10 @@ class NavBar extends React.Component {
   }
 
   componentDidMount() {
-    const db = Fire.firestore();
+    
     Fire.auth().onAuthStateChanged(function(user) {
       if (user) { // User is signed in
-        db.collection("profile-types") // Check if user has profile picture
+        Fire.firestore().collection("profile-types") // Check if user has profile picture
         .where("email", "==", Fire.auth().currentUser.email)
         .get()
         .then(snapshot => {
@@ -33,7 +33,7 @@ class NavBar extends React.Component {
       }
     });
     function renderParentPic(doc) {
-      db.collection("parents")
+      Fire.firestore().collection("parents")
       .where("email", "==", Fire.auth().currentUser.email)
       .get()
       .then(snapshot => {
@@ -43,7 +43,7 @@ class NavBar extends React.Component {
       });
     }
     function renderWalkerPic(doc) {
-      db.collection("walkers")
+      Fire.firestore().collection("walkers")
       .where("email", "==", Fire.auth().currentUser.email)
       .get()
       .then(snapshot => {
@@ -53,7 +53,7 @@ class NavBar extends React.Component {
       });
     }
     function renderBoarderPic(doc) {
-      db.collection("boarders")
+      Fire.firestore().collection("boarders")
       .where("email", "==", Fire.auth().currentUser.email)
       .get()
       .then(snapshot => {

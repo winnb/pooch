@@ -9,9 +9,9 @@ class RecordForm extends React.Component{
         document.getElementById("error-message").style.display = "none";
         document.getElementById("loader").style.display = "block";
         document.getElementById("upload-loader").style.display = "none";
-        const db = Fire.firestore();
+        
         setTimeout(() => { // Show all uploaded records
-            db.collection("records")
+            Fire.firestore().collection("records")
             .where("email", "==", Fire.auth().currentUser.email)
             .get()
             .then(snapshot => {
