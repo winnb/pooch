@@ -77,7 +77,7 @@ class WalkerForm extends React.Component {
       var rating = document.createElement("div");
       var ratingSum = 0;
       var ratingCount = 0;
-      Fire.firestore().collection("ratings")
+      Fire.firestore().collection("reviews")
       .where("for", "==", doc.data().email)
       .get()
       .then(snapshot => {
@@ -128,7 +128,7 @@ class WalkerForm extends React.Component {
 
       // Update popup rating
       if (document.getElementById("popup-walker-email").textContent === doc.data().email) {
-        Fire.firestore().collection("ratings")
+        Fire.firestore().collection("reviews")
         .where("for", "==", document.getElementById("popup-walker-email").textContent)
         .get()
         .then(snapshot => {
@@ -203,7 +203,7 @@ class WalkerForm extends React.Component {
           
         // Update popup average rating
         if (document.getElementById("popup-walker-email").textContent === doc.data().email) {
-          Fire.firestore().collection("ratings")
+          Fire.firestore().collection("reviews")
           .where("for", "==", document.getElementById("popup-walker-email").textContent)
           .get()
           .then(snapshot => {
@@ -225,7 +225,7 @@ class WalkerForm extends React.Component {
           document.getElementById("star"+(i+1)).className = "empty-stars";
           document.getElementById("star"+(i+1)).textContent = "☆";
         }
-        Fire.firestore().collection("ratings")
+        Fire.firestore().collection("reviews")
         .where("by", "==", Fire.auth().currentUser.email)
         .where("for", "==", document.getElementById("popup-walker-email").textContent)
         .get()
@@ -258,8 +258,65 @@ class WalkerForm extends React.Component {
           })
         });
 
+        // Get all popup reviews by others
+        document.getElementById("review-col").innerHTML = null;
+        Fire.firestore().collection("reviews")
+        .where("for", "==", document.getElementById("popup-walker-email").textContent)
+        .get()
+        .then(snapshot => {
+          snapshot.docs.forEach(doc => {
+                var reviewDiv = document.createElement("div");
+                reviewDiv.className = "user-review";
+                var ratingDiv = document.createElement("div");
+                ratingDiv.className = "row";
+                var nameDiv = document.createElement("div");
+                Fire.firestore().collection("parents").where("email", "==", doc.data().by).get()
+                .then(snapshot => {
+                  snapshot.forEach(doc => {
+                    nameDiv.textContent = doc.data().name;
+                  })
+                });
+                Fire.firestore().collection("walkers").where("email", "==", doc.data().by).get()
+                .then(snapshot => {
+                  snapshot.forEach(doc => {
+                    nameDiv.textContent = doc.data().name;
+                  })
+                });
+                Fire.firestore().collection("boarders").where("email", "==", doc.data().by).get()
+                .then(snapshot => {
+                  snapshot.forEach(doc => {
+                    nameDiv.textContent = doc.data().name;
+                  })
+                });
+                ratingDiv.appendChild(nameDiv);
+                for (var i=0; i<5; i++) {
+                  var starDiv = document.createElement("div");
+                  if (doc.data().stars > i) {
+                    starDiv.textContent = "⭐";
+                    starDiv.className = "full-stars";
+                  }
+                  else {
+                    starDiv.textContent = "☆";
+                    starDiv.className = "empty-stars";
+                  }
+                  ratingDiv.appendChild(starDiv);
+                }
+                reviewDiv.appendChild(ratingDiv);
+                var bodyDiv = document.createElement("div");
+                bodyDiv.className = "review-body";
+                bodyDiv.textContent = doc.data().body;
+                reviewDiv.appendChild(bodyDiv);
+                document.getElementById("review-col").appendChild(reviewDiv);
+            })
+        });
+        
         });
         });
+
+        // <div className="user-review my-3">
+        //   <div className="row">George Walker ⭐⭐⭐⭐</div>
+        //   <div className="review-body">Hello, this is my review. Hello, this is my review. Hello, this is my review. Hello, this is my review. Hello, this is my review. </div>
+        // </div>
 
         setTimeout(() => {
           document.getElementById("walker-popup").className = "fixed-top row collapse.show";
@@ -292,16 +349,6 @@ class WalkerForm extends React.Component {
         rating++;
     if (rating > 0) {
       if (document.getElementById("new-review").value.length > 0) {
-        // Delete existing rating
-        Fire.firestore().collection("ratings")
-          .where('by', '==', Fire.auth().currentUser.email)
-          .where("for", "==", document.getElementById("popup-walker-email").textContent)
-          .get()
-          .then(snapshot => {
-            snapshot.docs.forEach(doc => {
-              doc.ref.delete();
-            });
-          });
         // Delete existing review
         Fire.firestore().collection("reviews")
         .where('by', '==', Fire.auth().currentUser.email)
@@ -313,17 +360,12 @@ class WalkerForm extends React.Component {
         });
         // Wait 1 second
         setTimeout(() => {
-          // Add new rating
-          Fire.firestore().collection("ratings").add({
-            by: Fire.auth().currentUser.email,
-            for: document.getElementById("popup-walker-email").textContent,
-            stars: rating
-          });
           // Add new review
           Fire.firestore().collection("reviews").add({
             by: Fire.auth().currentUser.email,
             for: document.getElementById("popup-walker-email").textContent,
-            body: document.getElementById("new-review").value
+            body: document.getElementById("new-review").value,
+            stars: rating
           });
           //this.setState({reset: !this.state.reset});
           window.location.reload();
@@ -376,7 +418,7 @@ class WalkerForm extends React.Component {
                 <div className="col"><img className="profile-pic mr-5" id="popup-walker-pic" src="" alt="Profile Picture"/></div>
                 <div className="col"><div id="popup-walker-rating"/></div>
               </div>
-              <div className="my-3 row"><div className="popup-input collapse.show" id="popup-walker-email"/></div>
+              <div className="my-3 row"><div className="popup-input collapse" id="popup-walker-email"/></div>
               <div className="my-3 row"><div className="popup-input" id="popup-walker-name"/></div>
               <div className="my-3 row"><div className="popup-input" id="popup-walker-phone"/></div>
               <div className="my-3 row"><div className="popup-input" id="popup-walker-city"/></div>
@@ -403,7 +445,8 @@ class WalkerForm extends React.Component {
               </div>
               <textarea className="mt-2 mb-1" id="new-review" placeholder="Write a review..."  maxLength="256"></textarea>
               <button id="submit-review" className="btn" onClick={this.submitReview}>Submit Review</button>
-              <div className="user-review my-3">
+              <div id="review-col"></div>
+              {/* <div className="user-review my-3">
                 <div className="row">
                   George Walker ⭐⭐⭐⭐
                 </div>
@@ -420,7 +463,7 @@ class WalkerForm extends React.Component {
                   George Walker ⭐⭐⭐⭐⭐
                 </div>
                 <div className="review-body">Hello, this is my review. Hello, this is my review. Hello, this is my review. Hello, this is my review. Hello, this is my review. </div>
-              </div>
+              </div> */}
             </div>
           </div>
           

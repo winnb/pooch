@@ -56,13 +56,12 @@
   background-color: rgb(200, 200, 200);
   color: black;
   border-radius: 10px;
-  font-weight: 600;
 }
 
 #popup-walker-rating {
   margin-top: 20%;
   height: 20%;
-  width: 50%;
+  width: 80%;
   margin-bottom: 20%;
   transform: scale(1.5);
   //background-color: rgb(150, 150, 150);
@@ -110,7 +109,15 @@
 
 .review-body {
   background-color: white;
-  border-radius: 15px;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  padding-top: 0.5%;
+  padding-left: 1%;
+  padding-right: 1%;
+  padding-bottom: 0.5%;
+  border-style: inset;
 }
 
 .empty-stars {
