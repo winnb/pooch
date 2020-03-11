@@ -26,13 +26,9 @@ class WalkerForm extends React.Component {
     this.fillStar = this.fillStar.bind(this);
   }
 
-  handleChange(e) {
-    this.setState({ [e.target.name]: e.target.value });
-  }
+  handleChange(e) { this.setState({ [e.target.name]: e.target.value }); }
 
-  updateSearch(e) {
-    this.setState({search: e.target.value.substr(0,50) });
-  }
+  updateSearch(e) { this.setState({search: e.target.value.substr(0,50) }); }
 
   componentDidMount() {
     document.getElementById("loader").style.display = "block";
@@ -93,7 +89,7 @@ class WalkerForm extends React.Component {
       ratingRow.appendChild(rating);
 
       var nameRow = document.createElement("div"); // Second row
-      nameRow.className = "my-2 walker-box-row";
+      nameRow.className = "box-row";
       newCol.appendChild(nameRow);
       var name = document.createElement("div");
       name.innerText = doc.data().name;
@@ -101,7 +97,7 @@ class WalkerForm extends React.Component {
       nameRow.appendChild(name);
 
       var phoneRow = document.createElement("div"); // Third row
-      phoneRow.className = "my-2 walker-box-row";
+      phoneRow.className = "box-row";
       newCol.appendChild(phoneRow);
       var phone = document.createElement("div");
       phone.innerText = doc.data().phone;
@@ -111,7 +107,7 @@ class WalkerForm extends React.Component {
       phoneRow.appendChild(phone);
 
       var cityRow = document.createElement("div"); // Fourth row
-      cityRow.className = "my-2 walker-box-row";
+      cityRow.className = "box-row";
       newCol.appendChild(cityRow);
       var city = document.createElement("div");
       city.innerText = doc.data().city;
@@ -119,7 +115,7 @@ class WalkerForm extends React.Component {
       cityRow.appendChild(city);
 
       var hourlyRateRow = document.createElement("div"); // Fifth row
-      hourlyRateRow.className = "my-2 walker-box-row";
+      hourlyRateRow.className = "box-row";
       newCol.appendChild(hourlyRateRow);
       var hourlyRate = document.createElement("div");
       hourlyRate.innerText = "$"+doc.data().hourlyRate+"/hour";

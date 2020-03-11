@@ -93,7 +93,7 @@ class BoardingForm extends React.Component {
       ratingRow.appendChild(rating);
 
       var nameRow = document.createElement("div"); // Second row
-      nameRow.className = "my-2 mx-1 boarder-box-row";
+      nameRow.className = "mx-1 box-row";
       newCol.appendChild(nameRow);
       var name = document.createElement("div");
       name.innerText = doc.data().name;
@@ -101,7 +101,7 @@ class BoardingForm extends React.Component {
       nameRow.appendChild(name);
 
       var phoneRow = document.createElement("div"); // Third row
-      phoneRow.className = "my-2 mx-1 boarder-box-row";
+      phoneRow.className = "mx-1 box-row";
       newCol.appendChild(phoneRow);
       var phone = document.createElement("div");
       phone.innerText = doc.data().phone;
@@ -113,7 +113,7 @@ class BoardingForm extends React.Component {
       phoneRow.appendChild(phone);
 
       var addressRow = document.createElement("div"); // Fourth row
-      addressRow.className = "my-2 mx-1 boarder-box-row";
+      addressRow.className = "mx-1 box-row";
       newCol.appendChild(addressRow);
       var address = document.createElement("div");
       address.innerText = doc.data().address;
@@ -121,7 +121,7 @@ class BoardingForm extends React.Component {
       addressRow.appendChild(address);
 
       var cityRow = document.createElement("div"); // Fifth row
-      cityRow.className = "my-2 mx-1 boarder-box-row";
+      cityRow.className = "mx-1 box-row";
       newCol.appendChild(cityRow);
       var city = document.createElement("div");
       city.innerText = doc.data().city;
@@ -129,7 +129,7 @@ class BoardingForm extends React.Component {
       cityRow.appendChild(city);
 
       var dailyRateRow = document.createElement("div"); // Sixth row
-      dailyRateRow.className = "my-2 mx-1 boarder-box-row";
+      dailyRateRow.className = "mx-1 box-row";
       newCol.appendChild(dailyRateRow);
       var dailyRate = document.createElement("div");
       dailyRate.innerText = "$"+doc.data().dailyRate+"/day";
