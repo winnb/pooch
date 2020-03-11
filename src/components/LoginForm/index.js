@@ -65,7 +65,7 @@ class LoginForm extends React.Component {
           <div className="col profile-box py-4">
               <div id="login-form">
                 <span className="trak_body row my-2">
-                    <div className="trak_nav-item">Login to your Account</div>
+                    <div className="pooch-navbar-item">Login to your Account</div>
                 </span>
                 <span className="trak_body row my-2">
                     <input id="login-email" type="text" className="form-control" placeholder="Email"/>

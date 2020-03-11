@@ -396,7 +396,7 @@ closeError() { document.getElementById("error-message").style.display = "none"; 
       <div className="mt-7 mx-6 mb-4">
         <div id="profile-loader"><Loader type="TailSpin" color="black" height={150} width={150}/></div>
         <Fade>
-          <div className="trak_nav-item mb-3" id="username"></div>
+          <div className="pooch-navbar-item mb-3" id="username"></div>
 
           <div id="parent-or-provider" className="collapse">
           <div className="my-4">Thank you for joining POOCH!</div>
@@ -539,7 +539,7 @@ closeError() { document.getElementById("error-message").style.display = "none"; 
           <div id="upload-loader" className="mt-4"><Loader type="Oval" color="black" height={75} width={75}/></div>
           
           <div id="delete-popup" className="fixed-top collapse">
-              <div className="trak_nav-item">Are you sure you want to delete your profile? This will allow you to change account type</div>
+              <div className="pooch-navbar-item">Are you sure you want to delete your profile? This will allow you to change account type</div>
               <div><button className="my-2 mr-4 btn-danger popup-button" onClick={this.deleteProfile}>Yes</button><button className="my-2 ml-4 btn-primary popup-button" onClick={this.closeDeletePopup}>No</button></div>
               <div className="trak_body">WARNING: This is irreversable!</div>
           </div>

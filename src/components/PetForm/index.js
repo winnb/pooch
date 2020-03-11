@@ -24,7 +24,7 @@ class PetForm extends React.Component {
             document.getElementsByClassName("dog-icon gray")[i].className = "dog-icon gray collapse";
           document.getElementById("pet-welcome").className = "collapse";
           document.getElementById("pet-welcome-arrow").className = "collapse";
-          document.getElementById("open-dog-profile-tip").className = "trak_nav-item collapse.show";
+          document.getElementById("open-dog-profile-tip").className = "pooch-navbar-item collapse.show";
           // Apend dog icon row with next dog pictue
           var nextPic = document.createElement("img");
           nextPic.id = doc.data().name+"-picture";
@@ -36,7 +36,7 @@ class PetForm extends React.Component {
         });
       });
       document.getElementById("pet-loader").style.display = "none";
-    }, 750);
+    }, 1000);
 
     function viewProfile(dogName) {
       
@@ -235,9 +235,9 @@ deleteProfile() {
           <div className="mt-2" id="pet-loader"><Loader type="TailSpin" color="black" height={75} width={75}/></div>
         </div>
         <div className="dog-icon" id="add-dog-button" onClick={this.toggleNewProfile}>+</div>
-        <div className="trak_nav-item" id="pet-welcome-arrow">Add your dogs <b>⤣</b></div>
-        <div className="trak_nav-item" id="pet-welcome">Here you can manage all of your pets' profiles</div>
-        <div className="trak_nav-item collapse" id="open-dog-profile-tip"><b>	↖</b> View dog profile</div>
+        <div className="pooch-navbar-item" id="pet-welcome-arrow">Add your dogs <b>⤣</b></div>
+        <div className="pooch-navbar-item" id="pet-welcome">Here you can manage all of your pets' profiles</div>
+        <div className="pooch-navbar-item collapse" id="open-dog-profile-tip"><b>	↖</b> View dog profile</div>
         <div id="new-dog-profile" className="collapse">
               <div className="mb-3"><img className="dog-pic" id="dog-profile-pic" src={Gray1} alt="Profile"/></div>
               <input type="file" id="dog-input" onChange={this.previewDogPic}/>
@@ -883,7 +883,7 @@ deleteProfile() {
           </div>
 
           <div id="delete-dog-popup" className="fixed-top collapse">
-              <div className="trak_nav-item">Are you sure you want to delete the current dog profile?</div>
+              <div className="pooch-navbar-item">Are you sure you want to delete the current dog profile?</div>
               <div><button className="my-2 mr-4 btn-danger popup-button" onClick={this.deleteProfile}>Yes</button><button className="my-2 ml-4 btn-primary popup-button" onClick={this.closeDeletePopup}>No</button></div>
               <div className="trak_body">WARNING: This is irreversable!</div>
           </div>

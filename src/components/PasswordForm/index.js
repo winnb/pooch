@@ -44,7 +44,7 @@ class PasswordForm extends React.Component {
           <div className="col profile-box py-4">
               <div id="change-password-form">
                 <span className="trak_body row my-2">
-                    <div className="trak_nav-item">Recover Password with Email</div>
+                    <div className="pooch-navbar-item">Recover Password with Email</div>
                 </span>
                 <span className="trak_body row my-2">
                     <input name="email" id="change-password-email" type="text" className="form-control" placeholder="Email" value={this.state.email} onChange={this.handleChange}/>

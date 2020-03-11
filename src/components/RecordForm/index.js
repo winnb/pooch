@@ -84,19 +84,19 @@ class RecordForm extends React.Component{
     render(){
         return( 
             <div className="mt-7 mb-8">
-                <div className="trak_nav-item mb-4 ml-8" id="upload-step1"><b>↙</b> First, select the document you want</div>
+                <div className="pooch-navbar-item mb-4 ml-8" id="upload-step1"><b>↙</b> First, select the document you want</div>
                 <div id="upload-box">
                     <input className="my-2" type="file" id="file-input" onChange={this.filePreview} />
                     <div className="my-2"><img className="record-preview" id="preview"/></div>
                     <button className="my-2" id="file-upload-button" onClick={this.fileUpload}>Upload Dog Record</button>
-                    <div id="upload-loader" className="mt-4"><Loader type="Oval" color="black" height={75} width={75}/></div>
+                    <div id="upload-loader" className="mt-4"><Loader type="TailSpin" color="black" height={75} width={75}/></div>
                 </div>
-                <div className="trak_nav-item mt-4 ml-7" id="upload-step2"><b>↖</b> Then, click upload</div>
-                <div id="loader" className="mt-4"><Loader type="Oval" color="black" height={75} width={75}/></div>
+                <div className="pooch-navbar-item mt-4 ml-7" id="upload-step2"><b>↖</b> Then, click upload</div>
+                <div id="loader" className="mt-4"><Loader type="TailSpin" color="black" height={75} width={75}/></div>
                 <div className="mt-3" id="record-row"></div>
 
                 <div id="delete-record-popup" className="fixed-top collapse">
-                    <div className="trak_nav-item">Are you sure you want to delete the current document?</div>
+                    <div className="pooch-navbar-item">Are you sure you want to delete the current document?</div>
                     <div className="my-2"><img className="record-preview" id="delete-preview"/></div>
                     <div><button className="my-2 mr-4 btn-danger popup-button" onClick={this.deleteRecord}>Yes</button><button className="my-2 ml-4 btn-primary popup-button" onClick={this.closePopup}>No</button></div>
                     <div className="trak_body">WARNING: This is irreversable!</div>

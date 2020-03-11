@@ -12,7 +12,7 @@ import "./styles.scss";
 const PageNotFound = () => {
   return (
     <div>
-      <div className="trak_heading-medium mt-5">Ops ...</div>
+      <div className="pooch-title mt-5">Ops ...</div>
       <div className="trak_body-small mt-5 mb-3">
         You ended you in the wrong URL. Click the button below to go back home
       </div>

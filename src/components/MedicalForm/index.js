@@ -249,7 +249,7 @@ class MedicalForm extends React.Component {
               buttonTitle="Submit"
             />
             </div>
-          <div className="trak_heading-medium mt-5">Local Doggy Meetups</div>
+          <div className="pooch-title mt-5">Local Doggy Meetups</div>
           <div id="loader" className="mb-4">
             <Loader
               type="Grid"
@@ -263,7 +263,7 @@ class MedicalForm extends React.Component {
           {/* Render contents of database */}
           <div id="result-table">
             <table className="table table-dark mt-4 text-left trak_body">
-              <thead className="trak_heading-small">
+              <thead className="pooch-subtitle">
                 {/* change color */}
                 <tr>
                   <th scope="col">Date & Time</th>

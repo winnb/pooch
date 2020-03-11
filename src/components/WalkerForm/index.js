@@ -200,6 +200,26 @@ class WalkerForm extends React.Component {
             document.getElementById("popup-walker-feature2-pic").src = doc.data().feature2;
             document.getElementById("popup-walker-feature3-pic").src = doc.data().feature3;
             document.getElementById("popup-walker-feature4-pic").src = doc.data().feature4;
+            var pic1 = document.getElementById("popup-walker-feature1-pic").src;
+            if (pic1.substr(pic1.length-9, pic1.length-1) !== "undefined")
+              document.getElementById("popup-walker-feature1-pic").className = "popup-feature collapse.show";
+            else
+              document.getElementById("popup-walker-feature1-pic").className = "popup-feature collapse";
+            var pic2 = document.getElementById("popup-walker-feature2-pic").src;
+            if (pic2.substr(pic2.length-9, pic2.length-1) !== "undefined")
+                document.getElementById("popup-walker-feature2-pic").className = "popup-feature collapse.show";
+            else
+                document.getElementById("popup-walker-feature2-pic").className = "popup-feature collapse";
+            var pic3 = document.getElementById("popup-walker-feature3-pic").src;
+            if (pic3.substr(pic3.length-9, pic3.length-1) !== "undefined")
+              document.getElementById("popup-walker-feature3-pic").className = "popup-feature collapse.show";
+            else
+              document.getElementById("popup-walker-feature3-pic").className = "popup-feature collapse";
+            var pic4 = document.getElementById("popup-walker-feature4-pic").src;
+            if (pic4.substr(pic4.length-9, pic4.length-1) !== "undefined")
+              document.getElementById("popup-walker-feature4-pic").className = "popup-feature collapse.show";
+            else
+              document.getElementById("popup-walker-feature4-pic").className = "popup-feature collapse";
           
         // Update popup average rating
         if (document.getElementById("popup-walker-email").textContent === doc.data().email) {
@@ -266,9 +286,9 @@ class WalkerForm extends React.Component {
         .then(snapshot => {
           snapshot.docs.forEach(doc => {
                 var reviewDiv = document.createElement("div");
-                reviewDiv.className = "user-review";
+                reviewDiv.className = "user-review my-4";
                 var ratingDiv = document.createElement("div");
-                ratingDiv.className = "row";
+                ratingDiv.className = "row my-2";
                 var nameDiv = document.createElement("div");
                 Fire.firestore().collection("parents").where("email", "==", doc.data().by).get()
                 .then(snapshot => {
@@ -282,7 +302,7 @@ class WalkerForm extends React.Component {
                     nameDiv.textContent = doc.data().name;
                   })
                 });
-                Fire.firestore().collection("boarders").where("email", "==", doc.data().by).get()
+                Fire.firestore().collection("walkers").where("email", "==", doc.data().by).get()
                 .then(snapshot => {
                   snapshot.forEach(doc => {
                     nameDiv.textContent = doc.data().name;
@@ -293,7 +313,7 @@ class WalkerForm extends React.Component {
                   var starDiv = document.createElement("div");
                   if (doc.data().stars > i) {
                     starDiv.textContent = "⭐";
-                    starDiv.className = "full-stars";
+                    //starDiv.className = "full-stars";
                   }
                   else {
                     starDiv.textContent = "☆";
@@ -312,11 +332,6 @@ class WalkerForm extends React.Component {
         
         });
         });
-
-        // <div className="user-review my-3">
-        //   <div className="row">George Walker ⭐⭐⭐⭐</div>
-        //   <div className="review-body">Hello, this is my review. Hello, this is my review. Hello, this is my review. Hello, this is my review. Hello, this is my review. </div>
-        // </div>
 
         setTimeout(() => {
           document.getElementById("walker-popup").className = "fixed-top row collapse.show";
@@ -382,19 +397,6 @@ class WalkerForm extends React.Component {
 
   closeNoReviewError() { document.getElementById("no-review-error").className="popup-error collapse"; }
 
-  // swapReviewsAndPictures() {
-  //   if (document.getElementById("review-swapper").textContent === "Show Images 📷") {
-  //     document.getElementById("review-swapper").textContent = "See Reviews ✉️";
-  //     document.getElementById("popup-walker-reviews").className = "col collapse";
-  //     document.getElementById("popup-walker-images").className = "col collapse.show";
-  //   }
-  //   else {
-  //     document.getElementById("review-swapper").textContent = "Show Images 📷";
-  //     document.getElementById("popup-walker-reviews").className = "col collapse.show";
-  //     document.getElementById("popup-walker-images").className = "col collapse";
-  //   }
-  // }
-
   render() {
     return (
       <div className="mt-7 mb-8">
@@ -407,7 +409,7 @@ class WalkerForm extends React.Component {
             <option value="name">Name</option>
           </select>
         </div>
-        <div className="trak_heading-medium mb-3">Dog Walkers</div>
+        <div className="pooch-title mb-3">Dog Walkers</div>
         <div id="loader" className="mb-4"><Loader type="ThreeDots" color="black" height={75} width={75}/></div>
         <div id="bubble-home" className="row"></div>
 
@@ -432,7 +434,6 @@ class WalkerForm extends React.Component {
           </div>
 
           <div className="col my-4">
-            {/* <button id="review-swapper" type="submit" className="btn" onClick={this.swapReviewsAndPictures}>See Reviews ✉️</button> */}
             <button type="submit" className="btn btn-danger" id="close-popup-button" onClick={this.closeProfile}>X</button>
 
             <div className="col" id="popup-walker-reviews">
@@ -444,26 +445,8 @@ class WalkerForm extends React.Component {
                 <div className="empty-stars" id="star5" onClick={this.fillStar}>☆</div>
               </div>
               <textarea className="mt-2 mb-1" id="new-review" placeholder="Write a review..."  maxLength="256"></textarea>
-              <button id="submit-review" className="btn" onClick={this.submitReview}>Submit Review</button>
+              <button id="submit-review" className="btn mb-3" onClick={this.submitReview}>Submit Review</button>
               <div id="review-col"></div>
-              {/* <div className="user-review my-3">
-                <div className="row">
-                  George Walker ⭐⭐⭐⭐
-                </div>
-                <div className="review-body">Hello, this is my review. Hello, this is my review. Hello, this is my review. Hello, this is my review. Hello, this is my review. </div>
-              </div>
-              <div className="user-review my-3">
-                <div className="row">
-                  George Walker ⭐⭐
-                </div>
-                <div className="review-body">Hello, this is my review. Hello, this is my review. Hello, this is my review. Hello, this is my review. Hello, this is my review. </div>
-              </div>
-              <div className="user-review my-3">
-                <div className="row">
-                  George Walker ⭐⭐⭐⭐⭐
-                </div>
-                <div className="review-body">Hello, this is my review. Hello, this is my review. Hello, this is my review. Hello, this is my review. Hello, this is my review. </div>
-              </div> */}
             </div>
           </div>
           

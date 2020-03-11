@@ -119,7 +119,7 @@ class MeetupForm extends React.Component {
     return (
       <div className="mt-7 mx-6">
         <Slide down>
-          <div className="trak_heading-medium mb-6">
+          <div className="pooch-title mb-6">
             Schedule a New Meetup
           </div>
         </Slide>
@@ -248,7 +248,7 @@ class MeetupForm extends React.Component {
             <div id = "success-message">
                 Meetup Successfully Created 
             </div>
-          <div className="trak_heading-medium mt-5">Local Doggy Meetups</div>
+          <div className="pooch-title mt-5">Local Doggy Meetups</div>
           <div id="loader" className="mb-4">
             <Loader
               type="Grid"
@@ -262,7 +262,7 @@ class MeetupForm extends React.Component {
           {/* Render contents of database */}
           <div id="result-table">
             <table className="table mt-4 text-left trak_body">
-              <thead className="thead-light trak_heading-small">
+              <thead className="thead-light pooch-subtitle">
                 {/* change color */}
                 <tr>
                   <th scope="col">Date&Time</th>

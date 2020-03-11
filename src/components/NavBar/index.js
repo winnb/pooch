@@ -106,20 +106,20 @@ class NavBar extends React.Component {
       <div>
         <MessageTab/>
         <div className="collapse fixed-top" id="profile-dropdown" onMouseLeave={this.collapseDropdown}>
-            <div className="trak_nav-item mb-3" id="dropdown-row"><button id="dropdown-button" onClick={this.goToProfile}>Profile</button></div>
-            <div className="trak_nav-item mb-3" id="dropdown-row"><button id="dropdown-button" onClick={this.openMessages}>Messages</button></div>
-            <div className="trak_nav-item mt-3" id="dropdown-row"><button id="dropdown-button" onClick={this.logout}>Logout</button></div>
+            <div className="pooch-navbar-item mb-3" id="dropdown-row"><button id="dropdown-button" onClick={this.goToProfile}>Profile</button></div>
+            <div className="pooch-navbar-item mb-3" id="dropdown-row"><button id="dropdown-button" onClick={this.openMessages}>Messages</button></div>
+            <div className="pooch-navbar-item mt-3" id="dropdown-row"><button id="dropdown-button" onClick={this.logout}>Logout</button></div>
         </div>
         <nav className="navbar navbar-expand-lg fixed-top py-5" >
           <img className="ml-2" id="profile-pic" src={GenericProfile} alt="Profile" onClick={this.goToProfile} onMouseEnter={this.openDropdown}/>
           
           <div id="brand">
-            <a className="navbar-brand trak_nav-title"  href="/">
+            <a className="navbar-brand pooch-brand"  href="/">
             POOCH
             </a>
           </div>
           <div> 
-            <div className="row trak_nav-item" id="nav-pages">
+            <div className="row pooch-navbar-item" id="nav-pages">
               <div className="nav-item">
                 <a className="nav-link your-pets" href="/your-pets">
                 Your Pets

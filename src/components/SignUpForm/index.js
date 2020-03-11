@@ -69,7 +69,7 @@ class SignUpForm extends React.Component {
           <div className="col profile-box py-4">
               <div id="signup-form">
                 <span className="trak_body row my-2">
-                    <div className="trak_nav-item">Create an Account</div>
+                    <div className="pooch-navbar-item">Create an Account</div>
                 </span>
                 <span className="trak_body row my-2">
                     <input name="email" id="signup-email" type="text" className="form-control" placeholder="Email" value={this.state.email} onChange={this.handleChange}/>

@@ -211,6 +211,27 @@ class BoardingForm extends React.Component {
             document.getElementById("popup-boarder-feature2-pic").src = doc.data().feature2;
             document.getElementById("popup-boarder-feature3-pic").src = doc.data().feature3;
             document.getElementById("popup-boarder-feature4-pic").src = doc.data().feature4;
+            var pic1 = document.getElementById("popup-boarder-feature1-pic").src;
+            if (pic1.substr(pic1.length-9, pic1.length-1) !== "undefined")
+              document.getElementById("popup-boarder-feature1-pic").className = "popup-feature collapse.show";
+            else
+              document.getElementById("popup-boarder-feature1-pic").className = "popup-feature collapse";
+            var pic2 = document.getElementById("popup-boarder-feature2-pic").src;
+            if (pic2.substr(pic2.length-9, pic2.length-1) !== "undefined")
+                document.getElementById("popup-boarder-feature2-pic").className = "popup-feature collapse.show";
+            else
+                document.getElementById("popup-boarder-feature2-pic").className = "popup-feature collapse";
+            var pic3 = document.getElementById("popup-boarder-feature3-pic").src;
+            if (pic3.substr(pic3.length-9, pic3.length-1) !== "undefined")
+              document.getElementById("popup-boarder-feature3-pic").className = "popup-feature collapse.show";
+            else
+              document.getElementById("popup-boarder-feature3-pic").className = "popup-feature collapse";
+            var pic4 = document.getElementById("popup-boarder-feature4-pic").src;
+            if (pic4.substr(pic4.length-9, pic4.length-1) !== "undefined")
+              document.getElementById("popup-boarder-feature4-pic").className = "popup-feature collapse.show";
+            else
+              document.getElementById("popup-boarder-feature4-pic").className = "popup-feature collapse";
+            
           
         // Update popup average rating
         if (document.getElementById("popup-boarder-email").textContent === doc.data().email) {
@@ -277,9 +298,9 @@ class BoardingForm extends React.Component {
         .then(snapshot => {
           snapshot.docs.forEach(doc => {
                 var reviewDiv = document.createElement("div");
-                reviewDiv.className = "user-review";
+                reviewDiv.className = "user-review my-4";
                 var ratingDiv = document.createElement("div");
-                ratingDiv.className = "row";
+                ratingDiv.className = "row my-2";
                 var nameDiv = document.createElement("div");
                 Fire.firestore().collection("parents").where("email", "==", doc.data().by).get()
                 .then(snapshot => {
@@ -304,7 +325,7 @@ class BoardingForm extends React.Component {
                   var starDiv = document.createElement("div");
                   if (doc.data().stars > i) {
                     starDiv.textContent = "⭐";
-                    starDiv.className = "full-stars";
+                    //starDiv.className = "full-stars";
                   }
                   else {
                     starDiv.textContent = "☆";
@@ -398,7 +419,7 @@ class BoardingForm extends React.Component {
             <option value="name">Name</option>
           </select>
         </div>
-        <div className="trak_heading-medium mb-3">Dog Boarders</div>
+        <div className="pooch-title mb-3">Dog Boarders</div>
         <div id="loader" className="mb-4"><Loader type="ThreeDots" color="black" height={75} width={75}/></div>
         <div id="bubble-home" className="row"></div>
 
@@ -409,21 +430,20 @@ class BoardingForm extends React.Component {
                 <div className="col"><img className="profile-pic mr-5" id="popup-boarder-pic" src="" alt="Profile Picture"/></div>
                 <div className="col"><div id="popup-boarder-rating"/></div>
               </div>
-              <div className="my-3 row"><div className="popup-input collapse.show" id="popup-boarder-email"/></div>
+              <div className="my-3 row"><div className="popup-input collapse" id="popup-boarder-email"/></div>
               <div className="my-3 row"><div className="popup-input" id="popup-boarder-name"/></div>
               <div className="my-3 row"><div className="popup-input" id="popup-boarder-phone"/></div>
               <div className="my-3 row"><div className="popup-input" id="popup-boarder-city"/></div>
               <div className="my-3 row"><div className="popup-input" id="popup-boarder-daily-rate"/></div>
               <div className="col" id="popup-boarder-images">
-                <img className="popup-feature row collapse" id="popup-boarder-feature1-pic" src={Pic1} alt="Featured Picture"/>
-                <img className="popup-feature row collapse" id="popup-boarder-feature2-pic" src={Pic2} alt="Featured Picture"/>
-                <img className="popup-feature row collapse" id="popup-boarder-feature3-pic" src={Pic3} alt="Featured Picture"/>
-                <img className="popup-feature row collapse" id="popup-boarder-feature4-pic" src={Pic4} alt="Featured Picture"/>
+                <img className="popup-feature collapse" id="popup-boarder-feature1-pic" src={Pic1} alt="Featured Picture"/>
+                <img className="popup-feature collapse" id="popup-boarder-feature2-pic" src={Pic2} alt="Featured Picture"/>
+                <img className="popup-feature collapse" id="popup-boarder-feature3-pic" src={Pic3} alt="Featured Picture"/>
+                <img className="popup-feature collapse" id="popup-boarder-feature4-pic" src={Pic4} alt="Featured Picture"/>
               </div>
           </div>
 
           <div className="col my-4">
-            {/* <button id="review-swapper" type="submit" className="btn" onClick={this.swapReviewsAndPictures}>See Reviews ✉️</button> */}
             <button type="submit" className="btn btn-danger" id="close-popup-button" onClick={this.closeProfile}>X</button>
 
             <div className="col" id="popup-boarder-reviews">
@@ -435,26 +455,8 @@ class BoardingForm extends React.Component {
                 <div className="empty-stars" id="star5" onClick={this.fillStar}>☆</div>
               </div>
               <textarea className="mt-2 mb-1" id="new-review" placeholder="Write a review..." maxLength="256"></textarea>
-              <button id="submit-review" className="btn" onClick={this.submitReview}>Submit Review</button>
+              <button id="submit-review" className="btn mb-3" onClick={this.submitReview}>Submit Review</button>
               <div id="review-col"></div>
-              {/* <div className="user-review my-3">
-                <div className="row">
-                  George Boarder ⭐⭐
-                </div>
-                <div className="review-body">Hello, this is my review. Hello, this is my review. Hello, this is my review. Hello, this is my review. Hello, this is my review. </div>
-              </div>
-              <div className="user-review my-3">
-                <div className="row">
-                  George Boarder ⭐⭐⭐⭐⭐
-                </div>
-                <div className="review-body">Hello, this is my review. Hello, this is my review. Hello, this is my review. Hello, this is my review. Hello, this is my review. </div>
-              </div>
-              <div className="user-review my-3">
-                <div className="row">
-                  George Boarder ⭐⭐⭐⭐
-                </div>
-                <div className="review-body">Hello, this is my review. Hello, this is my review. Hello, this is my review. Hello, this is my review. Hello, this is my review. </div>
-              </div> */}
             </div>
           </div>
           

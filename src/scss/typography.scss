@@ -8,63 +8,41 @@ $red-hat-display: "Red Hat Display", sans-serif;
 $oswald:  'Oswald', sans-serif;
 $cherry-swash: 'Cherry Swash', cursive;
 
-.red-hat-display {
+.pooch-brand {
+  font-family: $oswald;
+  font-size: calc(80px);
+}
+
+.pooch-navbar-item {
+  font-family: $cherry-swash;
+  font-size: calc(25px);
+}
+
+.pooch-title {
+  font-family: $cherry-swash;
+  font-size: calc(48px);
+  font-weight: 500;
+}
+
+.pooch-subtitle {
   font-family: $red-hat-display;
+  font-size: calc(20px);
+  font-weight: 500;
 }
 
 body {
   font-family: $red-hat-display;
-  font-size: calc(16px + 0.5vw);
-  line-height: calc(24px + 1vw);
+  font-size: calc(16px);
 }
-
-// Trak custom header
-.trak_heading-xlarge {
-  font-family: $zilla-slab;
-  font-size: calc(32px + 1.5vw + 0.5vmin);
-  font-weight: 600;
-  line-height: calc(36px + 2.5vw);
-}
-
-.trak_heading-large {
-  font-family: $zilla-slab;
-  font-size: calc(60px);
-  font-weight: 600;
-}
-
-.trak_heading-medium {
-  font-family: $zilla-slab;
-  font-size: calc(48px);
-  font-weight: 600;
-}
-
-.trak_heading-small {
-  font-family: $zilla-slab;
-  font-size: calc(26px + 0.5vw + 0.5vmin);
-  font-weight: 600;
-}
-
-.trak_subheading {
-  font-family: $zilla-slab;
-  font-size: calc(26px);
-  font-weight: 600;
-}
-
-// Next custom body
 
 .trak_body {
   font-family: $red-hat-display;
-  font-size: calc(24px);
+  font-size: calc(16px);
 }
 
 .trak_body-small {
   font-family: $red-hat-display;
-  font-size: calc(18px);
-}
-
-.trak_body-xsmall {
-  font-family: $red-hat-display;
-  font-size: calc(12px);
+  font-size: calc(10px);
 }
 
 .trak_footer {
@@ -72,16 +50,6 @@ body {
   font-size: 10px;
   color: #9a9c9f;
   line-height: 20px;
-}
-
-.trak_nav-title {
-  font-family: $oswald;
-  font-size: calc(80px);
-}
-
-.trak_nav-item {
-  font-family: $cherry-swash;
-  font-size: calc(25px);
 }
 
 /***************************************/
@@ -95,12 +63,7 @@ body {
     line-height: 36px;
   }
 
-  .trak_heading-xlarge {
-    font-size: 72px;
-    line-height: 86px;
-  }
-
-  .trak_heading-small {
+  .pooch-subtitle {
     font-size: 36px;
   }
 }

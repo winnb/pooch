@@ -139,29 +139,29 @@ class ServicesForm extends React.Component {
     return (
       <div className="mt-7 mx-6">
         <Slide down>
-          <div className="trak_heading-medium mb-4">
+          <div className="pooch-title mb-4">
           Dog Services
           </div>
         </Slide>
         <label for="location">Enter your city: </label>
         <input type="text" onBlur={e=>this.setState({city:e.target.value})}/>
         <button type="button" onClick={this.trackLocation}>Track your location</button>
-        <div className="trak_heading-small section mt-3 mb-3">Local Dog Supply Stores:</div>
+        <div className="pooch-subtitle section mt-3 mb-3">Local Dog Supply Stores:</div>
         <div className="contact-box my-3 mx-5 px-3 py-5">{this.state.latitude}</div>
         <div className="contact-box my-3 mx-5 px-3 py-5">{this.state.longitude}</div>
     <div className="contact-box my-3 mx-5 px-3 py-5"></div>
         <div className="contact-box my-3 mx-5 px-3 py-5"><cards dog_wash={this.getUpdates.outcome}/> </div>
-        <div className="trak_heading-small section mt-3 mb-3">Local Dog Grooming Services:</div>
+        <div className="pooch-subtitle section mt-3 mb-3">Local Dog Grooming Services:</div>
         <div id="results-box" className="contact-box my-3 mx-5 px-3 py-5"></div>
         <div className="contact-box my-3 mx-5 px-3 py-5"></div>
         <div className="contact-box my-3 mx-5 px-3 py-5"></div>
         <div className="contact-box my-3 mx-5 px-3 py-5"></div>
-        <div className="trak_heading-small section mt-3 mb-3">Local Adoption Centers:</div>
+        <div className="pooch-subtitle section mt-3 mb-3">Local Adoption Centers:</div>
         <div className="contact-box my-3 mx-5 px-3 py-5"></div>
         <div className="contact-box my-3 mx-5 px-3 py-5"></div>
         <div className="contact-box my-3 mx-5 px-3 py-5"></div>
         <div className="contact-box my-3 mx-5 px-3 py-5"></div>
-        <div className="trak_heading-small section mt-3 mb-3">Local Vets:</div>
+        <div className="pooch-subtitle section mt-3 mb-3">Local Vets:</div>
         <div className="contact-box my-3 mx-5 px-3 py-5"></div>
         <div className="contact-box my-3 mx-5 px-3 py-5"></div>
         <div className="contact-box my-3 mx-5 px-3 py-5"></div>
