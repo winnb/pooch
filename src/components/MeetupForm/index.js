@@ -30,11 +30,11 @@ class MeetupForm extends React.Component {
 
   componentDidMount() {
     document.getElementById("error-message").style.display = "none";
-    document.getElementById("loader").style.display = "block";
     document.getElementById("add-meetup-button").style.display = "none";
   }
 
   componentDidUpdate() {
+    document.getElementById("loader").style.display = "block";
     document.getElementById("bubble-home").innerHTML = null; // Clear old data before updating
     
     // Get meetups from Firebase
@@ -49,7 +49,7 @@ class MeetupForm extends React.Component {
     function renderMeetup(doc) {
       // Bubble render
       var newBox = document.createElement("div");
-      newBox.className = "meetup-box row mx-3";
+      newBox.className = "meetup-box row mx-3 pooch-body";
       //newBox.addEventListener("click", ()=>{viewMeetup(doc.data().date, doc.data().time, doc.data().address)});
       var leftCol = document.createElement("div");
       leftCol.className = "box-left-col";
@@ -65,6 +65,28 @@ class MeetupForm extends React.Component {
       rightCol.className = "box-right-col";
       newBox.appendChild(rightCol);
       
+      var nameDiv = document.createElement("div");
+      nameDiv.className = "box-row";
+      Fire.firestore().collection("parents").where("email", "==", doc.data().email).get()
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+          nameDiv.textContent = "Host: "+doc.data().name;
+        })
+      });
+      Fire.firestore().collection("boarders").where("email", "==", doc.data().email).get()
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+          nameDiv.textContent = "Host: "+doc.data().name;
+        })
+      });
+      Fire.firestore().collection("boarders").where("email", "==", doc.data().email).get()
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+          nameDiv.textContent = "Host: "+doc.data().name;
+        })
+      });
+      rightCol.appendChild(nameDiv);
+
       var address = document.createElement("div");
       address.className = "box-row";
       address.textContent = doc.data().address;
@@ -73,18 +95,25 @@ class MeetupForm extends React.Component {
       var city = document.createElement("div");
       city.className = "box-row";
       city.textContent = doc.data().city;
-      city.textContent += ", "+doc.data().state;
       rightCol.appendChild(city);
 
       var zipcode = document.createElement("div");
       zipcode.className = "box-row";
-      zipcode.textContent = doc.data().zipcode;
+      zipcode.textContent = doc.data().state+", "+doc.data().zipcode;
       rightCol.appendChild(zipcode);
 
       var date = document.createElement("div");
       date.className = "box-row";
-      date.textContent = doc.data().date;
-      date.textContent += " "+doc.data().time;
+      var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      var adjustedMonth = months[parseInt(doc.data().date.substr(5,2))-1];
+      var adjustedTime;
+      if (parseInt(doc.data().time.substr(0,2)) < 12)
+        adjustedTime = doc.data().time.substr(1,1)+doc.data().time.substr(2,3)+"AM";
+      else if (parseInt(doc.data().time.substr(0,2)) == 12)
+        adjustedTime = doc.data().time.substr(0,2)+doc.data().time.substr(2,3)+"PM";
+      else
+        adjustedTime = (parseInt(doc.data().time.substr(0,2))-12).toString()+doc.data().time.substr(2,3)+"PM";
+      date.textContent = doc.data().date.substr(8,2)+" "+adjustedMonth+" "+doc.data().date.substr(0,4)+" @ "+adjustedTime;
       rightCol.appendChild(date);
 
       // Search functionality
@@ -190,7 +219,7 @@ class MeetupForm extends React.Component {
         <div className="collapse" id="meetup-popup">
           <div className="row">
             <div className="box-left-col">
-              <img className="meetup-pic" id="new-meetup-pic" src={DogPark} alt="New Meetup Picture"/>
+              <img className="popup-meetup-pic" id="new-meetup-pic" src={DogPark} alt="New Meetup Picture"/>
               <input type="file" id="new-meetup-input" onChange={this.previewPic}/>
             </div>
             <div className="box-right-col">
