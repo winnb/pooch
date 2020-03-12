@@ -92,7 +92,12 @@ class WalkerForm extends React.Component {
       nameRow.className = "box-row";
       newCol.appendChild(nameRow);
       var name = document.createElement("div");
-      name.innerText = doc.data().name;
+      // Make name camelcase
+      var nameWords = doc.data().name.toLowerCase().split(" ");
+      var adjustedName = "";
+      for (var i=0; i<nameWords.length; i++)
+        adjustedName += nameWords[i].substr(0,1).toUpperCase() + nameWords[i].substr(1, nameWords[i].length-1) + " ";
+      name.innerText = adjustedName;
       name.className = "walker-name";
       nameRow.appendChild(name);
 
@@ -110,7 +115,12 @@ class WalkerForm extends React.Component {
       cityRow.className = "box-row";
       newCol.appendChild(cityRow);
       var city = document.createElement("div");
-      city.innerText = doc.data().city;
+      // Make city camelcase
+      var cityWords = doc.data().city.toLowerCase().split(" ");
+      var adjustedCity = "";
+      for (var i=0; i<cityWords.length; i++)
+        adjustedCity += cityWords[i].substr(0,1).toUpperCase() + cityWords[i].substr(1, cityWords[i].length-1) + " ";
+      city.innerText = adjustedCity;
       city.className = "walker-city";
       cityRow.appendChild(city);
 

@@ -41,7 +41,7 @@ class PetForm extends React.Component {
     function viewProfile(dogName) {
       
         Fire.firestore().collection("pets")
-        .where("email", "==", Fire.auth().currentUser.email).where("name", "==", dogName)
+        .where("email", "==", Fire.auth().currentUser.email).where("name", "==", dogName.toLowerCase())
         .get()
         .then(snapshot => {
           snapshot.docs.forEach(doc => {
@@ -62,7 +62,12 @@ class PetForm extends React.Component {
               document.getElementById("database-dog-breed-row").className = "my-4 row collapse.show";
               document.getElementById("database-breed-checkbox").checked = false;
             }
-            document.getElementById("database-dog-name").value = doc.data().name;
+            // Make name camelcase
+            var nameWords = doc.data().name.toLowerCase().split(" ");
+            var adjustedName = "";
+            for (var i=0; i<nameWords.length; i++)
+              adjustedName += nameWords[i].substr(0,1).toUpperCase() + nameWords[i].substr(1, nameWords[i].length-1) + " ";
+            document.getElementById("database-dog-name").value = adjustedName;
             document.getElementById("database-dog-gender").value = doc.data().gender; 
             document.getElementById("database-dog-color").value = doc.data().color;
             document.getElementById("database-dog-age").value = doc.data().age;
@@ -90,7 +95,7 @@ newDog() {
     console.log("adding from simple dog breeds");
     Fire.firestore().collection("pets").add({
       email: Fire.auth().currentUser.email,
-      name: document.getElementById("dog-name").value,
+      name: document.getElementById("dog-name").value.toLowerCase(),
       gender: document.getElementById("dog-gender").value,
       breed: document.getElementById("dog-breed-simple").value,
       color: document.getElementById("dog-color").value,
@@ -102,7 +107,7 @@ newDog() {
     console.log("adding from all dog breeds");
     Fire.firestore().collection("pets").add({
       email: Fire.auth().currentUser.email,
-      name: document.getElementById("dog-name").value,
+      name: document.getElementById("dog-name").value.toLowerCase(),
       gender: document.getElementById("dog-gender").value,
       breed: document.getElementById("dog-breed").value,
       color: document.getElementById("dog-color").value,

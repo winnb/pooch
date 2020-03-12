@@ -67,34 +67,53 @@ class MeetupForm extends React.Component {
       
       var nameDiv = document.createElement("div");
       nameDiv.className = "box-row";
+      var nameStart = "";
       Fire.firestore().collection("parents").where("email", "==", doc.data().email).get()
       .then(snapshot => {
         snapshot.forEach(doc => {
-          nameDiv.textContent = "Host: "+doc.data().name;
+          nameStart = doc.data().name;
         })
       });
       Fire.firestore().collection("boarders").where("email", "==", doc.data().email).get()
       .then(snapshot => {
         snapshot.forEach(doc => {
-          nameDiv.textContent = "Host: "+doc.data().name;
+          nameStart = doc.data().name;
         })
       });
       Fire.firestore().collection("boarders").where("email", "==", doc.data().email).get()
       .then(snapshot => {
         snapshot.forEach(doc => {
-          nameDiv.textContent = "Host: "+doc.data().name;
+          nameStart = doc.data().name;
         })
       });
-      rightCol.appendChild(nameDiv);
-
+      setTimeout(() => {
+        // Make name camelcase (must wait for firebase to return)
+        var nameWords = nameStart.toLowerCase().split(" ");
+        var adjustedName = "";
+        for (var i=0; i<nameWords.length; i++)
+          adjustedName += nameWords[i].substr(0,1).toUpperCase() + nameWords[i].substr(1, nameWords[i].length-1) + " ";
+        nameDiv.textContent = "Host: "+adjustedName;
+        rightCol.appendChild(nameDiv);
+      }, 500);
+      
       var address = document.createElement("div");
       address.className = "box-row";
-      address.textContent = doc.data().address;
+      // Make address camelcase
+      var addressWords = doc.data().address.toLowerCase().split(" ");
+      var adjustedAddress = "";
+      for (var i=0; i<addressWords.length; i++)
+        adjustedAddress += addressWords[i].substr(0,1).toUpperCase() + addressWords[i].substr(1, addressWords[i].length-1) + " ";
+      address.textContent = adjustedAddress;
       rightCol.appendChild(address);
 
       var city = document.createElement("div");
       city.className = "box-row";
-      city.textContent = doc.data().city;
+      // Make city camelcase
+      var cityWords = doc.data().city.toLowerCase().split(" ");
+      var adjustedCity = "";
+      for (var i=0; i<cityWords.length; i++)
+        adjustedCity += cityWords[i].substr(0,1).toUpperCase() + cityWords[i].substr(1, cityWords[i].length-1) + " ";
+      city.textContent = adjustedCity;
       rightCol.appendChild(city);
 
       var zipcode = document.createElement("div");
@@ -115,6 +134,34 @@ class MeetupForm extends React.Component {
         adjustedTime = (parseInt(doc.data().time.substr(0,2))-12).toString()+doc.data().time.substr(2,3)+"PM";
       date.textContent = doc.data().date.substr(8,2)+" "+adjustedMonth+" "+doc.data().date.substr(0,4)+" @ "+adjustedTime;
       rightCol.appendChild(date);
+
+      var buttonRow = document.createElement("div");
+      buttonRow.style.width = "100%";
+      buttonRow.style.fontSize = "50%";
+      buttonRow.style.marginTop = "2%";
+      newBox.appendChild(buttonRow);
+
+      var maybeButton = document.createElement("button");
+      maybeButton.textContent = "Maybe";
+      maybeButton.style.marginLeft = "20%";
+      maybeButton.style.width = "20%";
+      maybeButton.style.marginRight = "10%";
+      maybeButton.style.borderRadius = "10px";
+      maybeButton.style.backgroundColor = "rgb(245, 245, 245)";
+      maybeButton.style.color = "black";
+      maybeButton.addEventListener("click", ()=>{toggleMaybe(maybeButton, yesButton)});
+      buttonRow.appendChild(maybeButton);
+
+      var yesButton = document.createElement("button");
+      yesButton.textContent = "I'm Going";
+      yesButton.style.marginLeft = "10%";
+      yesButton.style.width = "20%";
+      yesButton.style.marginRight = "20%";
+      yesButton.style.borderRadius = "10px";
+      yesButton.style.backgroundColor = "rgb(245, 245, 245)";
+      yesButton.style.color = "black";
+      yesButton.addEventListener("click", ()=>{toggleYes(maybeButton, yesButton)});
+      buttonRow.appendChild(yesButton);
 
       // Search functionality
       var matchSearch = true;
@@ -151,7 +198,30 @@ class MeetupForm extends React.Component {
       document.getElementById("add-meetup-button").style.display = "block";
     }
     
-    function viewMeetup(date, time, address) { 
+    function toggleYes(maybeButton, yesButton) { 
+      maybeButton.style.backgroundColor = "rgb(245, 245, 245)";
+      maybeButton.style.color = "black";
+      if (yesButton.style.backgroundColor === "rgb(245, 245, 245)") {
+        yesButton.style.backgroundColor = "rgb(65, 65, 65)";
+        yesButton.style.color = "white";
+      }
+      else {
+        yesButton.style.backgroundColor = "rgb(245, 245, 245)";
+        yesButton.style.color = "black";
+      }
+    }
+
+    function toggleMaybe(maybeButton, yesButton) { 
+      yesButton.style.backgroundColor = "rgb(245, 245, 245)";
+      yesButton.style.color = "black";
+      if (maybeButton.style.backgroundColor === "rgb(245, 245, 245)") {
+      maybeButton.style.backgroundColor = "rgb(65, 65, 65)";
+      maybeButton.style.color = "white";
+    }
+    else {
+      maybeButton.style.backgroundColor = "rgb(245, 245, 245)";
+      maybeButton.style.color = "black";
+    }
     }
   }
 
@@ -170,7 +240,7 @@ class MeetupForm extends React.Component {
           email: Fire.auth().currentUser.email,
           pic: document.getElementById("new-meetup-pic").src,
           address: document.getElementById("new-meetup-address").value,
-          city: document.getElementById("new-meetup-city").value,
+          city: document.getElementById("new-meetup-city").value.toLowerCase(),
           zipcode: document.getElementById("new-meetup-zipcode").value,
           state: document.getElementById("new-meetup-state").value.toUpperCase(),
           date: document.getElementById("new-meetup-date").value,

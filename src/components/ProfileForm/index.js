@@ -67,9 +67,19 @@ class ProfileForm extends React.Component {
           .then(snapshot => {
             snapshot.docs.forEach(doc => {
             document.getElementById("parent-profile").className = "react-reveal collapse.show";
-            document.getElementById("database-parent-name").value = doc.data().name;
+            // Make name camelcase
+            var nameWords = doc.data().name.toLowerCase().split(" ");
+            var adjustedName = "";
+            for (var i=0; i<nameWords.length; i++)
+              adjustedName += nameWords[i].substr(0,1).toUpperCase() + nameWords[i].substr(1, nameWords[i].length-1) + " ";
+            document.getElementById("database-parent-name").value = adjustedName;
             document.getElementById("database-parent-phone").value = doc.data().phone;
-            document.getElementById("database-parent-city").value = doc.data().city;
+            // Make city camelcase
+            var cityWords = doc.data().city.toLowerCase().split(" ");
+            var adjustedCity = "";
+            for (var i=0; i<cityWords.length; i++)
+              adjustedCity += cityWords[i].substr(0,1).toUpperCase() + cityWords[i].substr(1, cityWords[i].length-1) + " ";
+            document.getElementById("database-parent-city").value = adjustedCity;
             document.getElementById("database-parent-pic").src = doc.data().pic;
             document.getElementById("delete-button-row").className = "collapse.show";
             });
@@ -84,9 +94,19 @@ class ProfileForm extends React.Component {
           .then(snapshot => {
             snapshot.docs.forEach(doc => {
           document.getElementById("walker-profile").className = "react-reveal collapse.show";
-          document.getElementById("database-walker-name").value = doc.data().name;
+          // Make name camelcase
+          var nameWords = doc.data().name.toLowerCase().split(" ");
+          var adjustedName = "";
+          for (var i=0; i<nameWords.length; i++)
+            adjustedName += nameWords[i].substr(0,1).toUpperCase() + nameWords[i].substr(1, nameWords[i].length-1) + " ";
+          document.getElementById("database-walker-name").value = adjustedName;
           document.getElementById("database-walker-phone").value = doc.data().phone;
-          document.getElementById("database-walker-city").value = doc.data().city;
+          // Make city camelcase
+          var cityWords = doc.data().city.toLowerCase().split(" ");
+          var adjustedCity = "";
+          for (var i=0; i<cityWords.length; i++)
+            adjustedCity += cityWords[i].substr(0,1).toUpperCase() + cityWords[i].substr(1, cityWords[i].length-1) + " ";
+          document.getElementById("database-walker-city").value = adjustedCity;
           document.getElementById("database-walker-hourly-rate").value = doc.data().hourlyRate;
           document.getElementById("database-walker-pic").src = doc.data().pic;
           document.getElementById("delete-button-row").className = "collapse.show";
@@ -102,10 +122,25 @@ class ProfileForm extends React.Component {
           .then(snapshot => {
             snapshot.docs.forEach(doc => {
           document.getElementById("boarder-profile").className = "react-reveal collapse.show";
-          document.getElementById("database-boarder-name").value = doc.data().name;
+          // Make name camelcase
+          var nameWords = doc.data().name.toLowerCase().split(" ");
+          var adjustedName = "";
+          for (var i=0; i<nameWords.length; i++)
+            adjustedName += nameWords[i].substr(0,1).toUpperCase() + nameWords[i].substr(1, nameWords[i].length-1) + " ";
+          document.getElementById("database-boarder-name").value = adjustedName;
           document.getElementById("database-boarder-phone").value = doc.data().phone;
-          document.getElementById("database-boarder-address").value = doc.data().address;
-          document.getElementById("database-boarder-city").value = doc.data().city;
+          // Make address camelcase
+          var addressWords = doc.data().address.toLowerCase().split(" ");
+          var adjustedAddress = "";
+          for (var i=0; i<addressWords.length; i++)
+            adjustedAddress += addressWords[i].substr(0,1).toUpperCase() + addressWords[i].substr(1, addressWords[i].length-1) + " ";
+          document.getElementById("database-boarder-address").value = adjustedAddress;
+          // Make city camelcase
+          var cityWords = doc.data().city.toLowerCase().split(" ");
+          var adjustedCity = "";
+          for (var i=0; i<cityWords.length; i++)
+            adjustedCity += cityWords[i].substr(0,1).toUpperCase() + cityWords[i].substr(1, cityWords[i].length-1) + " ";
+          document.getElementById("database-boarder-city").value = adjustedCity;
           document.getElementById("database-boarder-daily-rate").value = doc.data().dailyRate;
           document.getElementById("database-boarder-pic").src = doc.data().pic;
           document.getElementById("delete-button-row").className = "collapse.show";

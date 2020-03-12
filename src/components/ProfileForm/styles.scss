@@ -78,6 +78,9 @@
     margin-left: 35%;
     margin-right: 35%;
     border-radius: 10px;
+    border-style: outset;
+    border-width: medium;
+    border-color: rgb(230, 230, 230);
 }
 
 #new-walker-profile {
@@ -89,6 +92,9 @@
     margin-left: 35%;
     margin-right: 35%;
     border-radius: 10px;
+    border-style: outset;
+    border-width: medium;
+    border-color: rgb(230, 230, 230);
 }
 
 #new-boarder-profile {
@@ -100,6 +106,9 @@
     margin-left: 35%;
     margin-right: 35%;
     border-radius: 10px;
+    border-style: outset;
+    border-width: medium;
+    border-color: rgb(230, 230, 230);
 }
 
 #parent-profile {
@@ -111,6 +120,9 @@
     margin-left: 35%;
     margin-right: 35%;
     border-radius: 10px;
+    border-style: outset;
+    border-width: medium;
+    border-color: rgb(230, 230, 230);
 }
 
 #walker-profile {
@@ -122,6 +134,9 @@
     margin-left: 35%;
     margin-right: 35%;
     border-radius: 10px;
+    border-style: outset;
+    border-width: medium;
+    border-color: rgb(230, 230, 230);
 }
 
 #boarder-profile {
@@ -133,6 +148,9 @@
     margin-left: 33%;
     margin-right: 33%;
     border-radius: 10px;
+    border-style: outset;
+    border-width: medium;
+    border-color: rgb(230, 230, 230);
 }
 
 #profile-error {
@@ -175,8 +193,10 @@
     padding-right: 5%;
     padding-bottom: 1%;
     border-radius: 10px;
-    border-style: hidden;
     background-color: white;
+    border-style: double;
+    border-width: medium;
+    border-color: rgb(230, 230, 230);
 }
 
 #featured-images {
@@ -190,12 +210,15 @@
 
 .feature-input {
     transform: scale(0.75);
+    max-width: 140%;
 }
 
 .feature-pic {
     transform: scale(1);
-    max-width: 75px;
-    max-height: 75px;
+    min-width: 50px;
+    min-height: 50px;
+    max-width: 20vw;
+    max-height: 20vw;
     border-radius: 15px;
 }
 

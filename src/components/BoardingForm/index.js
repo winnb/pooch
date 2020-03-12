@@ -96,7 +96,12 @@ class BoardingForm extends React.Component {
       nameRow.className = "mx-1 box-row";
       newCol.appendChild(nameRow);
       var name = document.createElement("div");
-      name.innerText = doc.data().name;
+      // Make name camelcase
+      var nameWords = doc.data().name.toLowerCase().split(" ");
+      var adjustedName = "";
+      for (var i=0; i<nameWords.length; i++)
+        adjustedName += nameWords[i].substr(0,1).toUpperCase() + nameWords[i].substr(1, nameWords[i].length-1) + " ";
+      name.innerText = adjustedName;
       name.className = "boarder-name";
       nameRow.appendChild(name);
 
@@ -116,7 +121,12 @@ class BoardingForm extends React.Component {
       addressRow.className = "mx-1 box-row";
       newCol.appendChild(addressRow);
       var address = document.createElement("div");
-      address.innerText = doc.data().address;
+      // Make address camelcase
+      var addressWords = doc.data().address.toLowerCase().split(" ");
+      var adjustedAddress = "";
+      for (var i=0; i<addressWords.length; i++)
+        adjustedAddress += addressWords[i].substr(0,1).toUpperCase() + addressWords[i].substr(1, addressWords[i].length-1) + " ";
+      address.innerText = adjustedAddress;
       address.className = "boarderer-address";
       addressRow.appendChild(address);
 
@@ -124,7 +134,12 @@ class BoardingForm extends React.Component {
       cityRow.className = "mx-1 box-row";
       newCol.appendChild(cityRow);
       var city = document.createElement("div");
-      city.innerText = doc.data().city;
+      // Make city camelcase
+      var cityWords = doc.data().city.toLowerCase().split(" ");
+      var adjustedCity = "";
+      for (var i=0; i<cityWords.length; i++)
+        adjustedCity += cityWords[i].substr(0,1).toUpperCase() + cityWords[i].substr(1, cityWords[i].length-1) + " ";
+      city.innerText = adjustedCity;
       city.className = "boarder-city";
       cityRow.appendChild(city);
 
