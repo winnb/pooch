@@ -1,3 +1,147 @@
 .each-slide {
     transform: scale(1);
 }
+
+.slide-arrow {
+    font-size: 200%;
+}
+
+#slide-message1 {
+    position: absolute;
+    top: 23%;
+    left: 60%;
+    width: 25%;
+    background-color: rgba(220, 220, 220, 0.0);
+    line-height: 1.1;
+    padding-top: 1%;
+    padding-left: 1%;
+    padding-right: 1%;
+    border-radius: 15px;
+    border-color: rgba(210, 210, 210, 0.01);
+    border-width: medium;
+    border-style: double;
+    color: white;
+}
+
+#slide-message1:hover {
+    background-color: rgba(200, 200, 200, 0.001);
+    border-color: rgba(255, 195, 117, 0.001);
+    transition-duration: 0.5s;
+    .slide-arrow {
+        color: rgb(255, 195, 117);
+        transform: translateX(5%);
+        transition-duration: 0.5s;
+    }
+}
+
+#slide-message2 {
+    position: absolute;
+    top: 23%;
+    left: 15%;
+    width: 25%;
+    background-color: rgba(220, 220, 220, 0.0);
+    line-height: 1.1;
+    padding-top: 1%;
+    padding-left: 1%;
+    padding-right: 1%;
+    border-radius: 15px;
+    border-color: rgba(210, 210, 210, 0.01);
+    border-width: medium;
+    border-style: double;
+    color: white;
+}
+
+#slide-message2:hover {
+    background-color: rgba(200, 200, 200, 0.001);
+    border-color: rgba(245, 220, 107, 0.001);
+    transition-duration: 0.5s;
+    .slide-arrow {
+        color: rgb(245, 220, 107);
+        transform: translateX(5%);
+        transition-duration: 0.5s;
+    }
+}
+
+#slide-message3 {
+    position: absolute;
+    top: 45%;
+    left: 60%;
+    width: 25%;
+    background-color: rgba(220, 220, 220, 0.0);
+    line-height: 1.1;
+    padding-top: 1%;
+    padding-left: 1%;
+    padding-right: 1%;
+    border-radius: 15px;
+    border-color: rgba(210, 210, 210, 0.01);
+    border-width: medium;
+    border-style: double;
+    color: white;
+}
+
+#slide-message3:hover {
+    background-color: rgba(200, 200, 200, 0.001);
+    border-color: rgba(158, 245, 102, 0.001);
+    transition-duration: 0.5s;
+    .slide-arrow {
+        color: rgb(158, 245, 102);
+        transform: translateX(5%);
+        transition-duration: 0.5s;
+    }
+}
+
+#slide-message4 {
+    position: absolute;
+    top: 70%;
+    left: 15%;
+    width: 25%;
+    background-color: rgba(220, 220, 220, 0.0);
+    line-height: 1.1;
+    padding-top: 1%;
+    padding-left: 1%;
+    padding-right: 1%;
+    border-radius: 15px;
+    border-color: rgba(210, 210, 210, 0.01);
+    border-width: medium;
+    border-style: double;
+    color: white;
+}
+
+#slide-message4:hover {
+    background-color: rgba(200, 200, 200, 0.001);
+    border-color: rgba(107, 213, 245, 0.001);
+    transition-duration: 0.5s;
+    .slide-arrow {
+        color: rgb(107, 213, 245);
+        transform: translateX(5%);
+        transition-duration: 0.5s;
+    }
+}
+
+#slide-message5 {
+    position: absolute;
+    top: 65%;
+    left: 60%;
+    width: 25%;
+    background-color: rgba(220, 220, 220, 0.0);
+    line-height: 1.1;
+    padding-top: 1%;
+    padding-left: 1%;
+    padding-right: 1%;
+    border-radius: 15px;
+    border-color: rgba(210, 210, 210, 0.01);
+    border-width: medium;
+    border-style: double;
+    color: white;
+}
+
+#slide-message5:hover {
+    background-color: rgba(200, 200, 200, 0.001);
+    border-color: rgba(188, 117, 255, 0.001);
+    transition-duration: 0.5s;
+    .slide-arrow {
+        color: rgb(188, 117, 255);
+        transform: translateX(5%);
+        transition-duration: 0.5s;
+    }
+}

@@ -20,7 +20,28 @@ const properties = {
   infinite: true,
   indicators: true,
   arrows: true,
+  pauseOnHover: true,
   onChange: (oldIndex, newIndex) => {
+    if (document.getElementById("slide-message1").className === "pooch-title collapse.show") {
+      document.getElementById("slide-message1").className = "pooch-title collapse";
+      document.getElementById("slide-message2").className = "pooch-title collapse.show";
+    }
+    else if (document.getElementById("slide-message2").className === "pooch-title collapse.show") {
+      document.getElementById("slide-message2").className = "pooch-title collapse";
+      document.getElementById("slide-message3").className = "pooch-title collapse.show";
+    }
+    else if (document.getElementById("slide-message3").className === "pooch-title collapse.show") {
+      document.getElementById("slide-message3").className = "pooch-title collapse";
+      document.getElementById("slide-message4").className = "pooch-title collapse.show";
+    }
+    else if (document.getElementById("slide-message4").className === "pooch-title collapse.show") {
+      document.getElementById("slide-message4").className = "pooch-title collapse";
+      document.getElementById("slide-message5").className = "pooch-title collapse.show";
+    }
+    else {
+      document.getElementById("slide-message5").className = "pooch-title collapse";
+      document.getElementById("slide-message1").className = "pooch-title collapse.show";
+    }
   }
 }
  
@@ -40,6 +61,31 @@ const Slideshow = () => {
             <img className="each-slide" src={Running} alt="running dogs"/>        
             <img className="each-slide" src={TugOWar} alt="dogs playing tug o war"/>
         </Slide>
+        <a href="/pets">
+          <div className="pooch-title collapse.show" id="slide-message1">Let people get to know your pooch! View Your Pets 🐶
+            <div className="slide-arrow">➥</div>
+          </div>
+        </a>
+        <a href="/dog-walking">
+          <div className="pooch-title collapse" id="slide-message2">No worries! Pooch dog walkers are here! View Dog Walkers 🐾
+            <div className="slide-arrow">➥</div>
+          </div>
+        </a>
+        <a href="/dog-boarding">
+          <div className="pooch-title collapse" id="slide-message3">Going out of town? Find accomodations with Pooch! View Dog Boarders 🏠
+            <div className="slide-arrow">➥</div>
+          </div>
+        </a>
+        <a href="/dog-meetup">
+          <div className="pooch-title collapse" id="slide-message4">Never miss your friends with Pooch! View Dog Meetups 🏞️
+            <div className="slide-arrow">➥</div>
+          </div>
+        </a>
+        <a href="/dog-records">
+          <div className="pooch-title collapse" id="slide-message5">Adoption paperwork, vet receipts, and more are safe here! View Dog Records 📝
+            <div className="slide-arrow">➥</div>
+          </div>
+        </a>
       </div>
     )
 }

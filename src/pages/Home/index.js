@@ -6,6 +6,7 @@ import React from "react";
 // import Walking from "./media/walking-icon.png";
 // import Doghouse from "./media/doghouse-icon.png";
 import "./styles.scss";
+import Fade from "react-reveal";
 import Slide from "react-reveal";
 import FamilyPets from './media/familypets.jpg';
 import DogWalking from './media/dogwalking.jpg';
@@ -51,10 +52,9 @@ class Home extends React.Component {
         <div className="fixed-top home-box">
           <ChangePassword/>
         </div>
+        
         <div id="section1"/>
-        <Slide down>
-          <Slideshow/> 
-        </Slide>
+        <Slideshow/> 
         <div className="row mb-5 mt-3">
           <Slide left>
             <div className="row pt-6 home-row" id="section2">
@@ -70,7 +70,7 @@ class Home extends React.Component {
             </div>
             </Slide>
             <Slide right>
-            <div className="row pt-6 home-row" id="section3">
+            <div className="row home-row py-2" id="section3">
               <div className="col mx-6">
                 <img className="paragraph-pic" src={DogWalking} alt="Walking dogs"/>
               </div>
@@ -83,7 +83,7 @@ class Home extends React.Component {
             </div>
             </Slide>
             <Slide left>
-            <div className="row pt-6 home-row" id="section4">
+            <div className="row home-row py-2" id="section4">
               <div className="col mx-6 paragraph">
               <font color = "#9ef566"> <center><div className="mb-2 paragraph-title">DOG BOARDING</div></center> </font>
                 Find the most qualified local dog boarders for your four-legged friend when you go out of town. Whether
@@ -96,7 +96,7 @@ class Home extends React.Component {
             </div>
             </Slide>
             <Slide right>
-            <div className="row pt-6 home-row" id="section5">
+            <div className="row home-row py-2" id="section5">
               <div className="col mx-6">
                 <img className="paragraph-pic" src={DogGrooming} alt="Dog grooming"/>
               </div>
@@ -109,7 +109,7 @@ class Home extends React.Component {
             </div>
             </Slide>
             <Slide left>
-            <div className="row pt-6 home-row" id="section6">
+            <div className="row home-row py-2" id="section6">
               <div className="col mx-6 paragraph"> 
               <font color = "#6bd5f5"> <center><div className="mb-2 paragraph-title">DOG MEETUP</div></center> </font> 
               Meetups help people come together for doggy dates without the need to hand out your phone number. With Pooch,
@@ -122,7 +122,7 @@ class Home extends React.Component {
             </div>
             </Slide>
             <Slide right>
-            <div className="row pt-6 home-row" id="section7">
+            <div className="row home-row py-2" id="section7">
               <div className="col mx-6">
                 <img className="paragraph-pic" src={Vet} alt="Vet visit"/>
               </div>
