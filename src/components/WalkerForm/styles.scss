@@ -35,9 +35,10 @@
   border-color: rgb(230, 230, 230);
 }
 
-#walker-search {
+.search-bar {
   margin-bottom: 2%;
   margin-left: 20%;
+  padding-left: 1%;
   width: 50%;
   border-radius: 10px;
   border-style: outset;
@@ -45,9 +46,11 @@
   border-color: rgb(230, 230, 230);
 }
 
-#walker-search-category {
+.search-dropdown {
   width: 8%;
   height: 75%;
+  padding-left: 0.5%;
+  padding-right: 0.5%;
   margin-left: 2%;
   margin-right: 20%;
   border-radius: 10px;

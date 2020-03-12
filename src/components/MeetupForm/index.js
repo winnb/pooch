@@ -191,11 +191,14 @@ class MeetupForm extends React.Component {
             if (searchBar[j].toLowerCase() !== address.innerText[j].toLowerCase())
               matchSearch = false;
       }
-      // Only add bubble if it matches search
-      if (matchSearch === true)
-        document.getElementById("bubble-home").appendChild(newBox);
-      document.getElementById("loader").style.display = "none";
-      document.getElementById("add-meetup-button").style.display = "block";
+      setTimeout(() => {
+        // Only add bubble if it matches search
+        //console.log(document.getElementById("bubble-home").childNodes[document.getElementById("bubble-home").childNodes.length-1]);
+        if (matchSearch === true)
+          document.getElementById("bubble-home").appendChild(newBox);
+        document.getElementById("loader").style.display = "none";
+        document.getElementById("add-meetup-button").style.display = "block";
+      }, 250);
     }
     
     function toggleYes(maybeButton, yesButton) { 
@@ -274,8 +277,8 @@ class MeetupForm extends React.Component {
     return (
       <div className="mt-7 mx-6">
         <div className="row">
-          <input id="meetup-search" placeholder="Search..." maxLength="50" onChange={this.updateSearch} value={this.state.search}></input>
-          <select id="meetup-search-category" onChange={this.handleChange}>
+          <input className="search-bar" id="meetup-search" placeholder="Search..." maxLength="50" onChange={this.updateSearch} value={this.state.search}></input>
+          <select className="search-dropdown" id="meetup-search-category" onChange={this.handleChange}>
             <option value="city">City</option>
             <option value="zipcode">Zipcode</option>
             <option value="address">Address</option>
@@ -284,7 +287,7 @@ class MeetupForm extends React.Component {
         <div className="pooch-title my-2">Dog Meetups</div>
         <div id="loader" className="mb-4"><Loader type="ThreeDots" color="black" height={75} width={75}/></div>
         <div id="bubble-home" className="row"></div>
-        <div className="pooch-navbar-item mb-4" id="add-meetup-button" onClick={this.openNewMeetup}>Add Meetup</div>
+        <button className="pooch-navbar-item mb-4" id="add-meetup-button" onClick={this.openNewMeetup}>Add Meetup</button>
 
         <div className="collapse" id="meetup-popup">
           <div className="row">

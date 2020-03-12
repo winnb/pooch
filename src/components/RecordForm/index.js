@@ -21,6 +21,7 @@ class RecordForm extends React.Component{
                 newPic.alt = "Document";
                 newPic.src = doc.data().pic;
                 newPic.docID = doc.id;
+                //newPic.addEventListener("click", ()=>{toggleExpand(newPic)});
                 newPic.addEventListener("click", ()=>{deletePopup(doc.data().pic, doc.id)});
                 document.getElementById("record-row").appendChild(newPic);
               });
@@ -30,7 +31,27 @@ class RecordForm extends React.Component{
             document.getElementById("delete-record-popup").className = "fixed-top collapse.show";
             document.getElementById("delete-preview").src = pic;
             document.getElementById("delete-preview").docID = id;
+            document.getElementsByClassName("page-footer")[0].className = "page-footer font-small trak_body_small text-left pt-4 px-3 py-3 collapse";
           }
+
+          function toggleExpand(pic) {
+            if (pic.style.maxWidth !== "80vw") {
+                pic.style.maxWidth = "80vw";
+                pic.style.position = "absolute";
+                pic.style.width = "80vw";
+                pic.style.top = "25vh";
+                pic.style.left = "10vw"; 
+            }
+            else {
+                pic.style.maxWidth = "15vw";
+                pic.style.position = "relative";
+                pic.style.width = "15vw";
+                pic.style.top = "0vh";
+                pic.style.left = "0vw"; 
+            }
+            
+        }
+
           setTimeout(() => {
             document.getElementById("loader").style.display = "none";
          }, 1750);
@@ -77,7 +98,10 @@ class RecordForm extends React.Component{
         }, 1000);
     }
 
-    closePopup() { document.getElementById("delete-record-popup").className = "fixed-top collapse"; }
+    closePopup() { 
+        document.getElementById("delete-record-popup").className = "fixed-top collapse";
+        document.getElementsByClassName("page-footer")[0].className = "page-footer font-small trak_body_small text-left pt-4 px-3 py-3 collapse.show"; 
+    }
 
     closeError() { document.getElementById("error-message").style.display = "none"; }
 
@@ -96,10 +120,9 @@ class RecordForm extends React.Component{
                 <div className="mt-3" id="record-row"></div>
 
                 <div id="delete-record-popup" className="fixed-top collapse">
-                    <div className="pooch-navbar-item">Are you sure you want to delete the current document?</div>
+                    <div className="pooch-navbar-item">What would you like to do with the current document?</div>
                     <div className="my-2"><img className="record-preview" id="delete-preview"/></div>
-                    <div><button className="my-2 mr-4 btn-danger popup-button" onClick={this.deleteRecord}>Yes</button><button className="my-2 ml-4 btn-primary popup-button" onClick={this.closePopup}>No</button></div>
-                    <div className="trak_body">WARNING: This is irreversable!</div>
+                    <div><button className="my-2 mr-4 btn-danger popup-button" onClick={this.deleteRecord}>Delete</button><button className="my-2 ml-4 btn-primary popup-button" onClick={this.closePopup}>Minimize</button></div>
                 </div>
                 <div className="fixed-top" id="error-message">
                     <div>Image size too large</div>
