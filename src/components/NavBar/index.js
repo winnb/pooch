@@ -62,6 +62,19 @@ class NavBar extends React.Component {
         });
       });
     }
+    // Bold current page
+    if(window.location.pathname.substr(1, window.location.pathname.length-1) === "your-pets")
+      document.getElementById("your-pets").style.fontWeight = "600";
+    else if(window.location.pathname.substr(1, window.location.pathname.length-1) === "dog-walking")
+      document.getElementById("dog-walking").style.fontWeight = "600";
+    else if(window.location.pathname.substr(1, window.location.pathname.length-1) === "dog-boarding")
+      document.getElementById("dog-boarding").style.fontWeight = "600";
+    else if(window.location.pathname.substr(1, window.location.pathname.length-1) === "dog-services")
+      document.getElementById("dog-services").style.fontWeight = "600";
+    else if(window.location.pathname.substr(1, window.location.pathname.length-1) === "dog-meetup")
+      document.getElementById("dog-meetup").style.fontWeight = "600";
+    else if(window.location.pathname.substr(1, window.location.pathname.length-1) === "dog-records")
+      document.getElementById("dog-records").style.fontWeight = "600";
   }
 
   logout(e) {
@@ -111,41 +124,15 @@ class NavBar extends React.Component {
             <div className="pooch-navbar-item my-2 ml-4 row" id="dropdown-row"><button id="dropdown-button" onClick={this.logout}>🔌 Logout</button></div>
         </div>
         <nav className="navbar navbar-expand-lg fixed-top py-5" >
-          <img className="ml-2" id="profile-pic" src={GenericProfile} alt="Profile" onClick={this.goToProfile} onMouseEnter={this.openDropdown}/>
+          <img id="profile-pic" src={GenericProfile} alt="Profile" onClick={this.goToProfile} onMouseEnter={this.openDropdown}/>
           <a className="pooch-brand" id="pooch"  href="/">POOCH</a>
-          <div> 
-            <div className="row pooch-navbar-item" id="nav-pages">
-              <div className="nav-item">
-                <a className="nav-link your-pets" href="/your-pets">
-                Your Pets
-                </a>
-              </div>
-              <div className="nav-item">
-                <a className="nav-link dog-walking" href="/dog-walking">
-                  Dog Walking
-                </a>
-              </div>
-              <div className="nav-item">
-                <a className="nav-link dog-boarding" href="/dog-boarding">
-                  Dog Boarding
-                </a>
-              </div>
-              <div className="nav-item">
-                <a className="nav-link dog-services" href="/dog-services">
-                  Dog Services
-                </a>
-              </div>
-              <div className="nav-item">
-                <a className="nav-link dog-meetup" href="/dog-meetup">
-                  Dog Meetup
-                </a>
-              </div>
-              <div className="nav-item">
-                <a className="nav-link dog-records" href="/dog-records">
-                  Dog Records
-                </a>
-              </div> 
-            </div>
+          <div className="pooch-navbar-item row" id="nav-pages">
+                <a classname="col" id="your-pets" href="/your-pets">Your Pets</a>
+                <a classname="col" id="dog-walking" href="/dog-walking">Dog Walking</a>
+                <a classname="col" id="dog-boarding" href="/dog-boarding">Dog Boarding</a>
+                <a classname="col" id="dog-services" href="/dog-services">Dog Services</a>
+                <a classname="col" id="dog-meetup" href="/dog-meetup">Dog Meetup</a>
+                <a classname="col" id="dog-records" href="/dog-records">Dog Records</a> 
           </div>
         </nav>     
       </div>

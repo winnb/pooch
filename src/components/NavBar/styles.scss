@@ -4,16 +4,16 @@
 }
 
 #profile-pic {
-  position: absolute;
-  top: 10%;
-  left: 2%;
-  max-height: 75%;
+  margin-left: 2%;
+  height: 75%;
+  min-height: 75px;
+  max-height: 150px;
   transform: scale(1);
   border-radius: 100%;
-  }
+}
 
-  #profile-pic:hover {
-    opacity:0.6;
+#profile-pic:hover {
+  opacity:0.6;
 }
 
 #profile-dropdown {
@@ -21,10 +21,11 @@
   left: 1%;
   padding-top: 1%;
   padding-bottom: 1%;
-  max-width: 100px;
-  min-width: 100px;
+  width: 10%;
+  min-width: 200px;
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
+  background-color: #eeeeee;
 }
 
 #dropdown-row:hover {
@@ -32,9 +33,9 @@
 }
 
 #dropdown-button {
-  background-color: #eeeeee;
   border-style: hidden;
   border-radius: 10px;
+  background-color: #eeeeee;
 }
 
 #dropdown-item:hover {
@@ -44,46 +45,71 @@
 }
 
 #pooch {
-  margin-left: 10%;
-  margin-right: 3%;
+  margin-left: 1%;
+  margin-right: 2%;
   width: 10%;
   border-bottom-style: hidden;
 }
 
-  .your-pets {
+#nav-pages {
+  width: 100%;
+  min-width: 1075px;
+  margin-left: 2%;
+  margin-right: 2%;
+}
+
+  #your-pets {
     border-bottom-color: rgb(255, 195, 117);
     border-bottom-style: solid;
-    margin-left: 10%;
+    margin-left: 3%;
+    min-width: 100px;
+    max-width: 250px;
+    text-decoration: none;
   }
 
-  .dog-walking {
+  #dog-walking {
     border-bottom-color: rgb(245, 220, 107);
     border-bottom-style: solid;
-    margin-left: 10%;
+    margin-left: 3%;
+    min-width: 100px;
+    max-width: 250px;
+    text-decoration: none;
   }
 
-  .dog-boarding {
+  #dog-boarding {
     border-bottom-color: rgb(158, 245, 102);
     border-bottom-style: solid;
-    margin-left: 10%;
+    margin-left: 3%;
+    min-width: 100px;
+    max-width: 250px;
+    text-decoration: none;
   }
 
-  .dog-services {
+  #dog-services {
     border-bottom-color: rgb(107, 245, 165);
     border-bottom-style: solid;
-    margin-left: 10%;
+    margin-left: 3%;
+    min-width: 100px;
+    max-width: 250px;
+    text-decoration: none;
   }
 
-  .dog-meetup {
+  #dog-meetup {
     border-bottom-color: rgb(107, 213, 245);
     border-bottom-style: solid;
-    margin-left: 10%;
+    margin-left: 3%;
+    min-width: 100px;
+    max-width: 250px;
+    text-decoration: none;
   }
 
-  .dog-records {
+  #dog-records {
     border-bottom-color: rgb(188, 117, 255);
     border-bottom-style: solid;
-    margin-left: 10%;
+    margin-left: 3%;
+    min-width: 100px;
+    max-width: 250px;
+    text-decoration: none;
   }
 
   a {

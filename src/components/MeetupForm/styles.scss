@@ -21,7 +21,7 @@
   margin-bottom: 1%;
   border-radius: 25px;
   width: 30%;
-  height: 20%;
+  height: 17%;
   border-style: outset;
   border-width: medium;
   border-color: rgb(230, 230, 230);
@@ -31,7 +31,6 @@
 .box-left-col {
   width: 39%;
   margin-right: 1%;
-  padding-top: 10%;
 }
 
 .box-right-col {
@@ -102,7 +101,8 @@
 
 .meetup-pic {
   max-width: 100%;
-  max-height: 100%;
+  //max-height: 100%;
+  max-height: 200px;
   transform: scale(1);
   border-radius: 10px;
   margin-bottom: 5%;
@@ -110,11 +110,9 @@
 
 .box-meetup-pic {
   transform: scale(1);
-  max-height: 50%;
+  max-height: 100%;
   max-width: 100%;
   border-radius: 5px;
-  margin-top: 30%;
-  margin-bottom: 30%;
 }
 
 #submit-meetup {

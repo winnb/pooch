@@ -2,12 +2,17 @@ import React from 'react';
 import { Slide } from 'react-slideshow-image';
 import './styles.scss';
 
-import Beach from './images/beach.jpg';
+import BrownLab from './images/brown-lab.jpg';
+import CattleDog from './images/cattle-dog.jpg';
+import Corgi from './images/corgi.jpg';
+import Daschund from './images/daschund.jpg';
+import Dalmation from './images/dalmation.jpg';
 import Flowers from './images/flowers.jpg';
-import Grass from './images/grass.jpg';
-import Puppies from './images/puppies.jpg';
-import Snow from './images/snow.jpg';
+import Frisbee from "./images/frisbee.jpg";
+import GermanShepard from "./images/german-shepard.jpg";
+import Husky from './images/husky.jpg';
 import Running from './images/running.jpg';
+import TugOWar from './images/tug-o-war.jpg';
  
 const properties = {
   duration: 5000,
@@ -21,14 +26,19 @@ const properties = {
  
 const Slideshow = () => {
     return (
-      <div className="slide-container py-3">
+      <div className="slide-container">
         <Slide {...properties}>
-            <img className="each-slide" src={Running} alt="running dogs"/>
+            <img className="each-slide" src={BrownLab} alt="brown labrador dog"/>
+            <img className="each-slide" src={CattleDog} alt="australian cattle dog"/>
+            <img className="each-slide" src={Corgi} alt="corgi dog"/>
+            <img className="each-slide" src={Dalmation} alt="dalmation dog"/>
+            <img className="each-slide" src={Daschund} alt="daschund dog"/>
             <img className="each-slide" src={Flowers} alt="four dogs laying in front of yellow flowers"/>
-            <img className="each-slide" src={Beach} alt="beach dog"/>
-            <img className="each-slide" src={Grass} alt="dog on grass"/>
-            <img className="each-slide" src={Puppies} alt="puppies lined up"/>
-            <img className="each-slide" src={Snow} alt="dog in snow"/>
+            <img className="each-slide" src={Frisbee} alt="dog catching frisbee"/>
+            <img className="each-slide" src={GermanShepard} alt="german shepard"/>
+            <img className="each-slide" src={Husky} alt="husky dog"/>
+            <img className="each-slide" src={Running} alt="running dogs"/>        
+            <img className="each-slide" src={TugOWar} alt="dogs playing tug o war"/>
         </Slide>
       </div>
     )
