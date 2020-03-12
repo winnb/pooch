@@ -545,9 +545,9 @@ closeError() { document.getElementById("error-message").style.display = "none"; 
           </div>
           <div id="delete-button-row" className="collapse"><button type="submit" className="btn btn-danger mt-8" onClick={this.openDeletePopup}>Delete Profile</button></div>
           <div className="fixed-top" id="error-message">
-                    <div>Image size too large</div>
-                    <button className="my-2 mr-4 btn-danger popup-button" onClick={this.closeError}>Close</button>
-                </div>
+            <div>Image size too large</div>
+            <button className="my-2 mr-4 btn-danger popup-button" onClick={this.closeError}>Close</button>
+          </div>
           </Fade>
       </div>
     ); 

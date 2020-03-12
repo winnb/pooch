@@ -27,7 +27,7 @@ class NavBarLoggedOut extends React.Component {
         </div>
         <div className="pooch-navbar-item fixed-top" id="new-tip">New to Pooch? Start here <b>↗</b></div>
         <nav className="navbar navbar-expand-lg fixed-top py-5">
-          <a className="navbar-brand pooch-brand ml-2" href="/">
+          <a className="pooch-brand" href="/">
             POOCH
           </a>
           <button

@@ -19,6 +19,7 @@ class MeetupForm extends React.Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.updateSearch = this.updateSearch.bind(this);
   }
 
   handleChange(e) {
@@ -27,8 +28,13 @@ class MeetupForm extends React.Component {
 
   updateSearch(e) { this.setState({search: e.target.value.substr(0,50) }); }
 
-  componentDidUpdate() {
+  componentDidMount() {
+    document.getElementById("error-message").style.display = "none";
     document.getElementById("loader").style.display = "block";
+    document.getElementById("add-meetup-button").style.display = "none";
+  }
+
+  componentDidUpdate() {
     document.getElementById("bubble-home").innerHTML = null; // Clear old data before updating
     
     // Get meetups from Firebase
@@ -43,14 +49,14 @@ class MeetupForm extends React.Component {
     function renderMeetup(doc) {
       // Bubble render
       var newBox = document.createElement("div");
-      newBox.className = "meetup-box row";
-      newBox.addEventListener("click", ()=>{viewMeetup(doc.data().date, doc.data().time, doc.data().address)});
+      newBox.className = "meetup-box row mx-3";
+      //newBox.addEventListener("click", ()=>{viewMeetup(doc.data().date, doc.data().time, doc.data().address)});
       var leftCol = document.createElement("div");
       leftCol.className = "box-left-col";
       newBox.appendChild(leftCol);
       // Left column
       var newPic = document.createElement("img");
-      newPic.className = "profile-pic";
+      newPic.className = "box-meetup-pic";
       newPic.src = doc.data().pic;
       newPic.alt = "Meetup Picture";
       leftCol.appendChild(newPic);
@@ -113,11 +119,41 @@ class MeetupForm extends React.Component {
       if (matchSearch === true)
         document.getElementById("bubble-home").appendChild(newBox);
       document.getElementById("loader").style.display = "none";
+      document.getElementById("add-meetup-button").style.display = "block";
     }
     
-    function viewMeetup(date, time, address) {
-      
+    function viewMeetup(date, time, address) { 
     }
+  }
+
+  submitMeetup() {
+      Fire.firestore().collection("meetups").where('email', '==', Fire.auth().currentUser.email)
+      .where("address", "==", document.getElementById("new-meetup-address").value)
+      .where("date", "==", document.getElementById("new-meetup-date").value)
+      .where("time", "==", document.getElementById("new-meetup-time").value)
+      .get().then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+          doc.ref.delete();
+        });
+      });
+      setTimeout(() => {
+        Fire.firestore().collection("meetups").add({
+          email: Fire.auth().currentUser.email,
+          pic: document.getElementById("new-meetup-pic").src,
+          address: document.getElementById("new-meetup-address").value,
+          city: document.getElementById("new-meetup-city").value,
+          zipcode: document.getElementById("new-meetup-zipcode").value,
+          state: document.getElementById("new-meetup-state").value.toUpperCase(),
+          date: document.getElementById("new-meetup-date").value,
+          time: document.getElementById("new-meetup-time").value
+      }).catch(error => {
+      document.getElementById("error-message").style.display = "block";
+    });
+    }, 1000);
+      setTimeout(() => {
+        if (document.getElementById("error-message").style.display !== "block")
+          window.location.reload();
+      }, 2000);
   }
 
   previewPic(event) {
@@ -133,10 +169,11 @@ class MeetupForm extends React.Component {
 
   closeNewMeetup() { document.getElementById("meetup-popup").className = "collapse" }
 
+  closeError() { document.getElementById("error-message").style.display = "none" }
+
   render() {
     return (
       <div className="mt-7 mx-6">
-        <div id="loader" className="mb-4"><Loader type="ThreeDots" color="black" height={75} width={75}/></div>
         <div className="row">
           <input id="meetup-search" placeholder="Search..." maxLength="50" onChange={this.updateSearch} value={this.state.search}></input>
           <select id="meetup-search-category" onChange={this.handleChange}>
@@ -146,11 +183,11 @@ class MeetupForm extends React.Component {
           </select>
         </div>
         <div className="pooch-title my-2">Dog Meetups</div>
-        <div id="add-meetup-button" onClick={this.openNewMeetup}>+</div>
+        <div id="loader" className="mb-4"><Loader type="ThreeDots" color="black" height={75} width={75}/></div>
         <div id="bubble-home" className="row"></div>
+        <div className="pooch-navbar-item mb-4" id="add-meetup-button" onClick={this.openNewMeetup}>Add Meetup</div>
 
         <div className="collapse" id="meetup-popup">
-          <div className="pooch-navbar-item my-2" style={{fontSize: "115%"}}>Create New Meetup</div>
           <div className="row">
             <div className="box-left-col">
               <img className="meetup-pic" id="new-meetup-pic" src={DogPark} alt="New Meetup Picture"/>
@@ -167,6 +204,10 @@ class MeetupForm extends React.Component {
           </div>
           <button id="submit-meetup" className="btn my-2" onClick={this.submitMeetup}>Submit Meetup</button>
           <button type="submit" className="btn btn-danger" id="close-meetup-button" onClick={this.closeNewMeetup}>X</button>
+        </div>
+        <div className="fixed-top" id="error-message">
+          <div>Image size too large</div>
+          <button className="m2-3 mr-4 btn-danger popup-button" onClick={this.closeError}>Close</button>
         </div>
       </div>
     );

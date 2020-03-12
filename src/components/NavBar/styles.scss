@@ -4,10 +4,12 @@
 }
 
 #profile-pic {
-    height: 75%;
-    //max-width: 175px;
-    transform: scale(1);
-    border-radius: 100%;
+  position: absolute;
+  top: 10%;
+  left: 2%;
+  max-height: 75%;
+  transform: scale(1);
+  border-radius: 100%;
   }
 
   #profile-pic:hover {
@@ -41,13 +43,12 @@
   transition-duration: 0.1s;
 }
 
-#brand {
+#pooch {
+  margin-left: 10%;
+  margin-right: 3%;
   width: 10%;
+  border-bottom-style: hidden;
 }
-
-  .navbar-brand {
-    border-bottom-style: hidden;
-  }
 
   .your-pets {
     border-bottom-color: rgb(255, 195, 117);

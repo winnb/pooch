@@ -117,10 +117,9 @@ newDog() {
 }
 
 updateDog() {
-  
-  var query = Fire.firestore().collection("pets").where('email', '==', Fire.auth().currentUser.email)
-  .where("name", "==", document.getElementById("database-dog-name").value);
-  query.get().then(function(querySnapshot) {
+  Fire.firestore().collection("pets").where('email', '==', Fire.auth().currentUser.email)
+  .where("name", "==", document.getElementById("database-dog-name").value)
+  .get().then(function(querySnapshot) {
     querySnapshot.forEach(function(doc) {
       doc.ref.delete();
     });

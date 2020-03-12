@@ -112,12 +112,7 @@ class NavBar extends React.Component {
         </div>
         <nav className="navbar navbar-expand-lg fixed-top py-5" >
           <img className="ml-2" id="profile-pic" src={GenericProfile} alt="Profile" onClick={this.goToProfile} onMouseEnter={this.openDropdown}/>
-          
-          <div id="brand">
-            <a className="navbar-brand pooch-brand"  href="/">
-            POOCH
-            </a>
-          </div>
+          <a className="pooch-brand" id="pooch"  href="/">POOCH</a>
           <div> 
             <div className="row pooch-navbar-item" id="nav-pages">
               <div className="nav-item">
