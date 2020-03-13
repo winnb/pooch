@@ -277,14 +277,16 @@ class MeetupForm extends React.Component {
     return (
       <div className="mt-7 mx-6">
         <div className="row">
-          <input className="search-bar" id="meetup-search" placeholder="Search..." maxLength="50" onChange={this.updateSearch} value={this.state.search}></input>
-          <select className="search-dropdown" id="meetup-search-category" onChange={this.handleChange}>
+          <div style={{paddingTop: "0.5%"}}>From</div><input className="date-input" id="start-date" type="date" min="2020-01-01" max="2030-01-01"/>
+          <div style={{paddingTop: "0.5%"}}>To</div><input className="date-input" id="end-date" type="date" min="document.getElementById('start-date').value" max="2030-01-01"/>
+          <input className="meetup-search-bar" id="meetup-search" placeholder="Search..." maxLength="50" onChange={this.updateSearch} value={this.state.search}></input>
+          <select className="meetup-search-dropdown" id="meetup-search-category" onChange={this.handleChange}>
             <option value="city">City</option>
             <option value="zipcode">Zipcode</option>
             <option value="address">Address</option>
           </select>
         </div>
-        <div className="pooch-title my-2">Dog Meetups</div>
+        <div className="pooch-title my-4">Dog Meetups</div>
         <div id="loader" className="mb-4"><Loader type="ThreeDots" color="black" height={75} width={75}/></div>
         <div id="bubble-home" className="row"></div>
         <button className="pooch-navbar-item mb-4" id="add-meetup-button" onClick={this.openNewMeetup}>Add Meetup</button>

@@ -36,7 +36,7 @@
 }
 
 .search-bar {
-  margin-bottom: 2%;
+  //margin-bottom: 2%;
   margin-left: 20%;
   padding-left: 1%;
   width: 50%;
@@ -106,10 +106,12 @@
 
 .popup-feature {
   transform: scale(1);
-   width: 100%;
+   width: 20vh;
   border-radius: 15px;
-  padding: 0%;
-  margin: 0%;
+  margin-top: 1vh;
+  margin-left: 1vh;
+  margin-right: 1vh;
+  margin-bottom: 1vh;
 }
 
 #close-popup-button {

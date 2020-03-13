@@ -104,3 +104,34 @@
   left: 72.5%;
   top: 22%;
 }
+
+.date-input {
+  min-height: 1vw;
+  font-weight: 500;
+  border-radius: 10px;
+  margin-left: 0.5%;
+  margin-right: 2%;
+  font-size: 70%;
+}
+
+.meetup-search-bar {
+  margin-left: 2%;
+  padding-left: 1%;
+  width: 50%;
+  border-radius: 10px;
+  border-style: outset;
+  border-width: medium;
+  border-color: rgb(230, 230, 230);
+}
+
+.meetup-search-dropdown {
+  width: 8%;
+  height: 75%;
+  padding-left: 0.5%;
+  padding-right: 0.5%;
+  margin-left: 2%;
+  border-radius: 10px;
+  border-style: outset;
+  border-width: medium;
+  border-color: rgb(230, 230, 230);
+}

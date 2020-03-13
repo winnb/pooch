@@ -415,7 +415,7 @@ class WalkerForm extends React.Component {
             <option value="name">Name</option>
           </select>
         </div>
-        <div className="pooch-title mb-3">Dog Walkers</div>
+        <div className="pooch-title my-4">Dog Walkers</div>
         <div id="loader" className="mb-4"><Loader type="ThreeDots" color="black" height={75} width={75}/></div>
         <div id="bubble-home" className="row"></div>
 

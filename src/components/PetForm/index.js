@@ -239,7 +239,7 @@ deleteProfile() {
           <div className="mt-2" id="pet-loader"><Loader type="TailSpin" color="black" height={75} width={75}/></div>
         </div>
         <div className="dog-icon" id="add-dog-button" onClick={this.toggleNewProfile}>+</div>
-        <div className="pooch-navbar-item" id="pet-welcome-arrow">Add your dogs <b>⤣</b></div>
+        <div className="pooch-navbar-item row" id="pet-welcome-arrow">Add your dogs <b>⤣</b></div>
         <div className="pooch-navbar-item" id="pet-welcome">Here you can manage all of your pets' profiles</div>
         <div className="pooch-navbar-item collapse" id="open-dog-profile-tip"><b>	↖</b> View dog profile</div>
         <div id="new-dog-profile" className="collapse">
