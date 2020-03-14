@@ -1,6 +1,6 @@
 
  .paragraph-pic {
-  transform: scale(0.75);
+  width: 28vw;
  }
 
   .logo {
@@ -29,12 +29,11 @@
 
   .paragraph {
     line-height: 1.4;
-    margin-top: 5%;
   }
 
-  // .home-row {
-  //   background-color: gray;
-  // }
+  .home-row {
+    margin-top: 3vh;
+  }
 
   #overlay {
     display: block;

@@ -1,17 +1,7 @@
-span {
-  width: 65%;
-}
-
-#dog-icon-row {
-  width: 75%;
-  margin-left: 0%;
-}
-
 .dog-icon {
   transform: scale(1);
   border-radius: 100%;
-  width: 100px;
-  height: 100px;
+  width: 6vw;
   margin-right: 5%;
   border-style: hidden;
   background-color: lightgray;
@@ -60,9 +50,17 @@ span {
 }
 
 #add-dog-button {
-  padding-top: 32px;
-  font-weight: 1000;
-  font-size: 60px;
+  transform: scale(0.75);
+  border-radius: 100%;
+  width: 6vw;
+  margin-right: 5%;
+  border-style: hidden;
+  background-color: lightgray;
+}
+
+#add-dog-button:hover {
+  transform: scale(0.8);
+  transition-duration: 0.33s;
 }
 
 #pet-welcome-arrow {

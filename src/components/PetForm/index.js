@@ -3,10 +3,10 @@ import Fire from "../../config/Fire.js"; // Firebase
 import "./styles.scss"; // Styles
 import Loader from "react-loader-spinner"; // Animation
 // Graphics
-import DogBust from "./dog-bust.png";
 import Gray1 from "./graydog1.png";
 import Gray2 from "./graydog2.png";
 import Gray3 from "./graydog3.png";
+import AddButton from "./add-button.png";
 
 class PetForm extends React.Component {
 
@@ -238,8 +238,9 @@ deleteProfile() {
           <img className="dog-icon gray" alt="dog-icon" src={Gray3}/>
           <div className="mt-2" id="pet-loader"><Loader type="TailSpin" color="black" height={75} width={75}/></div>
         </div>
-        <div className="dog-icon" id="add-dog-button" onClick={this.toggleNewProfile}>+</div>
-        <div className="pooch-navbar-item row" id="pet-welcome-arrow">Add your dogs <b>⤣</b></div>
+        {/* <div className="dog-icon" id="add-dog-button" onClick={this.toggleNewProfile}>+</div> */}
+        <img className="row" id="add-dog-button" alt="add-dog-button" src={AddButton} onClick={this.toggleNewProfile}/>
+        <div className="pooch-navbar-item row" id="pet-welcome-arrow" style={{height: "7vw"}}>Add your dogs <b>⤣</b></div>
         <div className="pooch-navbar-item" id="pet-welcome">Here you can manage all of your pets' profiles</div>
         <div className="pooch-navbar-item collapse" id="open-dog-profile-tip"><b>	↖</b> View dog profile</div>
         <div id="new-dog-profile" className="collapse">
@@ -565,7 +566,7 @@ deleteProfile() {
           </div>
 
           <div id="database-profile" className="collapse">
-              <div className="mb-3"><img className="dog-pic" id="database-dog-profile-pic" src={DogBust} alt="Profile"/></div>
+              <div className="mb-3"><img className="dog-pic" id="database-dog-profile-pic" alt="Profile"/></div>
               <input type="file" id="database-dog-input" onChange={this.previewDatabaseDogPic}/>
               <div className="col">
               <div className="my-4 row">
