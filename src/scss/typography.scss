@@ -10,18 +10,19 @@ $cherry-swash: 'Cherry Swash', cursive;
 
 .pooch-brand {
   font-family: $oswald;
-  font-size: calc(80px);
+  font-size: 4vw;
 }
 
 .pooch-navbar-item {
   font-family: $cherry-swash;
-  font-size: calc(25px);
+  //font-size: 1.2vw;
 }
 
 .pooch-title {
   font-family: $cherry-swash;
-  font-size: calc(48px);
+  font-size: 2.5vw;
   font-weight: 500;
+  margin: 1vw;
 }
 
 .pooch-subtitle {

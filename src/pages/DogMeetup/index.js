@@ -1,19 +1,11 @@
 import React from "react";
-import MeetupForm from "../../components/MeetupForm";
-//import { Link } from "@reach/router";
-
-// Styles
-import "./styles.scss";
+import MeetupForm from "../../components/MeetupForm"; // Inner component
+import Fade from "react-reveal"; // Animation
 
 class DogMeetup extends React.Component {
-
-  handleChange(e) {
-  }
   render() {
     return (
-      <div>
-        <MeetupForm />
-      </div>
+        <Fade> <MeetupForm /> </Fade>
     );
   }
 }

@@ -45,7 +45,7 @@ class SignUpForm extends React.Component {
       setTimeout(() => {
         fire.auth().onAuthStateChanged(user => {
             if (user) {
-                document.getElementById("login-outer").className = "collapse";
+                document.getElementById("login-box").className = "collapse";
                 window.location.replace("/profile"); 
             } else {
                 console.log("Error: User could not be logged in due to bad credentials");
@@ -60,33 +60,21 @@ class SignUpForm extends React.Component {
   }
 
   closeSignup() {
-    document.getElementById("signup-outer").className = "collapse"
+    document.getElementById("signup-box").className = "collapse"
   }
 
   render() {
     return (
-      <div id="signup-outer" className="collapse">
-          <div className="col profile-box py-4">
-              <div id="signup-form">
-                <span className="trak_body row my-2">
-                    <div className="pooch-navbar-item">Create an Account</div>
-                </span>
-                <span className="trak_body row my-2">
-                    <input name="email" id="signup-email" type="text" className="form-control" placeholder="Email" value={this.state.email} onChange={this.handleChange}/>
-                </span>
-                <span className="trak_body row my-2">
-                    <input name="password" id="signup-password" type="password" className="form-control" placeholder="Password" maxlength="50" value={this.state.password} onChange={this.handleChange}/>
-                </span>
-                <span className="trak_body row my-2">
-                    <input name="confirmPassword" id="signup-password-confirm" type="password" className="form-control" placeholder="Confirm Password" maxlength="50" value={this.state.confirmPassword} onChange={this.handleChange}/>
-                </span>
-              </div>
-               <button type="submit" onClick={this.signup} className="btn btn-secondary my-2">Create Account</button>
-               <div className="trak_body-small my-2">
-                  <button id="close-button" className="mx-3" onClick={this.closeSignup}>Not what you wanted? Click here to close</button>
-                  <div id="error-message-signup" className="trak_body-small"></div>
-               </div>
+      <div id="signup-box" className="collapse">
+          <div className="pooch-navbar-item login-title">Create an Account</div>
+          <input name="email" id="signup-email" type="text" className="login-input" placeholder="Email" maxlength="30" value={this.state.email} onChange={this.handleChange}/>
+          <input name="password" id="signup-password" type="password" className="login-input" placeholder="Password" maxlength="30" value={this.state.password} onChange={this.handleChange}/>
+          <input name="confirmPassword" id="signup-password-confirm" type="password" className="login-input" placeholder="Confirm Password" maxlength="30" value={this.state.confirmPassword} onChange={this.handleChange}/>
+          <div className="row login-button-row">
+            <div id="signup-button" onClick={this.signup}>Create Account</div>
           </div>
+          <div id="close-button" onClick={this.closeSignup}>Not what you wanted? Click here to close</div>
+          <div id="error-message-signup"></div>
       </div>
     );
   }

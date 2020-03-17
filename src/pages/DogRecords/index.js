@@ -1,12 +1,11 @@
 import React from "react";
-import RecordForm from "../../components/RecordForm";
+import RecordForm from "../../components/RecordForm"; // Inner component
+import Fade from "react-reveal"; // Animation
 
 class DogRecords extends React.Component {
   render(){
     return (
-      <div>
-        <RecordForm />
-      </div>
+        <Fade> <RecordForm /> </Fade>
     );
   }
 }

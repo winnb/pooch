@@ -1,10 +1,6 @@
-// React
 import React from "react";
 
 //Graphics, Styles, Animation
-// import Paw from "./media/paw-icon.png";
-// import Walking from "./media/walking-icon.png";
-// import Doghouse from "./media/doghouse-icon.png";
 import "./styles.scss";
 import Fade from "react-reveal";
 import Slide from "react-reveal";

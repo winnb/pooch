@@ -12,12 +12,6 @@
     margin-bottom: 1%;
 }
 
-// #record:hover {
-//     transform: scale(3);
-//     transition-duration: 0.75s;
-//     z-index: 100;
-// }
-
 .record-preview {
     max-width: 20vh;
     transform: scale(1);
@@ -43,7 +37,7 @@
     padding-bottom: 1%;
     margin-left: 30%;
     margin-right: 30%;
-    height: 15vh;
+    height: 13vh;
     min-height: 150px;
     background-color: rgb(140, 140, 140);
     border-radius: 10px;
@@ -68,11 +62,21 @@
     max-width: 80vw;
     position: absolute;
     width: 80vw;
-    margin-top: 10vh;
+    margin-top: 3vh;
     left: -40vh;
     border-radius: 1vw;
     border-width: 3vw;
     border-style: solid;
     border-color: rgb(215, 215, 215);
     margin-bottom: 5vh;
+  }
+
+  #upload-step1 {
+    margin-left: 22vw;
+    margin-bottom: 1vh;
+  }
+
+  #upload-step2 {
+    margin-left: 12vw;
+    margin-top: 1vh;
   }

@@ -4,11 +4,7 @@ import "./styles.scss"; // Styles
 // Animation
 import Loader from "react-loader-spinner";
 import "../WalkerForm/styles.scss";
-
-import Pic1 from "./1.png";
-import Pic2 from "./2.jpg";
-import Pic3 from "./3.png";
-import Pic4 from "./4.png";
+import Close from "../MeetupForm/close.jpg";
 
 class WalkerForm extends React.Component {
   constructor(props) {
@@ -58,7 +54,7 @@ class WalkerForm extends React.Component {
       var picHolder = document.createElement("div");
       picHolder.className = "mb-3";
       var newPic = document.createElement("img");
-      newPic.className = "profile-pic";
+      newPic.className = "box-pic";
       newPic.src = doc.data().pic;
       newPic.alt = "Profile Picture";
       picHolder.appendChild(newPic);
@@ -71,6 +67,7 @@ class WalkerForm extends React.Component {
       ratingRow.className = "my-2";
       newCol.appendChild(ratingRow);
       var rating = document.createElement("div");
+      rating.className = "box-rating";
       var ratingSum = 0;
       var ratingCount = 0;
       Fire.firestore().collection("reviews")
@@ -415,7 +412,7 @@ class WalkerForm extends React.Component {
             <option value="name">Name</option>
           </select>
         </div>
-        <div className="pooch-title my-4">Dog Walkers</div>
+        <div className="pooch-title">Dog Walkers</div>
         <div id="loader" className="mb-4"><Loader type="ThreeDots" color="black" height={75} width={75}/></div>
         <div id="bubble-home" className="row"></div>
 
@@ -432,18 +429,15 @@ class WalkerForm extends React.Component {
               <div className="my-3 row"><div className="popup-input" id="popup-walker-city"/></div>
               <div className="my-3 row"><div className="popup-input" id="popup-walker-hourly-rate"/></div>
               <div className="col" id="popup-walker-images">
-                <img className="popup-feature row collapse" id="popup-walker-feature1-pic" src={Pic1} alt="Featured Picture"/>
-                <img className="popup-feature row collapse" id="popup-walker-feature2-pic" src={Pic2} alt="Featured Picture"/>
-                <img className="popup-feature row collapse" id="popup-walker-feature3-pic" src={Pic3} alt="Featured Picture"/>
-                <img className="popup-feature row collapse" id="popup-walker-feature4-pic" src={Pic4} alt="Featured Picture"/>
+                <img className="popup-feature row collapse" id="popup-walker-feature1-pic" alt="Featured Picture"/>
+                <img className="popup-feature row collapse" id="popup-walker-feature2-pic" alt="Featured Picture"/>
+                <img className="popup-feature row collapse" id="popup-walker-feature3-pic" alt="Featured Picture"/>
+                <img className="popup-feature row collapse" id="popup-walker-feature4-pic" alt="Featured Picture"/>
               </div>
           </div>
-
-          <div className="col my-4">
-            <button type="submit" className="btn btn-danger" id="close-popup-button" onClick={this.closeProfile}>X</button>
-
-            <div className="col" id="popup-walker-reviews">
-              <div className="row justify-content-center my-2">
+          <div className="col" id="popup-walker-reviews">
+          <img src={Close} className="pull-right" id="close-popup-button" onClick={this.closeProfile}/>
+              <div className="popup-new-rating row justify-content-center mt-5 mb-2">
                 <div className="empty-stars" id="star1" onClick={this.fillStar}>☆</div>
                 <div className="empty-stars" id="star2" onClick={this.fillStar}>☆</div>
                 <div className="empty-stars" id="star3" onClick={this.fillStar}>☆</div>
@@ -453,9 +447,7 @@ class WalkerForm extends React.Component {
               <textarea className="mt-2 mb-1" id="new-review" placeholder="Write a review..."  maxLength="256"></textarea>
               <button id="submit-review" className="btn mb-3" onClick={this.submitReview}>Submit Review</button>
               <div id="review-col"></div>
-            </div>
           </div>
-          
         </div>
           
         <div className="popup-error collapse" id="no-rating-error">

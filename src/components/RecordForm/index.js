@@ -32,6 +32,10 @@ class RecordForm extends React.Component{
             document.getElementById("delete-preview").src = pic;
             document.getElementById("delete-preview").docID = id;
             document.getElementsByClassName("page-footer")[0].className = "page-footer font-small trak_body_small text-left pt-4 px-3 py-3 collapse";
+            document.getElementById("upload-box").className = "collapse";
+            document.getElementById("record-row").className = "collapse";
+            document.getElementById("upload-step1").className = "collapse";
+            document.getElementById("upload-step2").className = "collapse";
           }
 
           function toggleExpand(pic) {
@@ -100,7 +104,11 @@ class RecordForm extends React.Component{
 
     closePopup() { 
         document.getElementById("delete-record-popup").className = "fixed-top collapse";
-        document.getElementsByClassName("page-footer")[0].className = "page-footer font-small trak_body_small text-left pt-4 px-3 py-3 collapse.show"; 
+        document.getElementsByClassName("page-footer")[0].className = "page-footer font-small trak_body_small text-left pt-4 px-3 py-3 collapse.show";
+        document.getElementById("upload-box").className = "collapse.show";
+        document.getElementById("record-row").className = "collapse.show";  
+        document.getElementById("upload-step1").className = "collapse.show";
+        document.getElementById("upload-step2").className = "collapse.show";
     }
 
     closeError() { document.getElementById("error-message").style.display = "none"; }
@@ -108,21 +116,21 @@ class RecordForm extends React.Component{
     render(){
         return( 
             <div className="mt-7 mb-8">
-                <div className="pooch-navbar-item mb-4 ml-8" id="upload-step1"><b>↙</b> First, select the document you want</div>
+                <div className="pooch-navbar-item" id="upload-step1"><b>↙</b> First, select the document you want</div>
                 <div id="upload-box">
                     <input className="my-2" type="file" id="file-input" onChange={this.filePreview} />
                     <div className="my-2"><img className="record-preview" id="preview"/></div>
                     <button className="my-2" id="file-upload-button" onClick={this.fileUpload}>Upload Dog Record</button>
                     <div id="upload-loader" className="mt-4"><Loader type="TailSpin" color="black" height={75} width={75}/></div>
                 </div>
-                <div className="pooch-navbar-item mt-4 ml-7" id="upload-step2"><b>↖</b> Then, click upload</div>
+                <div className="pooch-navbar-item" id="upload-step2"><b>↖</b> Then, click upload</div>
                 <div id="loader" className="mt-4"><Loader type="TailSpin" color="black" height={75} width={75}/></div>
                 <div className="mt-3" id="record-row"></div>
 
                 <div id="delete-record-popup" className="fixed-top collapse">
-                    <div className="pooch-navbar-item">What would you like to do with the current document?</div>
-                    <div className="my-2"><img className="record-preview" id="delete-preview"/></div>
-                    <div><button className="my-2 mr-4 btn-danger popup-button" onClick={this.deleteRecord}>Delete</button><button className="my-2 ml-4 btn-primary popup-button" onClick={this.closePopup}>Minimize</button></div>
+                    <div className="pooch-navbar-item my-2">What would you like to do with the current document?</div>
+                    <div><button className="my-2 mr-5 btn-danger popup-button" onClick={this.deleteRecord}>Delete</button><button className="my-2 ml-5 btn-primary popup-button" onClick={this.closePopup}>Minimize</button></div>
+                    <div><img className="record-preview" id="delete-preview"/></div>
                 </div>
                 <div className="fixed-top" id="error-message">
                     <div>Image size too large</div>

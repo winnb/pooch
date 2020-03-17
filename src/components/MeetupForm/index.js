@@ -4,6 +4,7 @@ import "./styles.scss"; // Styles
 import Loader from "react-loader-spinner"; // Loader
 import Fade from "react-reveal"; // Animation
 import DogPark from "./dogpark.png"
+import Close from "./close.jpg";
 
 class MeetupForm extends React.Component {
   constructor(props) {
@@ -35,7 +36,7 @@ class MeetupForm extends React.Component {
 
   componentDidUpdate() {
     document.getElementById("loader").style.display = "block";
-    document.getElementById("bubble-home").innerHTML = null; // Clear old data before updating
+    document.getElementById("meetup-bubble-home").innerHTML = null; // Clear old data before updating
     
     // Get meetups from Firebase
     Fire.firestore().collection("meetups")
@@ -57,6 +58,9 @@ class MeetupForm extends React.Component {
       // Left column
       var newPic = document.createElement("img");
       newPic.className = "box-meetup-pic";
+      newPic.style.left = "0%";
+      newPic.style.marginTop = (leftCol.scrollHeight/4 - newPic.height/2).toString()+"px";
+      //newPic.style.top = min(25,;
       newPic.src = doc.data().pic;
       newPic.alt = "Meetup Picture";
       leftCol.appendChild(newPic);
@@ -137,7 +141,7 @@ class MeetupForm extends React.Component {
 
       var buttonRow = document.createElement("div");
       buttonRow.style.width = "100%";
-      buttonRow.style.fontSize = "50%";
+      buttonRow.style.fontSize = ".7vw";
       buttonRow.style.marginTop = "2%";
       newBox.appendChild(buttonRow);
 
@@ -193,9 +197,9 @@ class MeetupForm extends React.Component {
       }
       setTimeout(() => {
         // Only add bubble if it matches search
-        //console.log(document.getElementById("bubble-home").childNodes[document.getElementById("bubble-home").childNodes.length-1]);
+        //console.log(document.getElementById("meetup-bubble-home").childNodes[document.getElementById("meetup-bubble-home").childNodes.length-1]);
         if (matchSearch === true)
-          document.getElementById("bubble-home").appendChild(newBox);
+          document.getElementById("meetup-bubble-home").appendChild(newBox);
         document.getElementById("loader").style.display = "none";
         document.getElementById("add-meetup-button").style.display = "block";
       }, 250);
@@ -276,7 +280,7 @@ class MeetupForm extends React.Component {
   render() {
     return (
       <div className="mt-7 mx-6">
-        <div className="row">
+        <div className="row meetup-search-row">
           <div style={{paddingTop: "0.5%"}}>From</div><input className="date-input" id="start-date" type="date" min="2020-01-01" max="2030-01-01"/>
           <div style={{paddingTop: "0.5%"}}>To</div><input className="date-input" id="end-date" type="date" min="document.getElementById('start-date').value" max="2030-01-01"/>
           <input className="meetup-search-bar" id="meetup-search" placeholder="Search..." maxLength="50" onChange={this.updateSearch} value={this.state.search}></input>
@@ -286,18 +290,18 @@ class MeetupForm extends React.Component {
             <option value="address">Address</option>
           </select>
         </div>
-        <div className="pooch-title my-4">Dog Meetups</div>
+        <div className="pooch-title">Dog Meetups</div>
         <div id="loader" className="mb-4"><Loader type="ThreeDots" color="black" height={75} width={75}/></div>
-        <div id="bubble-home" className="row"></div>
+        <div id="meetup-bubble-home" className="row"></div>
         <button className="pooch-navbar-item mb-4" id="add-meetup-button" onClick={this.openNewMeetup}>Add Meetup</button>
 
         <div className="collapse" id="meetup-popup">
           <div className="row">
             <div className="box-left-col">
-              <img className="popup-meetup-pic" id="new-meetup-pic" src={DogPark} alt="New Meetup Picture"/>
-              <input type="file" id="new-meetup-input" onChange={this.previewPic}/>
+              <img className="popup-meetup-pic" id="new-meetup-pic" src={DogPark} alt="New Meetup Picture"/> 
             </div>
             <div className="box-right-col">
+              <img src={Close} className="pull-right" id="close-popup-button" onClick={this.closeNewMeetup}/>
               <input className="box-row" id="new-meetup-address" placeholder="Address" maxLength="32"/>
               <input className="box-row" id="new-meetup-city" placeholder="City" maxLength="32"/>
               <input className="box-row" id="new-meetup-state" placeholder="State" maxLength="2"/>
@@ -306,8 +310,8 @@ class MeetupForm extends React.Component {
               <input className="box-row" id="new-meetup-time" type="time" min="5:00" max="20:00"/>
             </div>
           </div>
+          <input className="row" type="file" id="new-meetup-input" onChange={this.previewPic}/>
           <button id="submit-meetup" className="btn my-2" onClick={this.submitMeetup}>Submit Meetup</button>
-          <button type="submit" className="btn btn-danger" id="close-meetup-button" onClick={this.closeNewMeetup}>X</button>
         </div>
         <div className="fixed-top" id="error-message">
           <div>Image size too large</div>
@@ -319,3 +323,4 @@ class MeetupForm extends React.Component {
 }
 
 export default MeetupForm;
+ 

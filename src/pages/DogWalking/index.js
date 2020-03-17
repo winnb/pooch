@@ -5,9 +5,7 @@ import Fade from "react-reveal"; // Animation
 class DogWalking extends React.Component {
   render() {
     return (
-      <div className="mt-5 mx-6">
         <Fade> <WalkerForm /> </Fade>
-      </div>
     );
   }
 }

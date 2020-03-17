@@ -116,15 +116,15 @@ class NavBar extends React.Component {
 
   render() {
     return (
-      <div>
+      <div onMouseLeave={this.collapseDropdown}>
         <MessageTab/>
-        <div className="collapse fixed-top" id="profile-dropdown" onMouseLeave={this.collapseDropdown}>
-            <div className="pooch-navbar-item my-2 ml-4 row" id="dropdown-row"><button id="dropdown-button" onClick={this.goToProfile}>📷 Profile</button></div>
-            <div className="pooch-navbar-item my-2 ml-4 row" id="dropdown-row"><button id="dropdown-button" onClick={this.openMessages}>✉️ Messages</button></div>
-            <div className="pooch-navbar-item my-2 ml-4 row" id="dropdown-row"><button id="dropdown-button" onClick={this.logout}>🔌 Logout</button></div>
+        <div className="collapse fixed-top" id="profile-dropdown" >
+            <div className="pooch-navbar-item row" id="dropdown-button" onClick={this.goToProfile}>📷 Profile</div>
+            <div className="pooch-navbar-item row" id="dropdown-button" onClick={this.openMessages}>✉️ Messages</div>
+            <div className="pooch-navbar-item row" id="dropdown-button" onClick={this.logout}>🔌 Logout</div>
         </div>
-        <nav className="navbar navbar-expand-lg fixed-top py-5" >
-          <img id="profile-pic" src={GenericProfile} alt="Profile" onClick={this.goToProfile} onMouseEnter={this.openDropdown}/>
+        <nav className="nav-bar row fixed-top py-5" >
+          <div id="nav-bar-pic"><img id="profile-pic" src={GenericProfile} alt="Profile" onClick={this.goToProfile} onMouseEnter={this.openDropdown}/></div>
           <a className="pooch-brand" id="pooch"  href="/">POOCH</a>
           <div className="pooch-navbar-item row" id="nav-pages">
                 <a classname="col" id="your-pets" href="/your-pets">Your Pets</a>

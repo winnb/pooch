@@ -5,9 +5,7 @@ import Fade from "react-reveal"; // Animation
 class DogBoarding extends React.Component {
   render() {
     return (
-      <div className="mt-5 mx-6">
         <Fade> <BoardingForm /> </Fade>
-      </div>
     );
   }
 }

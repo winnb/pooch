@@ -1,18 +1,13 @@
-// React
 import React from "react";
+import LoginForm from "../../components/LoginForm"; // Inner component
+import Fade from "react-reveal"; // Animation
 
-// Components
-import LoginForm from "../../components/LoginForm";
-
-// Animations
-import Flip from "react-reveal";
-
-const Login = () => {
-  return (
-    <Flip right>
-        <LoginForm/>
-    </Flip>
-  );
-};
+class Login extends React.Component {
+  render() {
+    return (
+    <Fade> <LoginForm/> </Fade>
+    );
+  }
+}
 
 export default Login;

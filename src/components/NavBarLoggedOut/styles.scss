@@ -6,14 +6,9 @@
     font-size: 100%;
   }
 
-
-  #dropdown-item {
-    background-color: #eeeeee;
-    border-style: hidden;
-  }
-
   #dropdown-item:hover {
     transform: scale(1.02);
     font-weight: 600;
     transition-duration: 0.1s;
+    cursor: pointer;
   }

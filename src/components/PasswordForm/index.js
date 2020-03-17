@@ -35,27 +35,19 @@ class PasswordForm extends React.Component {
   }
 
   closeChangePassword() {
-    document.getElementById("change-password-outer").className = "collapse"
+    document.getElementById("password-box").className = "collapse"
   }
 
   render() {
     return (
-      <div id="change-password-outer" className="collapse">
-          <div className="col profile-box py-4">
-              <div id="change-password-form">
-                <span className="trak_body row my-2">
-                    <div className="pooch-navbar-item">Recover Password with Email</div>
-                </span>
-                <span className="trak_body row my-2">
-                    <input name="email" id="change-password-email" type="text" className="form-control" placeholder="Email" value={this.state.email} onChange={this.handleChange}/>
-                </span>
-              </div>
-               <button type="submit" onClick={this.sendEmail} className="btn btn-secondary my-2">Send Email</button>
-               <div className="trak_body-small my-2">
-                  <button id="close-button" className="mx-3" onClick={this.closeChangePassword}>Not what you wanted? Click here to close</button>
-                  <div id="error-message-password" className="trak_body-small"></div>
-               </div>
+      <div id="password-box" className="collapse">
+          <div className="pooch-navbar-item login-title">Recover Password with Email</div>
+          <input name="email" id="change-password-email" type="text" className="login-input" placeholder="Email" value={this.state.email} onChange={this.handleChange}/>
+          <div className="row login-button-row">
+            <div id="email-button" onClick={this.sendEmail}>Send Email</div>
           </div>
+          <div id="close-button" onClick={this.closeChangePassword}>Not what you wanted? Click here to close</div>
+          <div id="error-message-password"></div>
       </div>
     ); 
   }

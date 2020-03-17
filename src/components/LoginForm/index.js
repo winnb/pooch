@@ -25,7 +25,7 @@ class LoginForm extends React.Component {
       setTimeout(() => {
         fire.auth().onAuthStateChanged(user => {
             if (user) {
-                document.getElementById("login-outer").className = "collapse";
+                document.getElementById("login-box").className = "collapse";
                 window.location.replace("/profile"); 
             } else {
                 console.log("Error: User could not be logged in due to bad credentials");
@@ -40,7 +40,7 @@ class LoginForm extends React.Component {
     setTimeout(() => {
         fire.auth().onAuthStateChanged(user => {
             if (user) {
-                document.getElementById("login-outer").className = "collapse";
+                document.getElementById("login-box").className = "collapse";
                 window.location.replace("/profile"); 
             } else {
                 console.log("Error: User could not be logged in due to bad credentials");
@@ -50,40 +50,28 @@ class LoginForm extends React.Component {
   }
 
   closeLogin() {
-    document.getElementById("login-outer").className = "collapse"
+    document.getElementById("login-box").className = "collapse"
   }
 
   resetPassword() {
-    document.getElementById("login-outer").className = "collapse";
-    document.getElementById("signup-outer").className = "collapse";
-    document.getElementById("change-password-outer").className = "collapse.show";
+    document.getElementById("login-box").className = "collapse";
+    document.getElementById("signup-box").className = "collapse";
+    document.getElementById("password-box").className = "collapse.show";
   }
 
   render() {
     return (
-      <div id="login-outer" className="collapse">
-          <div className="col profile-box py-4">
-              <div id="login-form">
-                <span className="trak_body row my-2">
-                    <div className="pooch-navbar-item">Login to your Account</div>
-                </span>
-                <span className="trak_body row my-2">
-                    <input id="login-email" type="text" className="form-control" placeholder="Email"/>
-                </span>
-                <span className="trak_body row my-2">
-                    <input id="login-password" type="password" className="form-control" placeholder="Password" maxlength="50"/>
-                </span>
-              </div>
-               <button type="submit" onClick={this.login} className="btn btn-secondary my-2 mx-2">Login</button>
-               <button type="submit" onClick={this.googleLogin} className="btn btn-danger my-2 mx-2">Login with Google</button>
-               <div className="col trak_body-small my-2"> 
-                  <button id="close-button" className="login-footer" onClick={this.resetPassword}>Forgot your password?</button>
-                </div>
-                <div className="col trak_body-small my-2"> 
-                  <button id="close-button" className="login-footer" onClick={this.closeLogin}>Not what you wanted? Click here to close</button>  
-               </div>
-               <div id="error-message-login" className="login-footer"></div>
+      <div id="login-box" className="collapse">
+          <div className="pooch-navbar-item login-title">Login to your Account</div>
+          <input id="login-email" type="text" className="login-input" placeholder="Email"/>
+          <input id="login-password" type="password" className="login-input" placeholder="Password" maxlength="50"/>
+          <div className="row login-button-row">
+            <div id="login-button" onClick={this.login}>Login</div>
+            <div id="google-button" onClick={this.googleLogin}>Login with Google</div> 
           </div>
+          <div id="close-button" onClick={this.resetPassword}>Forgot your password?</div>
+          <div id="close-button" onClick={this.closeLogin}>Not what you wanted? Click here to close</div>  
+          <div id="error-message-login"/>
       </div>
     );
   }

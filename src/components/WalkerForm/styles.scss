@@ -7,11 +7,12 @@
   margin-right: 1%;
   margin-bottom: 1%;
   border-radius: 25px;
-  width: 14.65%;
+  width: 325px;
   height: 50%;
   border-style: outset;
   border-width: medium;
   border-color: rgb(230, 230, 230);
+  font-size: 100%;
 }
 
 .walker-box:hover {
@@ -20,16 +21,31 @@
   transition-duration: 0.5s;
 }
 
+.box-pic {
+  width: 50%;
+  border-radius: 100%;
+  transform: scale(1);
+  border-style: solid;
+  border-width: thin;
+  border-color: rgb(200, 200, 200);
+}
+
+.box-rating {
+  font-size: 115%;
+}
+
 .box-row {
   background-color: white;
+  padding-top: 0.5%;
   padding-left: 2%;
   padding-right: 2%;
+  padding-bottom: 0.5%;
   margin-top: 1.5%;
   margin-bottom: 1.5%;
   border-radius: 10px;
   width: 100%;
-  font-size: 70%;
   font-weight: 500;
+  font-size: 90%;
   border-style: double;
   border-width: medium;
   border-color: rgb(230, 230, 230);
@@ -44,6 +60,7 @@
   border-style: outset;
   border-width: medium;
   border-color: rgb(230, 230, 230);
+  font-size: 1.5vw;
 }
 
 .search-dropdown {
@@ -57,6 +74,7 @@
   border-style: outset;
   border-width: medium;
   border-color: rgb(230, 230, 230);
+  font-size: 1.5vw;
 }
 
 #walker-popup {
@@ -85,8 +103,8 @@
   width: 80%;
   margin-bottom: 20%;
   transform: scale(1.5);
-  //background-color: rgb(150, 150, 150);
   border-radius: 10px;
+  font-size: 1.5vw;
 }
 
 .popup-input {
@@ -102,6 +120,7 @@
   border-style: double;
   border-width: medium;
   border-color: rgb(230, 230, 230);
+  font-size: 1.5vw;
 }
 
 .popup-feature {
@@ -114,22 +133,18 @@
   margin-bottom: 1vh;
 }
 
-#close-popup-button {
-  position: absolute;
-  left: 100%;
-  bottom: 100%;
-}
-
 #new-review {
   width: 100%;
   border-style: double;
   border-width: medium;
   border-color: rgb(230, 230, 230);
+  font-size: 1.5vw;
 }
 
 #submit-review {
   background-color: rgb(65, 65, 65);
   color: white;
+  font-size: 0.75vw;
 }
 
 #walker-popup {
@@ -186,3 +201,26 @@
   color: white;
   transform: scale(0.75);
 }
+
+.popup-new-rating {
+  font-size: 2vw;
+}
+
+.user-review {
+  font-size: 1.5vw;
+}
+
+#close-popup-button {
+  width: 2vw;
+  height: 2vw;
+  border-radius: .1vw;
+}
+
+#close-popup-button:hover {
+  cursor: pointer;
+ }
+
+ #bubble-home {
+   margin-left: 5vw;
+   margin-right: 5vw;
+ }

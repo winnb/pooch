@@ -32,7 +32,8 @@ class PetForm extends React.Component {
           nextPic.alt = "dog-profile-picture-preview";
           nextPic.src = doc.data().pic;
           nextPic.addEventListener("click", ()=>{viewProfile(doc.data().name)});
-          document.getElementById("dog-icon-row").appendChild(nextPic);
+          // document.getElementById("dog-icon-row").appendChild(nextPic);
+          document.getElementById("dog-icon-row").prepend(nextPic);
         });
       });
       document.getElementById("pet-loader").style.display = "none";
@@ -236,6 +237,7 @@ deleteProfile() {
           <img className="dog-icon gray" alt="dog-icon" src={Gray1}/>
           <img className="dog-icon gray" alt="dog-icon" src={Gray2}/>
           <img className="dog-icon gray" alt="dog-icon" src={Gray3}/>
+          <div className="pooch-navbar-item collapse" id="open-dog-profile-tip"><b>←</b> View dog profile</div>
           <div className="mt-2" id="pet-loader"><Loader type="TailSpin" color="black" height={75} width={75}/></div>
         </div>
         {/* <div className="dog-icon" id="add-dog-button" onClick={this.toggleNewProfile}>+</div> */}

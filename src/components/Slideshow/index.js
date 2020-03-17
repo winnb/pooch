@@ -5,22 +5,27 @@ import './styles.scss';
 import BrownLab from './images/brown-lab.jpg';
 import Beagle from "./images/beagle.jpg";
 import Bulldog from "./images/bulldog.jpg";
+import BlackAndYellow from "./images/black-and-yellow.jpg";
 import CattleDog from './images/cattle-dog.jpg';
+import Collie from "./images/collie.jpg";
 import Corgi from './images/corgi.jpg';
 import Daschund from './images/daschund.jpg';
 import Dalmation from './images/dalmation.jpg';
 import Frisbee from "./images/frisbee.jpg";
 import GermanShepard from "./images/german-shepard.jpg";
+import Golden from "./images/golden-retreiver.jpg";
 import Husky from './images/husky.jpg';
 import Running from './images/running.jpg';
 import TugOWar from './images/tug-o-war.jpg';
+import Terrier from "./images/terrier.jpg";
+import Yorkshire from "./images/yorkshire.jpg";
  
 const properties = {
   duration: 5000,
   transitionDuration: 500,
   infinite: true,
   indicators: true,
-  arrows: true,
+  arrows: false,
   pauseOnHover: true,
   onChange: (oldIndex, newIndex) => {
     if (document.getElementById("pets-message").className === "pooch-title collapse.show") {
@@ -54,18 +59,18 @@ const Slideshow = () => {
     return (
       <div className="slide-container">
         <Slide {...properties}>
-            <img className="each-slide" src={BrownLab} alt="brown labrador dog"/>
-            <img className="each-slide" src={Beagle} alt="beagle dog"/>
-            <img className="each-slide" src={Daschund} alt="daschund dog"/>
             <img className="each-slide" src={Corgi} alt="corgi dog"/>
-            <img className="each-slide" src={Bulldog} alt="bulldog running on beach"/>
-            <img className="each-slide" src={Frisbee} alt="dog catching frisbee"/>
-            <img className="each-slide" src={CattleDog} alt="australian cattle dog"/>
-            <img className="each-slide" src={Dalmation} alt="dalmation dog"/>
+            <img className="each-slide" src={Collie} alt="border collie dog"/>
+            <img className="each-slide" src={Daschund} alt="daschund dog"/>
+            <img className="each-slide" src={Beagle} alt="beagle dog"/>
+            <img className="each-slide" src={BlackAndYellow} alt="black and yellow dog"/>
             <img className="each-slide" src={Husky} alt="husky dog"/>
-            <img className="each-slide" src={Running} alt="running dogs"/>   
-            <img className="each-slide" src={GermanShepard} alt="german shepard"/>
-            <img className="each-slide" src={TugOWar} alt="dogs playing tug o war"/>
+            <img className="each-slide" src={CattleDog} alt="australian cattle dog"/>
+            <img className="each-slide" src={Golden} alt="golden retreiver dog"/>
+            <img className="each-slide" src={BrownLab} alt="brown labrador dog"/>
+            <img className="each-slide" src={Yorkshire} alt="four yorkshire terrier dogs"/>      
+            <img className="each-slide" src={GermanShepard} alt="german shepard dog"/>
+            <img className="each-slide" src={Terrier} alt="jack russel terrier dog"/> 
         </Slide>
         <a href="/pets">
           <div className="pooch-title collapse.show" id="pets-message">Let people get to know your pooch! View Your Pets 🐶
