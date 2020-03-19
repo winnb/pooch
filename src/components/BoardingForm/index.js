@@ -98,7 +98,7 @@ class BoardingForm extends React.Component {
       var adjustedName = "";
       for (var i=0; i<nameWords.length; i++)
         adjustedName += nameWords[i].substr(0,1).toUpperCase() + nameWords[i].substr(1, nameWords[i].length-1) + " ";
-      name.innerText = adjustedName;
+      name.textContent = adjustedName;
       name.className = "boarder-name";
       nameRow.appendChild(name);
 
@@ -106,11 +106,11 @@ class BoardingForm extends React.Component {
       phoneRow.className = "mx-1 box-row";
       newCol.appendChild(phoneRow);
       var phone = document.createElement("div");
-      phone.innerText = doc.data().phone;
-      if (phone.innerText.length === 10)
-        phone.innerText = phone.innerText[0]+phone.innerText[1]+phone.innerText[2]+"-"+phone.innerText[3]+phone.innerText[4]+phone.innerText[5]+"-"+phone.innerText[6]+phone.innerText[7]+phone.innerText[8]+phone.innerText[9];
-      if (phone.innerText.length === 7)
-        phone.innerText = phone.innerText[0]+phone.innerText[1]+phone.innerText[2]+"-"+phone.innerText[3]+phone.innerText[4]+phone.innerText[5]+phone.innerText[6];
+      phone.textContent = doc.data().phone;
+      if (phone.textContent.length === 10)
+        phone.textContent = phone.textContent[0]+phone.textContent[1]+phone.textContent[2]+"-"+phone.textContent[3]+phone.textContent[4]+phone.textContent[5]+"-"+phone.textContent[6]+phone.textContent[7]+phone.textContent[8]+phone.textContent[9];
+      if (phone.textContent.length === 7)
+        phone.textContent = phone.textContent[0]+phone.textContent[1]+phone.textContent[2]+"-"+phone.textContent[3]+phone.textContent[4]+phone.textContent[5]+phone.textContent[6];
       phone.className = "boarder-phone";
       phoneRow.appendChild(phone);
 
@@ -123,7 +123,7 @@ class BoardingForm extends React.Component {
       var adjustedAddress = "";
       for (var i=0; i<addressWords.length; i++)
         adjustedAddress += addressWords[i].substr(0,1).toUpperCase() + addressWords[i].substr(1, addressWords[i].length-1) + " ";
-      address.innerText = adjustedAddress;
+      address.textContent = adjustedAddress;
       address.className = "boarderer-address";
       addressRow.appendChild(address);
 
@@ -136,7 +136,7 @@ class BoardingForm extends React.Component {
       var adjustedCity = "";
       for (var i=0; i<cityWords.length; i++)
         adjustedCity += cityWords[i].substr(0,1).toUpperCase() + cityWords[i].substr(1, cityWords[i].length-1) + " ";
-      city.innerText = adjustedCity;
+      city.textContent = adjustedCity;
       city.className = "boarder-city";
       cityRow.appendChild(city);
 
@@ -144,7 +144,7 @@ class BoardingForm extends React.Component {
       dailyRateRow.className = "mx-1 box-row";
       newCol.appendChild(dailyRateRow);
       var dailyRate = document.createElement("div");
-      dailyRate.innerText = "$"+doc.data().dailyRate+"/day";
+      dailyRate.textContent = "$"+doc.data().dailyRate+"/day";
       dailyRate.className = "boarder-daily-rate";
       dailyRateRow.appendChild(dailyRate);
 
@@ -170,31 +170,40 @@ class BoardingForm extends React.Component {
 
       // Search functionality
       var matchSearch = true;
-      // Searching by city
-      if (document.getElementById("boarder-search-category").value === "city") { 
-        if (document.getElementById("boarder-search").value.length > city.innerText.length) // Check if search bar is longer than city
+      // Searching by address
+      if (document.getElementById("boarder-search-category").value === "address") { 
+        if (document.getElementById("boarder-search").value.length > address.textContent.length) // Check if search bar is longer than address
           matchSearch = false;
         else
           for (var j=0; j<document.getElementById("boarder-search").value.length; j++) // Loop through each letter in search bar
-            if (document.getElementById("boarder-search").value[j].toLowerCase() !== city.innerText[j].toLowerCase())
+            if (document.getElementById("boarder-search").value[j].toLowerCase() !== address.textContent[j].toLowerCase())
+              matchSearch = false;
+      }
+      // Searching by city
+      if (document.getElementById("boarder-search-category").value === "city") { 
+        if (document.getElementById("boarder-search").value.length > city.textContent.length) // Check if search bar is longer than city
+          matchSearch = false;
+        else
+          for (var j=0; j<document.getElementById("boarder-search").value.length; j++) // Loop through each letter in search bar
+            if (document.getElementById("boarder-search").value[j].toLowerCase() !== city.textContent[j].toLowerCase())
               matchSearch = false;
       }
       // Searching by daily rate
       if (document.getElementById("boarder-search-category").value === "dailyRate") { 
-        if (document.getElementById("boarder-search").value.length > dailyRate.innerText.length) // Check if search bar is longer than daily rate
+        if (document.getElementById("boarder-search").value.length > dailyRate.textContent.length) // Check if search bar is longer than daily rate
           matchSearch = false;
         else
           for (var j=0; j<document.getElementById("boarder-search").value.length; j++) // Loop through each letter in search bar
-            if (document.getElementById("boarder-search").value[j].toLowerCase() !== dailyRate.innerText[j].toLowerCase())
+            if (document.getElementById("boarder-search").value[j].toLowerCase() !== dailyRate.textContent.substr(1,3)[j].toLowerCase())
               matchSearch = false;
       }
       // Searching by name
       if (document.getElementById("boarder-search-category").value === "name") { 
-        if (document.getElementById("boarder-search").value.length > name.innerText.length) // Check if search bar is longer than name
+        if (document.getElementById("boarder-search").value.length > name.textContent.length) // Check if search bar is longer than name
           matchSearch = false;
         else
           for (var j=0; j<document.getElementById("boarder-search").value.length; j++) // Loop through each letter in search bar
-            if (document.getElementById("boarder-search").value[j].toLowerCase() !== name.innerText[j].toLowerCase())
+            if (document.getElementById("boarder-search").value[j].toLowerCase() !== name.textContent[j].toLowerCase())
               matchSearch = false;
       }
       // Only add bubble if it matches search
@@ -426,9 +435,10 @@ class BoardingForm extends React.Component {
         <div className="row">
           <input className="search-bar" id="boarder-search" placeholder="Search..." maxLength="50" onChange={this.updateSearch} value={this.state.search}></input>
           <select className="search-dropdown" id="boarder-search-category" onChange={this.handleChange}>
+            <option value="name">Name</option>
+            <option value="address">Address</option>
             <option value="city">City</option>
             <option value="dailyRate">Daily Rate</option>
-            <option value="name">Name</option>
           </select>
         </div>
         <div className="pooch-title">Dog Boarders</div>

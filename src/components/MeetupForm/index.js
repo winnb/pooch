@@ -2,9 +2,9 @@ import React from "react";
 import Fire from "../../config/Fire.js"; // Firebase
 import "./styles.scss"; // Styles
 import Loader from "react-loader-spinner"; // Loader
-import Fade from "react-reveal"; // Animation
 import DogPark from "./dogpark.png"
 import Close from "./close.jpg";
+import AddButton from "./add-button.png";
 
 class MeetupForm extends React.Component {
   constructor(props) {
@@ -16,7 +16,9 @@ class MeetupForm extends React.Component {
       sta: "",
       zipcode: "",
       description: "",
-      search: ""
+      search: "",
+      startDate: "",
+      endDate: ""
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -31,7 +33,15 @@ class MeetupForm extends React.Component {
 
   componentDidMount() {
     document.getElementById("error-message").style.display = "none";
-    document.getElementById("add-meetup-button").style.display = "none";
+    // Set search start date to today
+    var today = new Date();
+    var month = (today.getMonth()+1).toString();
+    if (month.length == 1)
+      month = "0"+month;
+    var day = today.getDate().toString();
+    if (day.length == 1)
+      day = "0"+day;
+    document.getElementById("start-date").value = today.getFullYear()+"-"+month+"-"+day;
   }
 
   componentDidUpdate() {
@@ -55,22 +65,32 @@ class MeetupForm extends React.Component {
       var leftCol = document.createElement("div");
       leftCol.className = "box-left-col";
       newBox.appendChild(leftCol);
+
       // Left column
       var newPic = document.createElement("img");
       newPic.className = "box-meetup-pic";
       newPic.style.left = "0%";
       newPic.style.marginTop = (leftCol.scrollHeight/4 - newPic.height/2).toString()+"px";
-      //newPic.style.top = min(25,;
       newPic.src = doc.data().pic;
       newPic.alt = "Meetup Picture";
       leftCol.appendChild(newPic);
+
       // Right column
       var rightCol = document.createElement("div");
       rightCol.className = "box-right-col";
       newBox.appendChild(rightCol);
-      
       var nameDiv = document.createElement("div");
+      rightCol.appendChild(nameDiv);
+
+      // Make title camelcase
+      var titleWords = doc.data().title.toLowerCase().split(" ");
+      var adjustedTitle = "";
+      for (var i=0; i<titleWords.length; i++)
+        adjustedTitle += titleWords[i].substr(0,1).toUpperCase() + titleWords[i].substr(1, titleWords[i].length-1) + " ";
+      nameDiv.textContent = adjustedTitle+" by ";
+
       nameDiv.className = "box-row";
+      nameDiv.style.fontWeight = "600";
       var nameStart = "";
       Fire.firestore().collection("parents").where("email", "==", doc.data().email).get()
       .then(snapshot => {
@@ -96,8 +116,7 @@ class MeetupForm extends React.Component {
         var adjustedName = "";
         for (var i=0; i<nameWords.length; i++)
           adjustedName += nameWords[i].substr(0,1).toUpperCase() + nameWords[i].substr(1, nameWords[i].length-1) + " ";
-        nameDiv.textContent = "Host: "+adjustedName;
-        rightCol.appendChild(nameDiv);
+        nameDiv.textContent += adjustedName;
       }, 500);
       
       var address = document.createElement("div");
@@ -117,13 +136,8 @@ class MeetupForm extends React.Component {
       var adjustedCity = "";
       for (var i=0; i<cityWords.length; i++)
         adjustedCity += cityWords[i].substr(0,1).toUpperCase() + cityWords[i].substr(1, cityWords[i].length-1) + " ";
-      city.textContent = adjustedCity;
+      city.textContent = adjustedCity+", "+doc.data().state+", "+doc.data().zipcode;
       rightCol.appendChild(city);
-
-      var zipcode = document.createElement("div");
-      zipcode.className = "box-row";
-      zipcode.textContent = doc.data().state+", "+doc.data().zipcode;
-      rightCol.appendChild(zipcode);
 
       var date = document.createElement("div");
       date.className = "box-row";
@@ -137,6 +151,7 @@ class MeetupForm extends React.Component {
       else
         adjustedTime = (parseInt(doc.data().time.substr(0,2))-12).toString()+doc.data().time.substr(2,3)+"PM";
       date.textContent = doc.data().date.substr(8,2)+" "+adjustedMonth+" "+doc.data().date.substr(0,4)+" @ "+adjustedTime;
+      var formattedDate = doc.data().date.substr(0,4)+"-"+doc.data().date.substr(5,2)+"-"+doc.data().date.substr(8,2);
       rightCol.appendChild(date);
 
       var buttonRow = document.createElement("div");
@@ -171,20 +186,29 @@ class MeetupForm extends React.Component {
       var matchSearch = true;
       var searchCategory = document.getElementById("meetup-search-category").value;
       var searchBar = document.getElementById("meetup-search").value;
+      if (searchCategory === "title") { // Searching by title
+        if (searchBar.length > nameDiv.textContent.split("by")[0].length) // Check if search bar is longer than title
+          matchSearch = false;
+        else
+          for (var j=0; j<searchBar.length; j++) {// Loop through each letter in search bar
+            if (searchBar[j].toLowerCase() !== nameDiv.textContent.split("by")[0][j].toLowerCase())
+              matchSearch = false;
+          }
+      }
       if (searchCategory === "city") { // Searching by city
-        if (searchBar.length > city.textContent.length) // Check if search bar is longer than city
+        if (searchBar.length > city.textContent.split(", ")[0].length) // Check if search bar is longer than city
           matchSearch = false;
         else
           for (var j=0; j<searchBar.length; j++) // Loop through each letter in search bar
-            if (searchBar[j].toLowerCase() !== city.innerText[j].toLowerCase())
+            if (searchBar[j].toLowerCase() !== city.textContent.split(", ")[0][j].toLowerCase())
               matchSearch = false;
       }
       if (searchCategory === "zipcode") { // Searching by zipcode
-        if (searchBar.length > zipcode.textContent.length) // Check if search bar is longer than zipcode
+        if (searchBar.length > city.textContent.split(", ")[2].length) // Check if search bar is longer than zipcode
           matchSearch = false;
         else
           for (var j=0; j<searchBar.length; j++) // Loop through each letter in search bar
-            if (searchBar[j].toLowerCase() !== zipcode.innerText[j].toLowerCase())
+            if (searchBar[j].toLowerCase() !== city.textContent.split(", ")[2][j].toLowerCase())
               matchSearch = false;
       }
       if (searchCategory === "address") { // Searching by address
@@ -192,16 +216,48 @@ class MeetupForm extends React.Component {
           matchSearch = false;
         else
           for (var j=0; j<searchBar.length; j++) // Loop through each letter in search bar
-            if (searchBar[j].toLowerCase() !== address.innerText[j].toLowerCase())
+            if (searchBar[j].toLowerCase() !== address.textContent[j].toLowerCase())
               matchSearch = false;
+      }
+      // Make sure meetup is equal or later than search start date
+      var startDate = document.getElementById("start-date").value;
+      // If meetup year before search year => no match
+      if (parseInt(formattedDate.substr(0,4)) < parseInt(startDate.substr(0,4))) { 
+        matchSearch = false;
+        console.log("Year too small: "+formattedDate+" < "+startDate);
+      }
+      // If meetup year equal to search year, but meetup month earlier than search month => no match
+      else if (parseInt(formattedDate.substr(0,4)) === parseInt(startDate.substr(0,4)) && parseInt(formattedDate.substr(5,2)) < parseInt(startDate.substr(5,2))) { 
+        matchSearch = false;
+        console.log("Month too small: "+formattedDate+" < "+startDate);
+      }
+      // If meetup year equal to search year and meetup month equal to search month, but meetup day earlier than search day => no match
+      else if ( (parseInt(formattedDate.substr(0,4)) === parseInt(startDate.substr(0,4))) && (parseInt(formattedDate.substr(5,2)) === parseInt(startDate.substr(5,2))) && (parseInt(formattedDate.substr(8,2)) < parseInt(startDate.substr(8,2))) ) {
+        matchSearch = false;
+        console.log("Day too small: "+formattedDate+" < "+startDate);
+      }
+      //Make sure meetup is equal or earlier than search end date
+      var endDate = document.getElementById("end-date").value;
+      // If meetup year after search year => no match
+      if (parseInt(formattedDate.substr(0,4)) > parseInt(endDate.substr(0,4))) { 
+        matchSearch = false;
+        console.log("Year too big: "+formattedDate+" > "+endDate);
+      }
+      // If meetup year equal to search year, but meetup month after search month => no match
+      else if (parseInt(formattedDate.substr(0,4)) === parseInt(endDate.substr(0,4)) && parseInt(formattedDate.substr(5,2)) > parseInt(endDate.substr(5,2))) { 
+        matchSearch = false;
+        console.log("Month too big: "+formattedDate+" > "+endDate);
+      }
+      // If meetup year equal to search year and meetup month equal to search month, but meetup day after search day => no match
+      else if ( (parseInt(formattedDate.substr(0,4)) === parseInt(endDate.substr(0,4))) && (parseInt(formattedDate.substr(5,2)) === parseInt(endDate.substr(5,2))) && (parseInt(formattedDate.substr(8,2)) > parseInt(endDate.substr(8,2))) ) {
+        matchSearch = false;
+        console.log("Day too big: "+formattedDate+" > "+endDate);
       }
       setTimeout(() => {
         // Only add bubble if it matches search
-        //console.log(document.getElementById("meetup-bubble-home").childNodes[document.getElementById("meetup-bubble-home").childNodes.length-1]);
         if (matchSearch === true)
           document.getElementById("meetup-bubble-home").appendChild(newBox);
         document.getElementById("loader").style.display = "none";
-        document.getElementById("add-meetup-button").style.display = "block";
       }, 250);
     }
     
@@ -246,7 +302,8 @@ class MeetupForm extends React.Component {
         Fire.firestore().collection("meetups").add({
           email: Fire.auth().currentUser.email,
           pic: document.getElementById("new-meetup-pic").src,
-          address: document.getElementById("new-meetup-address").value,
+          title: document.getElementById("new-meetup-title").value.toLowerCase(),
+          address: document.getElementById("new-meetup-address").value.toLowerCase(),
           city: document.getElementById("new-meetup-city").value.toLowerCase(),
           zipcode: document.getElementById("new-meetup-zipcode").value,
           state: document.getElementById("new-meetup-state").value.toUpperCase(),
@@ -277,23 +334,135 @@ class MeetupForm extends React.Component {
 
   closeError() { document.getElementById("error-message").style.display = "none" }
 
+  viewMeetupsThis(duration) {
+    var today = new Date();
+    if (duration === "week") {
+      var month = getFormattedMonth(today);
+      var day = getFormattedDay(today);
+      document.getElementById("start-date").value = today.getFullYear()+"-"+month+"-"+day;
+      today.setDate(today.getDate()+7);
+      month = getFormattedMonth(today);
+      day = getFormattedDay(today);
+      document.getElementById("end-date").value = today.getFullYear()+"-"+month+"-"+day;
+      // Highlight selection
+      document.getElementById("week-block").style.backgroundColor = "rgb(65,65,65)";
+      document.getElementById("week-block").style.color = "white";
+      document.getElementById("weekend-block").style.backgroundColor = "rgb(220,220,220)";
+      document.getElementById("weekend-block").style.color = "black";
+      document.getElementById("two-week-block").style.backgroundColor = "rgb(220,220,220)";
+      document.getElementById("two-week-block").style.color = "black";
+      document.getElementById("month-block").style.backgroundColor = "rgb(220,220,220)";
+      document.getElementById("month-block").style.color = "black";
+      this.setState({startDate: document.getElementById("start-date").value});
+    }
+    else if (duration === "weekend") {
+      var daysUntilFriday = 0;
+      if (today.getDay() < 5)
+        daysUntilFriday = 5-today.getDay();
+      else if (today.getDay() == 5)
+        daysUntilFriday = 7;
+      else
+      daysUntilFriday = 6;
+      today.setDate(today.getDate()+daysUntilFriday);
+      var month = getFormattedMonth(today);
+      var day = getFormattedDay(today);
+      document.getElementById("start-date").value = (today.getFullYear()+"-"+month+"-"+day);
+      today.setDate(today.getDate()+2);
+      month = getFormattedMonth(today);
+      day = getFormattedDay(today);
+      // Highlight selection
+      document.getElementById("end-date").value = (today.getFullYear()+"-"+month+"-"+day);
+      document.getElementById("week-block").style.backgroundColor = "rgb(220,220,220)";
+      document.getElementById("week-block").style.color = "black";
+      document.getElementById("weekend-block").style.backgroundColor = "rgb(65,65,65)";
+      document.getElementById("weekend-block").style.color = "white";
+      document.getElementById("two-week-block").style.backgroundColor = "rgb(220,220,220)";
+      document.getElementById("two-week-block").style.color = "black";
+      document.getElementById("month-block").style.backgroundColor = "rgb(220,220,220)";
+      document.getElementById("month-block").style.color = "black";
+      this.setState({startDate: document.getElementById("start-date").value});
+    }
+    else if (duration === "two weeks") {
+      var month = getFormattedMonth(today);
+      var day = getFormattedDay(today);
+      document.getElementById("start-date").value = today.getFullYear()+"-"+month+"-"+day;
+      today.setDate(today.getDate()+14);
+      month = getFormattedMonth(today);
+      day = getFormattedDay(today);
+      document.getElementById("end-date").value = today.getFullYear()+"-"+month+"-"+day;
+      // Highlight selection
+      document.getElementById("end-date").value = (today.getFullYear()+"-"+month+"-"+day);
+      document.getElementById("week-block").style.backgroundColor = "rgb(220,220,220)";
+      document.getElementById("week-block").style.color = "black";
+      document.getElementById("weekend-block").style.backgroundColor = "rgb(220,220,220)";
+      document.getElementById("weekend-block").style.color = "black";
+      document.getElementById("two-week-block").style.backgroundColor = "rgb(65,65,65)";
+      document.getElementById("two-week-block").style.color = "white";
+      document.getElementById("month-block").style.backgroundColor = "rgb(220,220,220)";
+      document.getElementById("month-block").style.color = "black";
+      this.setState({startDate: document.getElementById("start-date").value});
+    }
+    else if (duration === "month") {
+      var month = getFormattedMonth(today);
+      var day = getFormattedDay(today);
+      document.getElementById("start-date").value = today.getFullYear()+"-"+month+"-"+day;
+      today.setMonth(today.getMonth()+1);
+      today.setDate(1);
+      today.setDate(today.getDate()-1);
+      month = getFormattedMonth(today);
+      day = getFormattedDay(today);
+      document.getElementById("end-date").value = today.getFullYear()+"-"+month+"-"+day;
+      // Highlight selection
+      document.getElementById("end-date").value = (today.getFullYear()+"-"+month+"-"+day);
+      document.getElementById("week-block").style.backgroundColor = "rgb(220,220,220)";
+      document.getElementById("week-block").style.color = "black";
+      document.getElementById("weekend-block").style.backgroundColor = "rgb(220,220,220)";
+      document.getElementById("weekend-block").style.color = "black";
+      document.getElementById("two-week-block").style.backgroundColor = "rgb(220,220,220)";
+      document.getElementById("two-week-block").style.color = "black";
+      document.getElementById("month-block").style.backgroundColor = "rgb(65,65,65)";
+      document.getElementById("month-block").style.color = "white";
+      this.setState({startDate: document.getElementById("start-date").value});
+    }
+    
+    function getFormattedDay(today) {
+      var day = today.getDate().toString();
+      if (day.length == 1)
+        day = "0"+day;
+      return day;
+    }
+
+    function getFormattedMonth(today) {
+      var month = (today.getMonth()+1).toString();
+      if (month.length == 1)
+        month = "0"+month;
+      return month;
+    }
+  }
+
   render() {
     return (
       <div className="mt-7 mx-6">
         <div className="row meetup-search-row">
-          <div style={{paddingTop: "0.5%"}}>From</div><input className="date-input" id="start-date" type="date" min="2020-01-01" max="2030-01-01"/>
-          <div style={{paddingTop: "0.5%"}}>To</div><input className="date-input" id="end-date" type="date" min="document.getElementById('start-date').value" max="2030-01-01"/>
+          <div style={{paddingTop: "0.5%"}}>From</div><input name="startDate" className="date-input" id="start-date" type="date" min="2020-01-01" max="2030-01-01" onChange={this.handleChange}/>
+          <div style={{paddingTop: "0.5%"}}>To</div><input name="endDate" className="date-input" id="end-date" type="date" min="document.getElementById('start-date').value" max="2030-01-01" onChange={this.handleChange}/>
           <input className="meetup-search-bar" id="meetup-search" placeholder="Search..." maxLength="50" onChange={this.updateSearch} value={this.state.search}></input>
           <select className="meetup-search-dropdown" id="meetup-search-category" onChange={this.handleChange}>
+            <option value="title">Title</option>
+            <option value="address">Address</option>
             <option value="city">City</option>
             <option value="zipcode">Zipcode</option>
-            <option value="address">Address</option>
           </select>
         </div>
-        <div className="pooch-title">Dog Meetups</div>
+        <div className="row" id="time-row">
+          <div className="time-block" id="week-block" onClick={()=>this.viewMeetupsThis("week")}>This week</div>
+          <div className="time-block" id="weekend-block" onClick={()=>this.viewMeetupsThis("weekend")}>This weekend</div>
+          <div className="time-block" id="two-week-block" onClick={()=>this.viewMeetupsThis("two weeks")}>Next two weeks</div>
+          <div className="time-block" id="month-block" onClick={()=>this.viewMeetupsThis("month")}>This month</div>
+        </div>
+        <div className="pooch-title">Dog Meetups<img id="add-dog-button" alt="add-meetup-button" src={AddButton} onClick={this.openNewMeetup} style={{width:"3.5vw", marginTop: "0%"}}/></div>
         <div id="loader" className="mb-4"><Loader type="ThreeDots" color="black" height={75} width={75}/></div>
-        <div id="meetup-bubble-home" className="row"></div>
-        <button className="pooch-navbar-item mb-4" id="add-meetup-button" onClick={this.openNewMeetup}>Add Meetup</button>
+        <div id="meetup-bubble-home" className="row mb-8"></div>
 
         <div className="collapse" id="meetup-popup">
           <div className="row">
@@ -302,6 +471,7 @@ class MeetupForm extends React.Component {
             </div>
             <div className="box-right-col">
               <img src={Close} className="pull-right" id="close-popup-button" onClick={this.closeNewMeetup}/>
+              <input className="box-row" id="new-meetup-title" placeholder="Title" maxLength="16"/>
               <input className="box-row" id="new-meetup-address" placeholder="Address" maxLength="32"/>
               <input className="box-row" id="new-meetup-city" placeholder="City" maxLength="32"/>
               <input className="box-row" id="new-meetup-state" placeholder="State" maxLength="2"/>

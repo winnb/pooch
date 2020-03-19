@@ -407,9 +407,9 @@ class WalkerForm extends React.Component {
         <div className="row">
           <input className="search-bar" id="walker-search" placeholder="Search..." maxLength="50" onChange={this.updateSearch} value={this.state.search}></input>
           <select className="search-dropdown" id="walker-search-category" onChange={this.handleChange}>
+            <option value="name">Name</option>
             <option value="city">City</option>
             <option value="hourlyRate">Hourly Rate</option>
-            <option value="name">Name</option>
           </select>
         </div>
         <div className="pooch-title">Dog Walkers</div>
