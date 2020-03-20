@@ -127,12 +127,12 @@ class NavBar extends React.Component {
           <div id="nav-bar-pic"><img id="profile-pic" src={GenericProfile} alt="Profile" onClick={this.goToProfile} onMouseEnter={this.openDropdown}/></div>
           <a className="pooch-brand" id="pooch"  href="/">POOCH</a>
           <div className="pooch-navbar-item row" id="nav-pages">
-                <a classname="col" id="your-pets" href="/your-pets">Your Pets</a>
-                <a classname="col" id="dog-walking" href="/dog-walking">Dog Walking</a>
-                <a classname="col" id="dog-boarding" href="/dog-boarding">Dog Boarding</a>
-                <a classname="col" id="dog-services" href="/dog-services">Dog Services</a>
-                <a classname="col" id="dog-meetup" href="/dog-meetup">Dog Meetups</a>
-                <a classname="col" id="dog-records" href="/dog-records">Dog Records</a> 
+                <a className="col" id="your-pets" href="/your-pets">Your Pets</a>
+                <a className="col" id="dog-walking" href="/dog-walking">Dog Walking</a>
+                <a className="col" id="dog-boarding" href="/dog-boarding">Dog Boarding</a>
+                <a className="col" id="dog-services" href="/dog-services">Dog Services</a>
+                <a className="col" id="dog-meetup" href="/dog-meetup">Dog Meetups</a>
+                <a className="col" id="dog-records" href="/dog-records">Dog Records</a> 
           </div>
         </nav>     
       </div>

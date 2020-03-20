@@ -431,7 +431,7 @@ class BoardingForm extends React.Component {
 
   render() {
     return (
-      <div className="mt-7 mb-8">
+      <div id="boarding-form">
         <div className="row">
           <input className="search-bar" id="boarder-search" placeholder="Search..." maxLength="50" onChange={this.updateSearch} value={this.state.search}></input>
           <select className="search-dropdown" id="boarder-search-category" onChange={this.handleChange}>

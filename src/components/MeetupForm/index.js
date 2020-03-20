@@ -156,30 +156,48 @@ class MeetupForm extends React.Component {
 
       var buttonRow = document.createElement("div");
       buttonRow.style.width = "100%";
-      buttonRow.style.fontSize = ".7vw";
+      buttonRow.style.fontSize = "70%";
       buttonRow.style.marginTop = "2%";
       newBox.appendChild(buttonRow);
 
       var maybeButton = document.createElement("button");
       maybeButton.textContent = "Maybe";
-      maybeButton.style.marginLeft = "20%";
-      maybeButton.style.width = "20%";
+      maybeButton.style.marginLeft = "15%";
+      maybeButton.style.width = "25%";
       maybeButton.style.marginRight = "10%";
       maybeButton.style.borderRadius = "10px";
       maybeButton.style.backgroundColor = "rgb(245, 245, 245)";
       maybeButton.style.color = "black";
-      maybeButton.addEventListener("click", ()=>{toggleMaybe(maybeButton, yesButton)});
+      Fire.firestore().collection("maybe") // Check if maybe
+      .where("email", "==", Fire.auth().currentUser.email)
+      .where("meetupID", "==", doc.id).get()
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+          maybeButton.style.backgroundColor = "rgb(65, 65, 65)";
+          maybeButton.style.color = "white";
+        })
+      });
+      maybeButton.addEventListener("click", ()=>{toggleMaybe(maybeButton, yesButton, doc.id)});
       buttonRow.appendChild(maybeButton);
 
       var yesButton = document.createElement("button");
       yesButton.textContent = "I'm Going";
       yesButton.style.marginLeft = "10%";
-      yesButton.style.width = "20%";
-      yesButton.style.marginRight = "20%";
+      yesButton.style.width = "25%";
+      yesButton.style.marginRight = "15%";
       yesButton.style.borderRadius = "10px";
       yesButton.style.backgroundColor = "rgb(245, 245, 245)";
       yesButton.style.color = "black";
-      yesButton.addEventListener("click", ()=>{toggleYes(maybeButton, yesButton)});
+      Fire.firestore().collection("going") // Check if going
+      .where("email", "==", Fire.auth().currentUser.email)
+      .where("meetupID", "==", doc.id).get()
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+          yesButton.style.backgroundColor = "rgb(65, 65, 65)";
+          yesButton.style.color = "white";
+        })
+      });
+      yesButton.addEventListener("click", ()=>{toggleYes(maybeButton, yesButton, doc.id)});
       buttonRow.appendChild(yesButton);
 
       // Search functionality
@@ -261,29 +279,91 @@ class MeetupForm extends React.Component {
       }, 250);
     }
     
-    function toggleYes(maybeButton, yesButton) { 
+    function toggleYes(maybeButton, yesButton, docID) { 
       maybeButton.style.backgroundColor = "rgb(245, 245, 245)";
       maybeButton.style.color = "black";
       if (yesButton.style.backgroundColor === "rgb(245, 245, 245)") {
         yesButton.style.backgroundColor = "rgb(65, 65, 65)";
         yesButton.style.color = "white";
+        Fire.firestore().collection("maybe") // Delete from maybe
+      .where("email", "==", Fire.auth().currentUser.email)
+      .where("meetupID", "==", docID).get()
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+          doc.ref.delete();
+        })
+      });
+      Fire.firestore().collection("going") // Delete from going
+        .where("email", "==", Fire.auth().currentUser.email)
+        .where("meetupID", "==", docID).get()
+        .then(snapshot => {
+          snapshot.forEach(doc => {
+            doc.ref.delete();
+          })
+        });
+        setTimeout(() => {
+          Fire.firestore().collection("going").add({ // Add to going
+            email: Fire.auth().currentUser.email,
+            meetupID: docID
+          });
+        }, 500);
+      
       }
       else {
         yesButton.style.backgroundColor = "rgb(245, 245, 245)";
         yesButton.style.color = "black";
+        Fire.firestore().collection("going") // Delete from going
+        .where("email", "==", Fire.auth().currentUser.email)
+        .where("meetupID", "==", docID).get()
+        .then(snapshot => {
+          snapshot.forEach(doc => {
+            doc.ref.delete();
+          })
+        });
       }
     }
 
-    function toggleMaybe(maybeButton, yesButton) { 
+    function toggleMaybe(maybeButton, yesButton, docID) { 
       yesButton.style.backgroundColor = "rgb(245, 245, 245)";
       yesButton.style.color = "black";
       if (maybeButton.style.backgroundColor === "rgb(245, 245, 245)") {
       maybeButton.style.backgroundColor = "rgb(65, 65, 65)";
       maybeButton.style.color = "white";
+      Fire.firestore().collection("going") // Delete from going
+      .where("email", "==", Fire.auth().currentUser.email)
+      .where("meetupID", "==", docID).get()
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+          doc.ref.delete();
+        })
+      });
+      Fire.firestore().collection("maybe") // Delete from maybe
+      .where("email", "==", Fire.auth().currentUser.email)
+      .where("meetupID", "==", docID).get()
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+          doc.ref.delete();
+        })
+      });
+      setTimeout(() => {
+        Fire.firestore().collection("maybe").add({ // Add to maybe
+          email: Fire.auth().currentUser.email,
+          meetupID: docID
+        });
+      }, 500);
+      
     }
     else {
       maybeButton.style.backgroundColor = "rgb(245, 245, 245)";
       maybeButton.style.color = "black";
+      Fire.firestore().collection("maybe") // Delete from maybe
+      .where("email", "==", Fire.auth().currentUser.email)
+      .where("meetupID", "==", docID).get()
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+          doc.ref.delete();
+        })
+      });
     }
     }
   }
@@ -440,9 +520,15 @@ class MeetupForm extends React.Component {
     }
   }
 
+  maybeGoing() {
+    Fire.firestore().collection("meetups").add({
+      maybe: Fire.auth().currentUser.email
+  });
+  }
+
   render() {
     return (
-      <div className="mt-7 mx-6">
+      <div id="meetup-form">
         <div className="row meetup-search-row">
           <div style={{paddingTop: "0.5%"}}>From</div><input name="startDate" className="date-input" id="start-date" type="date" min="2020-01-01" max="2030-01-01" onChange={this.handleChange}/>
           <div style={{paddingTop: "0.5%"}}>To</div><input name="endDate" className="date-input" id="end-date" type="date" min="document.getElementById('start-date').value" max="2030-01-01" onChange={this.handleChange}/>

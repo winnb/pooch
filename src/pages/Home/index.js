@@ -38,7 +38,7 @@ class Home extends React.Component {
 
   render() {
     return (
-      <div className="my-6">
+      <div id="home-page">
         <div className="fixed-top home-box">
           <Login/>
         </div>

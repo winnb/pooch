@@ -428,7 +428,7 @@ closeError() { document.getElementById("error-message").style.display = "none"; 
 
   render() {
     return (
-      <div className="mt-7 mx-6 mb-4">
+      <div id="profile-form">
         <div id="profile-loader"><Loader type="TailSpin" color="black" height={150} width={150}/></div>
         <Fade>
           <div className="pooch-navbar-item mb-3" id="username"></div>

@@ -1,8 +1,8 @@
 .nav-bar {
   background-color: #eeeeee;
   height: 20%;
-  min-height: 180px;
-  max-height: 275px;
+  //min-height: 180px;
+  //max-height: 275px;
 }
 
 #nav-bar-pic {
@@ -61,7 +61,8 @@
 
 #nav-pages {
   width: 70vw;
-  font-size: 1.5vw;
+  min-width: 410px;
+  font-size: 1.2vw;
   display : flex;
   align-items : center;
   justify-content: center;

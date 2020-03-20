@@ -115,7 +115,7 @@ class RecordForm extends React.Component{
 
     render(){
         return( 
-            <div className="mt-7 mb-8">
+            <div id="record-form">
                 <div className="pooch-navbar-item" id="upload-step1"><b>↙</b> First, select the document you want</div>
                 <div id="upload-box">
                     <input className="my-2" type="file" id="file-input" onChange={this.filePreview} />

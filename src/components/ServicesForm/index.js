@@ -1,6 +1,5 @@
-// React
 import React from "react";
-// Styles
+import "./styles.scss"; // Styles
 import Slide from "react-reveal";
 import dog_wash from "../ServicesForm/cards"
 class ServicesForm extends React.Component {
@@ -137,7 +136,7 @@ class ServicesForm extends React.Component {
  
   render() {
     return (
-      <div className="mt-7 mx-6">
+      <div id="services-form">
         <Slide down>
           <div className="pooch-title">Dog Services</div>
         </Slide>

@@ -1,5 +1,10 @@
 // See /WalkerForm/styles.scss for rest of styling on BoarderForm
 
+#boarding-form {
+  margin-top: 25vh;
+  margin-bottom: 25vh;
+}
+
 .boarder-box {
   background-color: rgb(216, 216, 218);
   padding-top: 3%;
@@ -10,7 +15,6 @@
   margin-bottom: 1%;
   border-radius: 25px;
   width: 325px;
-  height: 50%;
   border-style: outset;
   border-width: thick;
   border-color: rgb(230, 230, 230);

@@ -232,7 +232,7 @@ deleteProfile() {
 
   render() {
     return (
-      <div className="mt-7 mx-6 mb-8">
+      <div id="pet-form">
         <div className="my-5 row" id="dog-icon-row">
           <img className="dog-icon gray" alt="dog-icon" src={Gray1}/>
           <img className="dog-icon gray" alt="dog-icon" src={Gray2}/>

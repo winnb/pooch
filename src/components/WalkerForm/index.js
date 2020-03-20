@@ -402,7 +402,7 @@ class WalkerForm extends React.Component {
 
   render() {
     return (
-      <div className="mt-7 mb-8">
+      <div id="walking-form">
 
         <div className="row">
           <input className="search-bar" id="walker-search" placeholder="Search..." maxLength="50" onChange={this.updateSearch} value={this.state.search}></input>
