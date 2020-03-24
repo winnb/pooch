@@ -120,7 +120,7 @@ class NavBar extends React.Component {
         <MessageTab/>
         <div className="collapse fixed-top" id="profile-dropdown" >
             <div className="pooch-navbar-item row" id="dropdown-button" onClick={this.goToProfile}>📷 Profile</div>
-            <div className="pooch-navbar-item row" id="dropdown-button" onClick={this.openMessages}>✉️ Messages</div>
+            {/* <div className="pooch-navbar-item row" id="dropdown-button" onClick={this.openMessages}>✉️ Messages</div> */}
             <div className="pooch-navbar-item row" id="dropdown-button" onClick={this.logout}>🔌 Logout</div>
         </div>
         <nav className="nav-bar row fixed-top py-5" >

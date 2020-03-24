@@ -29,12 +29,12 @@ class NavBarLoggedOut extends React.Component {
         <nav className="nav-bar row fixed-top py-5" >
           <a className="pooch-brand" id="pooch"  href="/">POOCH</a>
           <div className="pooch-navbar-item row" id="nav-pages">
-            <a classname="col" id="your-pets" href="/your-pets">Your Pets</a>
-            <a classname="col" id="dog-walking" href="/dog-walking">Dog Walking</a>
-            <a classname="col" id="dog-boarding" href="/dog-boarding">Dog Boarding</a>
-            <a classname="col" id="dog-services" href="/dog-services">Dog Services</a>
-            <a classname="col" id="dog-meetup" href="/dog-meetup">Dog Meetups</a>
-            <a classname="col" id="dog-records" href="/dog-records">Dog Records</a> 
+            <a classname="col" id="your-pets" href="/">Your Pets</a>
+            <a classname="col" id="dog-walking" href="/">Dog Walking</a>
+            <a classname="col" id="dog-boarding" href="/">Dog Boarding</a>
+            <a classname="col" id="dog-services" href="/">Dog Services</a>
+            <a classname="col" id="dog-meetup" href="/">Dog Meetups</a>
+            <a classname="col" id="dog-records" href="/">Dog Records</a> 
           </div>
           <div className="col pooch-navbar-item mr-5" id="profile-dropdown">
             <div className="row mb-3" id="dropdown-item" onClick={this.openLogin}>Login</div>

@@ -1,7 +1,10 @@
 import React from "react";
+import axios from "axios";
 import "./styles.scss"; // Styles
 import Slide from "react-reveal";
 import dog_wash from "../ServicesForm/cards"
+import { service } from "firebase-functions/lib/providers/analytics";
+
 class ServicesForm extends React.Component {
   
   constructor(props) {
@@ -34,10 +37,10 @@ class ServicesForm extends React.Component {
        {enableHighAccuracy: true, timeout: 20000, maximumAge: 10000}
       );
     });
-    //this.setState({apikey:"jmi-PoyyCL6TczqHp0M9e5ywy7Bs8GAaEehHDP-7ktNpoflo4uvMUs-t312lgSqo8Ton8MVJ5faipw85aJGCk1O1YYZkWAPUMBy8Q8KkjvhabSflVGKZS65cDNJRXnYx"});
-    this.getUpdates();
+    //this.getUpdates();
   }
-/*
+
+  /*
   getUpdates(){
     this.setState({ loading: true })
 
@@ -113,44 +116,111 @@ class ServicesForm extends React.Component {
    }
  }*/
  getUpdates(){
-  var request = require('request');
-  var outcome;
-  var options = {
-    'method': 'GET',
-    'url': 'https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/textsearch/json?query=restaurants+in+LongBeach&key=AIzaSyAr-Fd30VXDDoStitEIztHwyyYLVvjBIl4',
-    'headers': {
-    }
-  };
-  request(options, function (error, response,body) { 
-    if (error) throw new Error(error);
-    //console.log(response.body);
-    //document.getElementById("results-box").innerHTML = response.body;
-    outcome = JSON.parse(body).results;
-    //console.log(outcome);
-  });
-  this.setState({results:outcome});
-  console.log(this.state.results);
-}
+   var request = require('request');
+   var outcome;
+   var options = {
+     'method': 'GET',
+     'url': 'https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/textsearch/json?query=restaurants+in+LongBeach&key=AIzaSyAr-Fd30VXDDoStitEIztHwyyYLVvjBIl4',
+     'headers': {
+     }
+   };
+   request(options, function (error, response,body) { 
+     if (error) throw new Error(error);
+     //console.log(response.body);
+     //document.getElementById("results-box").innerHTML = response.body;
+     //outcome = JSON.parse(body).results;
+     //console.log(outcome);
+     outcome = JSON.parse(response.body).results;
+   });
+   //this.setState({results:outcome});
+   console.log(this.state.results);
+ }
 
-//const listItems = this.state.results.map((res) => <div key={res.name}>{res.name}</div>);
+// getUpdates(){
+//   var search = document.getElementById("services-search").value.split(" ");
+//   //var googlePlacesRef = "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input="; (returns coordinate error)
+//   var googlePlacesRef = "https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/textsearch/json?query=";
+// //   for (var i=0; i<search.length; i++) { // for google only
+// //     if (i < search.length-1)
+// //       googlePlacesRef += search[i]+"%20";
+// //     else
+// //       googlePlacesRef += search[i]+"&inputtype=textquery&fields=photos,formatted_address,name,rating,opening_hours,geometry&key=";
+// //   }
+//   for (var i=0; i<search.length; i++) { // for heroku
+//    if (i < search.length-1)
+//      googlePlacesRef += search[i]+"+";
+//    else
+//      googlePlacesRef += search[i]+"&key=";
+//  }
+//   var apiKey = "AIzaSyAFLooFShJB9IpAK8Rb_nyhNi8PuhthPt8";
+//   googlePlacesRef += apiKey;
+//   var request = require('request');
+//   var options = {
+//     'method': 'GET',
+//     'url': googlePlacesRef,
+//     'headers': {
+//     }
+//   };
+//   request(options, function (error, response,body) { 
+//     if (error) throw new Error(error);
+//     console.log(response.body);
+//     var nameBody = response.body.split('"name" : "');
+//     var addressBody = response.body.split('"formatted_address" : "');
+//     var latitudeBody = response.body.split('"lat" : ');
+//     var longitudeBody = response.body.split('"lng" : ');
+//     var count = (body.match(/formatted_address/g) || []).length; // Count number of results
+//     for (var i=1; i<count; i++) {
+//       var serviceBox = document.createElement("div");
+//       serviceBox.style.backgroundColor = "rgb(215, 215, 215)";
+//       serviceBox.style.borderRadius = "15px";
+//       var name = document.createElement("div");
+//       name.textContent = nameBody[i].split('",')[0];
+//       name.className = "box-row";
+//       serviceBox.appendChild(name);
+//       var address = document.createElement("div");
+//       address.textContent = addressBody[i].split('",')[0];
+//       address.className = "box-row";
+//       serviceBox.appendChild(address);
+//       // var latitude = document.createElement("div");
+//       // latitude.textContent = latitudeBody.split(",")[0];
+//       // latitude.className = "input-box";
+//       // serviceBox.appendChild(latitude);
+//       // var longitude = document.createElement("div");
+//       // longitude.textContent = longitudeBody.split(",")[0];
+//       // longitude.className = "input-box";
+//       // serviceBox.appendChild(longitude);
+//       document.getElementById("bubble-home").appendChild(serviceBox);
+//     }
+
+//   });
+// }
  
+  formatResults() {
+
+  }
   render() {
     return (
       <div id="services-form">
-        <Slide down>
-          <div className="pooch-title">Dog Services</div>
-        </Slide>
-        <label for="location">Enter your city: </label>
-        <input type="text" onBlur={e=>this.setState({city:e.target.value})}/>
-        <button type="button" onClick={this.trackLocation}>Track your location</button>
-        <div className="contact-box my-3 mx-5 px-3 py-5">{this.state.latitude}</div>
-        <div className="contact-box my-3 mx-5 px-3 py-5">{this.state.longitude}</div>
-        <div className="contact-box my-3 mx-5 px-3 py-5"><cards dog_wash={this.getUpdates.outcome}/> </div>
-        <div id="results-box" className="contact-box my-3 mx-5 px-3 py-5"></div>
-        
-        <div id="success-message" className="trak_body">
-          <div>Service Booked!</div>
+        {/* <label>Enter your city: </label>
+        <input type="text" onBlur={e=>this.setState({city:e.target.value})}/> */}
+        <button className="mb-5" type="button" onClick={this.trackLocation}>Detect your location</button>
+        <div className="row">
+          <input className="search-bar mr-3" id="services-search" placeholder="Search..." maxLength="50" onChange={this.updateSearch} value={this.state.search}></input>
+          <button onClick={this.getUpdates}>Search</button>
         </div>
+        <div id="bubble-home"></div>
+        {/* <div className="contact-box my-3 mx-5 px-3 py-5">{this.state.latitude}</div>
+        <div className="contact-box my-3 mx-5 px-3 py-5">{this.state.longitude}</div> */}
+        {/* <div className="contact-box my-3 mx-5 px-3 py-5"><cards dog_wash={this.getUpdates.outcome}/> </div> */}
+        {/* <div id="results-box" className="contact-box my-3 mx-5 px-3 py-5"></div> */}
+        {/* <iframe width="600" height="450" frameBorder="0" style={{border: "0"}} src="https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=Museum%20of%20Contemporary%20Art%20Australia&inputtype=textquery&fields=photos,formatted_address,name,rating,opening_hours,geometry&key=AIzaSyAFLooFShJB9IpAK8Rb_nyhNi8PuhthPt8" allowFullScreen></iframe> */}
+        {/* <img style={{height: "600px", width: "600px"}}alt="maps" src="https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=Museum%20of%20Contemporary%20Art%20Australia&inputtype=textquery&fields=photos,formatted_address,name,rating,opening_hours,geometry&key=AIzaSyAFLooFShJB9IpAK8Rb_nyhNi8PuhthPt8"></img> */}
+        {/* <div style={{height: "100%"}} id="map"></div> */}
+        {/* <script style={{height: "100%"}} src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAFLooFShJB9IpAK8Rb_nyhNi8PuhthPt8&libraries=places&callback=initMap" async defer></script> */}
+        {/* <div id="success-message" className="trak_body">
+          <div>Service Booked!</div>
+        </div> */}
+        
         </div>
       
     );
