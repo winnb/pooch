@@ -220,6 +220,7 @@ class ProfileForm extends React.Component {
               email: Fire.auth().currentUser.email,
               name: document.getElementById("database-parent-name").value,
               phone: document.getElementById("database-parent-phone").value,
+              city: document.getElementById("database-parent-city").value,
               pic: document.getElementById("database-parent-pic").src
             })
             .catch(error => {
