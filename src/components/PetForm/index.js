@@ -27,7 +27,7 @@ class PetForm extends React.Component {
           document.getElementById("open-dog-profile-tip").className = "pooch-navbar-item collapse.show";
           // Apend dog icon row with next dog pictue
           var nextPic = document.createElement("img");
-          nextPic.id = doc.data().name+"-picture";
+          nextPic.id = doc.data().name.toLowerCase().trim()+"-picture";
           nextPic.className = "dog-icon";
           nextPic.alt = "dog-profile-picture-preview";
           nextPic.src = doc.data().pic;
@@ -83,9 +83,8 @@ class PetForm extends React.Component {
   }
 
 newDog() {
-  
   Fire.firestore().collection("pets").where('email', '==', Fire.auth().currentUser.email)
-  .where("name", "==", document.getElementById("dog-name").value)
+  .where("name", "==", document.getElementById("database-dog-name").value.toLowerCase().trim())
   .get().then(function(querySnapshot) {
     querySnapshot.forEach(function(doc) {
       doc.ref.delete();
@@ -124,7 +123,7 @@ newDog() {
 
 updateDog() {
   Fire.firestore().collection("pets").where('email', '==', Fire.auth().currentUser.email)
-  .where("name", "==", document.getElementById("database-dog-name").value)
+  .where("name", "==", document.getElementById("database-dog-name").value.toLowerCase().trim())
   .get().then(function(querySnapshot) {
     querySnapshot.forEach(function(doc) {
       doc.ref.delete();
@@ -135,7 +134,7 @@ updateDog() {
     console.log("adding from simple dog breeds");
     Fire.firestore().collection("pets").add({
       email: Fire.auth().currentUser.email,
-      name: document.getElementById("database-dog-name").value,
+      name: document.getElementById("database-dog-name").value.toLowerCase().trim(),
       gender: document.getElementById("database-dog-gender").value,
       breed: document.getElementById("database-dog-breed-simple").value,
       color: document.getElementById("database-dog-color").value,
@@ -147,7 +146,7 @@ updateDog() {
     console.log("adding from all dog breeds");
     Fire.firestore().collection("pets").add({
       email: Fire.auth().currentUser.email,
-      name: document.getElementById("database-dog-name").value,
+      name: document.getElementById("database-dog-name").value.toLowerCase().trim(),
       gender: document.getElementById("database-dog-gender").value,
       breed: document.getElementById("database-dog-breed").value,
       color: document.getElementById("database-dog-color").value,
@@ -217,9 +216,11 @@ openDeletePopup() {document.getElementById("delete-dog-popup").className="fixed-
 closeDeletePopup() {document.getElementById("delete-dog-popup").className="fixed-top collapse";}
 
 deleteProfile() {
+  //var adjustedName = document.getElementById("database-dog-name").value[0].toUpperCase()+document.getElementById("database-dog-name").value.substr(1,document.getElementById("database-dog-name").value.length-1).trim()
+  console.log("Trying to delete "+document.getElementById("database-dog-name").value.toLowerCase().trim()+"'s profile");
   Fire.firestore().collection("pets")
   .where('email', '==', Fire.auth().currentUser.email)
-  .where('name', '==', document.getElementById("database-dog-name").value)
+  .where('name', '==', document.getElementById("database-dog-name").value.toLowerCase().trim())
   .get().then(function(querySnapshot) {
       querySnapshot.forEach(function(doc) {
         doc.ref.delete();

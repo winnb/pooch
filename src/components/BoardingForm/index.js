@@ -67,11 +67,26 @@ class BoardingForm extends React.Component {
       newCol.className = "col";
       newBox.appendChild(newCol);
 
-      var ratingRow = document.createElement("div"); // First row
+      var nameRow = document.createElement("div"); // First row
+      nameRow.className = "mx-1 box-rating";
+      newCol.appendChild(nameRow);
+      var name = document.createElement("div");
+      // Make name camelcase
+      var nameWords = doc.data().name.toLowerCase().split(" ");
+      var adjustedName = "";
+      for (var i=0; i<nameWords.length; i++)
+        adjustedName += nameWords[i].substr(0,1).toUpperCase() + nameWords[i].substr(1, nameWords[i].length-1) + " ";
+      name.textContent = adjustedName;
+      name.className = "boarder-name";
+      if (name.innerText.length === 1)
+        name.textContent = "No name listed";
+      nameRow.appendChild(name);
+
+      var ratingRow = document.createElement("div"); // Second row
       ratingRow.className = "my-2";
       newCol.appendChild(ratingRow);
       var rating = document.createElement("div");
-      rating.className = "box-rating";
+      rating.className = "box-row";
       var ratingSum = 0;
       var ratingCount = 0;
       Fire.firestore().collection("reviews")
@@ -89,19 +104,6 @@ class BoardingForm extends React.Component {
       });
       ratingRow.appendChild(rating);
 
-      var nameRow = document.createElement("div"); // Second row
-      nameRow.className = "mx-1 box-row";
-      newCol.appendChild(nameRow);
-      var name = document.createElement("div");
-      // Make name camelcase
-      var nameWords = doc.data().name.toLowerCase().split(" ");
-      var adjustedName = "";
-      for (var i=0; i<nameWords.length; i++)
-        adjustedName += nameWords[i].substr(0,1).toUpperCase() + nameWords[i].substr(1, nameWords[i].length-1) + " ";
-      name.textContent = adjustedName;
-      name.className = "boarder-name";
-      nameRow.appendChild(name);
-
       var phoneRow = document.createElement("div"); // Third row
       phoneRow.className = "mx-1 box-row";
       newCol.appendChild(phoneRow);
@@ -112,6 +114,8 @@ class BoardingForm extends React.Component {
       if (phone.textContent.length === 7)
         phone.textContent = phone.textContent[0]+phone.textContent[1]+phone.textContent[2]+"-"+phone.textContent[3]+phone.textContent[4]+phone.textContent[5]+phone.textContent[6];
       phone.className = "boarder-phone";
+      if (phone.innerText.length === 0)
+        phone.textContent = "No phone listed";
       phoneRow.appendChild(phone);
 
       var addressRow = document.createElement("div"); // Fourth row
@@ -124,7 +128,9 @@ class BoardingForm extends React.Component {
       for (var i=0; i<addressWords.length; i++)
         adjustedAddress += addressWords[i].substr(0,1).toUpperCase() + addressWords[i].substr(1, addressWords[i].length-1) + " ";
       address.textContent = adjustedAddress;
-      address.className = "boarderer-address";
+      address.className = "boarder-address";
+      if (address.textContent.length === 0)
+        address.textContent = "No address listed";
       addressRow.appendChild(address);
 
       var cityRow = document.createElement("div"); // Fifth row

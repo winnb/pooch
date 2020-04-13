@@ -116,23 +116,23 @@ class NavBar extends React.Component {
 
   render() {
     return (
-      <div onMouseLeave={this.collapseDropdown}>
-        <MessageTab/>
+      <div className="navbar" onMouseLeave={this.collapseDropdown}>
+        <MessageTab/>      
         <div className="collapse fixed-top" id="profile-dropdown" >
             <div className="pooch-navbar-item row" id="dropdown-button" onClick={this.goToProfile}>📷 Profile</div>
             {/* <div className="pooch-navbar-item row" id="dropdown-button" onClick={this.openMessages}>✉️ Messages</div> */}
             <div className="pooch-navbar-item row" id="dropdown-button" onClick={this.logout}>🔌 Logout</div>
-        </div>
-        <nav className="nav-bar row fixed-top py-5" >
+        </div> 
+        <nav className="nav-bar row fixed-top" >
           <div id="nav-bar-pic"><img id="profile-pic" src={GenericProfile} alt="Profile" onClick={this.goToProfile} onMouseEnter={this.openDropdown}/></div>
           <a className="pooch-brand" id="pooch"  href="/">POOCH</a>
           <div className="pooch-navbar-item row" id="nav-pages">
-                <a className="col" id="your-pets" href="/your-pets">Your Pets</a>
-                <a className="col" id="dog-walking" href="/dog-walking">Dog Walking</a>
-                <a className="col" id="dog-boarding" href="/dog-boarding">Dog Boarding</a>
-                <a className="col" id="dog-services" href="/dog-services">Dog Services</a>
-                <a className="col" id="dog-meetup" href="/dog-meetup">Dog Meetups</a>
-                <a className="col" id="dog-records" href="/dog-records">Dog Records</a> 
+                <a id="your-pets" href="/your-pets">Your Pets</a>
+                <a id="dog-walking" href="/dog-walking">Dog Walking</a>
+                <a id="dog-boarding" href="/dog-boarding">Dog Boarding</a>
+                <a id="dog-services" href="/dog-services">Dog Services</a>
+                <a id="dog-meetup" href="/dog-meetup">Dog Meetups</a>
+                <a id="dog-records" href="/dog-records">Dog Records</a> 
           </div>
         </nav>     
       </div>

@@ -1,9 +1,21 @@
 // See Navbar/styles.scss for rest of styling
   #new-tip {
     margin-top: 21vh;
-    margin-left: 70%;
+    margin-left: 82vw;
+    margin-right: 1vw;
     font-weight: 600;
-    font-size: 100%;
+    font-size: 1vw;
+    background-color: rgb(250, 250, 250);
+    border-top-left-radius: 10vw;
+    border-top-right-radius: 0vw;
+    border-bottom-left-radius: 10vw;
+    border-bottom-right-radius: 10vw;
+    border-style: outset;
+    border-width: medium;
+    padding-top: 0.5vw;
+    padding-left: 0.5vw;
+    padding-right: 0.5vw;
+    padding-bottom: 0.5vw;
   }
 
   #dropdown-item:hover {
@@ -11,4 +23,29 @@
     font-weight: 600;
     transition-duration: 0.1s;
     cursor: pointer;
+  }
+
+  .nav-button {
+    background-color: rgb(225, 225, 225);
+    border-radius: 1vw;
+    padding-top: 0.25vw;
+    padding-left: 0.5vw;
+    padding-right: 0.5vw;
+    padding-bottom: 0.25vw;
+    font-size: 1vw;
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+    max-width: 10vw;
+  }
+
+  .nav-button:hover {
+    background-color: rgb(205, 205, 205);
+    transition-duration: 0.5s;
+    cursor: pointer;
+  }
+
+  #login-options {
+    display : flex;
+    align-items : center;
+    margin-left: 3vw;
   }

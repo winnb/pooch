@@ -122,7 +122,7 @@ class ServicesForm extends React.Component {
           formattedResult += ")";
           var formattedResults = formattedResult.split(", ");
           var name = document.createElement("div");
-          name.className = "box-row";
+          name.className = "box-rating";
           name.textContent = formattedResults[6];
           resultBox.appendChild(name);
           var rating = document.createElement("div");
@@ -148,7 +148,7 @@ class ServicesForm extends React.Component {
       <div id="services-form">
         {/* <button className="mb-3" type="button" onClick={this.trackLocation}>Detect your location</button>
         <div id="coordinates">({this.state.latitude}, {this.state.longitude})</div> */}
-        <div className="row my-3">
+        <div id="services-search-row">
           <input className="search-bar mr-3" id="services-search" placeholder="Search..." maxLength="50" onChange={this.updateSearch} value={this.state.search}></input>
           <button onClick={this.getUpdates}>Search</button>
         </div>

@@ -378,7 +378,7 @@ previewPic(event) {
 expand(event) {
   if(event.target.textContent === "Show More ▼") {
     document.getElementById(event.target.id.split("expand")[0]+"featured-images").className = "collapse.show";
-    event.target.textContent = "Show More ▲";
+    event.target.textContent = "Show Less ▲";
   }
   else {
     document.getElementById(event.target.id.split("expand")[0]+"featured-images").className = "collapse";
@@ -550,7 +550,7 @@ closeError() { document.getElementById("error-message").style.display = "none"; 
             <input type="file" id="database-boarder-input" onChange={this.previewPic}/>
             <div className="row">
               <div className="col">
-                <div className="my-4 row"><input className="profile-input" id="database-boarder-name" type="text" placeholder="Name" maxLength="50"/></div>
+                <div className="my-4 row"><input className="profile-input col" id="database-boarder-name" type="text" placeholder="Name" maxLength="50"/></div>
                 <div className="my-4 row"><input className="profile-input" id="database-boarder-phone" type="text" placeholder="Phone Number" min="0" max="9999999999" maxLength="11"/></div>
                 <div className="my-4 row"><input className="profile-input" id="database-boarder-address" type="text" placeholder="Address" maxLength="50"/></div>
                 <div className="my-4 row"><input className="profile-input" id="database-boarder-city" type="text" placeholder="City" maxLength="50"/></div>

@@ -63,11 +63,26 @@ class WalkerForm extends React.Component {
       newCol.className = "col";
       newBox.appendChild(newCol);
 
-      var ratingRow = document.createElement("div"); // First row
+      var nameRow = document.createElement("div"); // First row
+      nameRow.className = "box-rating";
+      newCol.appendChild(nameRow);
+      var name = document.createElement("div");
+      // Make name camelcase
+      var nameWords = doc.data().name.toLowerCase().split(" ");
+      var adjustedName = "";
+      for (var i=0; i<nameWords.length; i++)
+        adjustedName += nameWords[i].substr(0,1).toUpperCase() + nameWords[i].substr(1, nameWords[i].length-1) + " ";
+      name.innerText = adjustedName;
+      name.className = "walker-name";
+      if (name.innerText.length === 1)
+        name.innerText = "No name listed";
+      nameRow.appendChild(name);
+
+      var ratingRow = document.createElement("div"); // Second row
       ratingRow.className = "my-2";
       newCol.appendChild(ratingRow);
       var rating = document.createElement("div");
-      rating.className = "box-rating";
+      rating.className = "box-row";
       var ratingSum = 0;
       var ratingCount = 0;
       Fire.firestore().collection("reviews")
@@ -84,20 +99,7 @@ class WalkerForm extends React.Component {
           rating.textContent = "No Ratings ⭐";
       });
       ratingRow.appendChild(rating);
-
-      var nameRow = document.createElement("div"); // Second row
-      nameRow.className = "box-row";
-      newCol.appendChild(nameRow);
-      var name = document.createElement("div");
-      // Make name camelcase
-      var nameWords = doc.data().name.toLowerCase().split(" ");
-      var adjustedName = "";
-      for (var i=0; i<nameWords.length; i++)
-        adjustedName += nameWords[i].substr(0,1).toUpperCase() + nameWords[i].substr(1, nameWords[i].length-1) + " ";
-      name.innerText = adjustedName;
-      name.className = "walker-name";
-      nameRow.appendChild(name);
-
+      
       var phoneRow = document.createElement("div"); // Third row
       phoneRow.className = "box-row";
       newCol.appendChild(phoneRow);
@@ -106,6 +108,8 @@ class WalkerForm extends React.Component {
       if (phone.innerText.length === 10)
         phone.innerText = phone.innerText[0]+phone.innerText[1]+phone.innerText[2]+"-"+phone.innerText[3]+phone.innerText[4]+phone.innerText[5]+"-"+phone.innerText[6]+phone.innerText[7]+phone.innerText[8]+phone.innerText[9];
       phone.className = "walker-phone";
+      if (phone.innerText.length === 0)
+        phone.innerText = "No phone listed";
       phoneRow.appendChild(phone);
 
       var cityRow = document.createElement("div"); // Fourth row
@@ -118,6 +122,8 @@ class WalkerForm extends React.Component {
       for (var i=0; i<cityWords.length; i++)
         adjustedCity += cityWords[i].substr(0,1).toUpperCase() + cityWords[i].substr(1, cityWords[i].length-1) + " ";
       city.innerText = adjustedCity;
+      if (city.innerText.length === 1)
+        city.innerText = "No city listed";
       city.className = "walker-city";
       cityRow.appendChild(city);
 
@@ -125,8 +131,10 @@ class WalkerForm extends React.Component {
       hourlyRateRow.className = "box-row";
       newCol.appendChild(hourlyRateRow);
       var hourlyRate = document.createElement("div");
-      hourlyRate.innerText = "$"+doc.data().hourlyRate+"/hour";
       hourlyRate.className = "walker-hourly-rate";
+      hourlyRate.innerText = "$"+doc.data().hourlyRate+"/hour";
+      if (hourlyRate.innerText === "$undefined/hour")
+        hourlyRate.innerText = "No rate listed"
       hourlyRateRow.appendChild(hourlyRate);
 
       // Update popup rating
