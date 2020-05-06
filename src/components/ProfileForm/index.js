@@ -531,7 +531,7 @@ closeError() { document.getElementById("error-message").style.display = "none"; 
                 <div className="my-4 row"><input className="profile-input" id="database-walker-hourly-rate" type="text" placeholder="Hourly Rate" min="12" max="100" maxLength="3"/></div>
                 <button className="my-1 btn" id="walker-expand" onClick={this.expand}>Show More ▼</button>
                 <div className="collapse" id="walker-featured-images">
-                  <b>Featured Images</b>
+                  <b>Your Featured Images</b>
                   <div><input className="feature-input" type="file" id="database-walker-feature1-input" onChange={this.previewPic}/></div>
                   <div><input className="feature-input" type="file" id="database-walker-feature2-input" onChange={this.previewPic}/></div>
                   <div><input className="feature-input" type="file" id="database-walker-feature3-input" onChange={this.previewPic}/></div>
@@ -557,7 +557,7 @@ closeError() { document.getElementById("error-message").style.display = "none"; 
                 <div className="mt-4 row"><input className="profile-input" id="database-boarder-daily-rate" type="text" placeholder="Daily Rate" min="12" max="1000" maxLength="4"/></div>
                 <button className="my-1 btn" id="boarder-expand" onClick={this.expand}>Show More ▼</button>
                 <div className="collapse" id="boarder-featured-images">
-                  <b>Featured Images</b>
+                  <b>Your Featured Images</b>
                   <div><input className="feature-input" type="file" id="database-boarder-feature1-input" onChange={this.previewPic}/></div>
                   <div><input className="feature-input" type="file" id="database-boarder-feature2-input" onChange={this.previewPic}/></div>
                   <div><input className="feature-input" type="file" id="database-boarder-feature3-input" onChange={this.previewPic}/></div>
